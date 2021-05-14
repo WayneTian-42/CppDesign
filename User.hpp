@@ -34,8 +34,13 @@ class Account
         {
             accSet[num] = new AccInfo;
             accfp >> accSet[num]->name >> accSet[num]->pwd >> accSet[num]->t >> accSet[num]->bala;
-            accInfo.insert(*accSet[num]);
-            num++;
+            if (accSet[num]->name.empty())
+                delete accSet[num];
+            else
+            {
+                accInfo.insert(*accSet[num]);
+                num++;
+            }
         }
     }
     ~Account()
@@ -51,7 +56,7 @@ class Account
     }
     void init();  //好像不用实现？
     bool search();
-    bool login(const std::string &, int &, double &);
+    bool login(const std::string &);
     bool registerAcc();
     void changePwd();
     double checkBalance();
@@ -68,11 +73,8 @@ class Account
 class User
 {
   public:
-    User()
+    User() : logged(false), type(0), balance(0)
     {
-        logged = false;
-        type = -1;
-        balance = 0.0;
     }
     ~User()
     {

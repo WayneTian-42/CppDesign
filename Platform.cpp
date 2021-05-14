@@ -48,6 +48,7 @@ void Platform::userRegisterOrLog()
     {
         case 1:
             user->userRegister(name);
+            name.clear();
             break;
         case 2:
             user->login(name);
@@ -58,7 +59,12 @@ void Platform::userRegisterOrLog()
 }
 void Platform::userInformationChange()
 {
-    std::cout << "Ñ¡Ôñ²Ù×÷£º\n"
+    if (name.empty())
+    {
+        std::cout << "\nÇëµÇÂ¼ºó²Ù×÷\n";
+        return;
+    }
+    std::cout << name << ", ÇëÑ¡Ôñ²Ù×÷£º\n"
               << "1. ÐÞ¸ÄÃÜÂë\n"
               << "2. Óà¶î²éÑ¯\n"
               << "3. Óà¶î³äÖµ\n"
@@ -66,11 +72,8 @@ void Platform::userInformationChange()
               << "-1. ÍË³ö" << std::endl;
     int choice;
     std::cin >> choice;
-    if (name.empty() && choice != -1)
-    {
-        std::cout << "\nÊäÈëÕË»§Ãû£º\n";
-        std::cin >> name;
-    }
+    if (choice == -1)
+        return;
     switch (choice)
     {
         case 1:
@@ -80,6 +83,7 @@ void Platform::userInformationChange()
             user->queryBalance(name);
             break;
         case 3:
+
             break;
         default:
             break;

@@ -20,14 +20,9 @@ bool Account::search()
     return (st != accInfo.end());
 }
 //只有账号存在才会调用该函数
-bool Account::login(const std::string &input, int &type, double &bala)
+bool Account::login(const std::string &input)
 {
     bool flg = (input == acc->pwd);
-    if (flg)
-    {
-        type = acc->t;
-        bala = acc->bala;
-    }
     return flg;
 }
 bool Account::registerAcc()
@@ -91,7 +86,7 @@ void User::login(const std::string &userName)
         std::string pwd;
         std::cout << "Input the password of the account:\n";
         std::cin >> pwd;
-        if (!tmp.login(pwd, type, balance))
+        if (!tmp.login(pwd))
         {
             std::cout << "Wrong password!\n";
         }

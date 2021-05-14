@@ -1,3 +1,0 @@
-D:/VS-Code/VS-Code-C++/semester_4/Cpp_Design/build/CMakeFiles/Lab1.dir
-D:/VS-Code/VS-Code-C++/semester_4/Cpp_Design/build/CMakeFiles/edit_cache.dir
-D:/VS-Code/VS-Code-C++/semester_4/Cpp_Design/build/CMakeFiles/rebuild_cache.dir
