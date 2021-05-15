@@ -15,13 +15,10 @@ struct AccInfo
     bool operator<(const AccInfo &ac) const;
 };
 
-class Account
+class User
 {
   public:
-    Account()
-    {
-    }
-    Account(const std::string name) : userName(name)
+    User() : logged(false), type(0), balance(0)
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -43,7 +40,7 @@ class Account
             }
         }
     }
-    ~Account()
+    ~User()
     {
         for (int i = 0; i < num; i++)
             delete accSet[i];
@@ -53,31 +50,6 @@ class Account
         for (auto st : accInfo)
             accfp << st.name << " " << st.pwd << " " << st.t << " " << st.bala << std::endl;
         accfp.close();
-    }
-    void init();  //好像不用实现？
-    bool search();
-    bool login(const std::string &);
-    bool registerAcc();
-    void changePwd();
-    double checkBalance();
-
-  private:
-    std::string userName;
-    std::fstream accfp;
-    AccInfo *accSet[1024];
-    std::set<AccInfo> accInfo;
-    std::set<AccInfo>::iterator acc;
-    int num;
-};
-
-class User
-{
-  public:
-    User() : logged(false), type(0), balance(0)
-    {
-    }
-    ~User()
-    {
     }
 
     virtual int getUserType() = 0;
@@ -95,6 +67,14 @@ class User
     bool logged;
     int type;
     double balance;
+
+  private:
+    std::string userName;
+    std::fstream accfp;
+    AccInfo *accSet[1024];
+    std::set<AccInfo> accInfo;
+    std::set<AccInfo>::iterator acc;
+    int num;
 };
 
 class Consumer : public User
@@ -134,4 +114,19 @@ class Merchant : public User
 
   private:
     std::vector<Goods> goods;
+};
+class Admin : public User
+{
+  public:
+    Admin()
+    {
+        type = 0;
+    }
+    ~Admin()
+    {
+    }
+    virtual int getUserType() override
+    {
+        return type;
+    }
 };
