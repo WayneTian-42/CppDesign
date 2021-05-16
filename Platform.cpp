@@ -54,17 +54,18 @@ void Platform::userRegisterOrLog()
             switch (type)
             {
                 case 1:
-                    user = new Consumer(name);
+                    if (!user)
+                        user = new Consumer(name);
                     user->userRegister(name);
                     break;
                 case 2:
-                    user = new Merchant(name);
+                    if (!user)
+                        user = new Merchant(name);
                     user->userRegister(name);
                     break;
                 default:
                     break;
             }
-            name.clear();
             break;
         case 2:
             std::cout << "请输入登录的账户类型：\n"
@@ -73,15 +74,18 @@ void Platform::userRegisterOrLog()
             switch (type)
             {
                 case 1:
-                    user = new Consumer(name);
+                    if (!user)
+                        user = new Consumer(name);
                     user->login(name);
                     break;
                 case 2:
-                    user = new Merchant(name);
+                    if (!user)
+                        user = new Merchant(name);
                     user->login(name);
                     break;
                 case 3:
-                    user = new Admin;
+                    if (!user)
+                        user = new Admin;
                     user->login("admin");
                     break;
             }
@@ -89,6 +93,7 @@ void Platform::userRegisterOrLog()
         default:
             break;
     }
+    user->save();
 }
 void Platform::userInformationChange()
 {
@@ -121,4 +126,5 @@ void Platform::userInformationChange()
         default:
             break;
     }
+    user->save();
 }

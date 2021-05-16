@@ -13,7 +13,7 @@ bool AccInfo::operator<(const AccInfo &ac) const
 bool User::search()
 {
     AccInfo tmp;
-    tmp.name = userName;
+    tmp.name = name;
     auto st = accInfo.find(tmp);
     if (st != accInfo.end())
         acc = st;
@@ -43,13 +43,14 @@ void User::login(const std::string &userName)
         std::string pwd;
         std::cout << "Input the password of the account:\n";
         std::cin >> pwd;
-        if (pwd == acc->pwd)
+        if (pwd != acc->pwd)
         {
             std::cout << "Wrong password!\n";
         }
         else
         {
             std::cout << "Successfully logged in!\n";
+            // logged = true;
         }
     }
     else
@@ -85,4 +86,14 @@ void User::queryBalance(const std::string &userName)
 }
 void User::buySth()
 {
+}
+void User::save()
+{
+    // logged = false;
+    accfp.close();
+    accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt", std::ios::out | std::ios::trunc);
+    accfp.seekg(0, std::fstream::beg);
+    for (auto st : accInfo)
+        accfp << st.name << " " << st.pwd << " " << st.t << " " << st.bala << std::endl;
+    accfp.close();
 }

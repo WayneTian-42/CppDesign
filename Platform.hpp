@@ -13,6 +13,7 @@ class Platform
   public:
     Platform()
     {
+        user = nullptr;
     }
     ~Platform()
     {

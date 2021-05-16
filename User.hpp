@@ -18,7 +18,7 @@ struct AccInfo
 class User
 {
   public:
-    User() : logged(false), type(0), balance(0)
+    User() : type(0), balance(0)
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -61,15 +61,14 @@ class User
     void buySth();
     void topUp();  //??
     int getAcc();  //??
+    void save();
 
   protected:
     std::string name;
-    bool logged;
     int type;
     double balance;
 
   private:
-    std::string userName;
     std::fstream accfp;
     AccInfo *accSet[1024];
     std::set<AccInfo> accInfo;
