@@ -1,4 +1,5 @@
 #include "Goods.hpp"
+#include <iostream>
 
 bool GoodsInfo::operator<(const GoodsInfo &go) const
 {
@@ -54,43 +55,75 @@ void Goods::changeItems()
 }
 void Goods::search()
 {
+    int flg = 0;
     for (auto st : goodsInfo)
     {
         if (st.type == type)
         {
-            std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
+            if (!flg)
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "数量" << std::setw(8)
+                          << std::left << "价格" << std::endl;
+            flg++;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
+                      << std::left << st.price << std::endl;
         }
     }
+    if (!flg)
+        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
 void Goods::search(const std::string &name)
 {
+    int flg = 0;
     for (auto st : goodsInfo)
     {
-        if (st.name == name)
+        if (st.name == name && st.type == type)
         {
-            std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
+            if (!flg)
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "数量" << std::setw(8)
+                          << std::left << "价格" << std::endl;
+            flg++;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
+                      << std::left << st.price << std::endl;
         }
     }
+    if (!flg)
+        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
 void Goods::search(const double lowPrice, const double highPrice)
 {
+    int flg = 0;
     for (auto st : goodsInfo)
     {
-        if (st.price * st.discount >= lowPrice && st.price * st.discount <= highPrice)
+        if (st.type == type && st.price * st.discount >= lowPrice && st.price * st.discount <= highPrice)
         {
-            std::cout << st.name << " " << st.amount << " " << st.price << " " << st.discount << std::endl;
+            if (!flg)
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "数量" << std::setw(8)
+                          << std::left << "价格" << std::endl;
+            flg++;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
+                      << std::left << st.price << std::endl;
         }
     }
+    if (!flg)
+        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
 void Goods::search(const int lowAmount, const int highAmount)
 {
+    int flg = 0;
     for (auto st : goodsInfo)
     {
-        if (st.amount >= lowAmount && st.amount <= highAmount)
+        if (st.type == type && st.amount >= lowAmount && st.amount <= highAmount)
         {
-            std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
+            if (!flg)
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "数量" << std::setw(8)
+                          << std::left << "价格" << std::endl;
+            flg++;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
+                      << std::left << st.price << std::endl;
         }
     }
+    if (!flg)
+        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
 void Goods::discount(const int dis)
 {

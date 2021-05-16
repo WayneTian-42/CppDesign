@@ -23,6 +23,7 @@ class Platform
     void userRegisterOrLog();
     void userInformationChange();
     void goodsInformation();
+    void changeGoods();
     void freeUser();
     void freeGoods();
 

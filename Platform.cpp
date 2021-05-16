@@ -25,6 +25,7 @@ void Platform::show()
                 goodsInformation();
                 break;
             case 4:
+                changeGoods();
                 break;
             default:
                 break;

@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <set>
@@ -30,8 +31,13 @@ class Goods
             goodSet[num] = new GoodsInfo;
             goofp >> goodSet[num]->type >> goodSet[num]->name >> goodSet[num]->amount >> goodSet[num]->price >>
                 goodSet[num]->discount >> goodSet[num]->merchant;
-            goodsInfo.insert(*goodSet[num]);
-            num++;
+            if (goodSet[num]->name.empty())
+                delete goodSet[num];
+            else
+            {
+                goodsInfo.insert(*goodSet[num]);
+                num++;
+            }
         }
     }
     virtual ~Goods()
