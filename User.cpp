@@ -36,14 +36,14 @@ void User::userRegister()
     std::cout << "Register Succeed!\n";
     num++;
 }
-void User::login(const int type)
+bool User::login(const int type)
 {
     if (search())
     {
         if (acc->t != type)
         {
             std::cout << "账户类型错误，请退出重新选择！";
-            return;
+            return false;
         }
         std::string pwd;
         std::cout << "Input the password of the account:\n";
@@ -51,16 +51,19 @@ void User::login(const int type)
         if (pwd != acc->pwd)
         {
             std::cout << "Wrong password!\n";
+            return false;
         }
         else
         {
             std::cout << "Successfully logged in!\n";
+            return true;
             // logged = true;
         }
     }
     else
     {
         std::cout << "The account does not exist!\n";
+        return false;
     }
 }
 void User::changePwd()
@@ -83,11 +86,29 @@ void User::changePwd()
 }
 void User::queryBalance()
 {
-    if (!search())
+    /* if (!search())
     {
         std::cout << "This account doesn't exist.";
-    }
-    std::cout << "账户余额为" << acc->bala << "元";
+    } */
+    std::cout << name << "，您账户当前余额为" << acc->bala << "元" << std::endl;
+}
+void User::topUp()
+{
+    queryBalance();
+    double money;
+    std::cout << "请输入充值金额：";
+    std::cin >> money;
+    accSet[num] = new AccInfo;
+    accSet[num]->name = name;
+    accSet[num]->bala = acc->bala + money;
+    accSet[num]->pwd = acc->pwd;
+    accSet[num]->t = acc->t;
+    // accSet[num]并未释放掉
+    accInfo.erase(acc);
+    accInfo.insert(*accSet[num]);
+    num++;
+    search();  // acc被清除掉了
+    queryBalance();
 }
 void User::buySth()
 {

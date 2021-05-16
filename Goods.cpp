@@ -52,11 +52,21 @@ void Goods::changeItems()
     goodsInfo.insert(*goodSet[num]);
     num++;
 }
+void Goods::search()
+{
+    for (auto st : goodsInfo)
+    {
+        if (st.type == type)
+        {
+            std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
+        }
+    }
+}
 void Goods::search(const std::string &name)
 {
     for (auto st : goodsInfo)
     {
-        if (st.name == name && st.type == type)
+        if (st.name == name)
         {
             std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
         }
@@ -66,7 +76,7 @@ void Goods::search(const double lowPrice, const double highPrice)
 {
     for (auto st : goodsInfo)
     {
-        if (st.type == type && st.price * st.discount >= lowPrice && st.price * st.discount <= highPrice)
+        if (st.price * st.discount >= lowPrice && st.price * st.discount <= highPrice)
         {
             std::cout << st.name << " " << st.amount << " " << st.price << " " << st.discount << std::endl;
         }
@@ -76,7 +86,7 @@ void Goods::search(const int lowAmount, const int highAmount)
 {
     for (auto st : goodsInfo)
     {
-        if (st.type == type && st.amount >= lowAmount && st.amount <= highAmount)
+        if (st.amount >= lowAmount && st.amount <= highAmount)
         {
             std::cout << st.name << " " << st.amount << " " << st.price << std::endl;
         }

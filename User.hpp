@@ -18,7 +18,7 @@ struct AccInfo
 class User
 {
   public:
-    User() : type(0), balance(0)
+    User() : /* logged(false), */ type(0), balance(0)
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -55,16 +55,17 @@ class User
     virtual int getUserType() = 0;
     bool search();
     void userRegister();
-    void login(const int);
+    bool login(const int);
     void changePwd();
     void queryBalance();
-    void buySth();
-    void topUp();  //??
+    virtual void buySth();
+    void topUp();  //≥‰÷µ
     int getAcc();  //??
     void save();
 
   protected:
     std::string name;
+    // bool logged;
     int type;
     double balance;
 

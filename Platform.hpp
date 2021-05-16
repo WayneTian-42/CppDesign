@@ -21,9 +21,11 @@ class Platform
     void show();
     void userRegisterOrLog();
     void userInformationChange();
+    void goodsInformation();
     void freeUser();
 
   private:
     std::string name;
     User *user;
+    Goods *goods;
 };

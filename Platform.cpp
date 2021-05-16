@@ -22,6 +22,7 @@ void Platform::show()
                 userInformationChange();
                 break;
             case 3:
+
                 break;
             case 4:
                 break;
@@ -90,7 +91,11 @@ void Platform::userRegisterOrLog()
                         user = new Admin;
                     break;
             }
-            user->login(type);
+            if (!user->login(type))
+            {
+                freeUser();
+                name.clear();
+            }
             break;
         default:
             break;
@@ -123,12 +128,15 @@ void Platform::userInformationChange()
             user->queryBalance();
             break;
         case 3:
-
+            user->topUp();
             break;
         default:
             break;
     }
     freeUser();
+}
+void Platform::goodsInformation()
+{
 }
 void Platform::freeUser()
 {

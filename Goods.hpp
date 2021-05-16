@@ -48,9 +48,10 @@ class Goods
     }
 
     virtual double getPrice() = 0;
-    bool existGoods();  //ï¿½ï¿½Ã»Êµï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÊ²Ã´Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    bool existGoods();  //»¹Ã»ÊµÏÖ£¬ÍüÁËÎªÊ²Ã´ÒªÓÐÕâ¸öº¯Êý
     void addItems();
     void changeItems();
+    void search();
     void search(const std::string &);
     void search(const double, const double = 100000005);
     void search(const int, const int = 100000005);
@@ -60,7 +61,7 @@ class Goods
     std::string name;
     GoodsInfo *goodSet[1024];
     std::set<GoodsInfo> goodsInfo;
-    int type, num;  //ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
+    int type, num;  //ÉÌÆ·ÊýÁ¿
     double price;
 
   private:
