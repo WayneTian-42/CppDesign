@@ -55,8 +55,8 @@ class Goods
 
     virtual double getPrice() = 0;
     bool existGoods();  //还没实现，忘了为什么要有这个函数
-    void addItems();
-    void changeItems();
+    void addItems(const std::string &, const std::string &);
+    void changeItems(const std::string &, const std::string &);
     void search();
     void search(const std::string &);
     void search(const double, const double);

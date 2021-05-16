@@ -11,35 +11,42 @@ bool GoodsInfo::operator<(const GoodsInfo &go) const
         return name < go.name;
 };
 
-void Goods::addItems()
+void Goods::addItems(const std::string &goodsName, const std::string &merchant)
 {
     goodSet[num] = new GoodsInfo;
-    goodSet[num]->name = name;
+    goodSet[num]->name = goodsName;
     goodSet[num]->type = type;
     auto it = goodsInfo.find(*goodSet[num]);
     if (it != goodsInfo.end())
     {
-        std::cout << "This account has existed.\n";
+        std::cout << "该商品已存在\n";
         delete goodSet[num];
         return;
     }
     //更改为用户可选修改哪些内容
     std::cout << "Please enter the new type, new name, new amount, new price, new discount:\n";
     std::cin >> goodSet[num]->type >> goodSet[num]->name >> goodSet[num]->amount >> goodSet[num]->price >>
-        goodSet[num]->discount >> goodSet[num]->merchant;
-
+        goodSet[num]->discount;
+    goodSet[num]->merchant = merchant;
     goodsInfo.insert(*goodSet[num]);
     num++;
 }
-void Goods::changeItems()
+//改成把该商家商品全部显示
+void Goods::changeItems(const std::string &goodsName, const std::string &merchant)
 {
     goodSet[num] = new GoodsInfo;
-    goodSet[num]->name = name;
+    goodSet[num]->name = goodsName;
     goodSet[num]->type = type;
     auto it = goodsInfo.find(*goodSet[num]);
     if (it == goodsInfo.end())
     {
-        std::cout << "This account hasn't existed.";
+        std::cout << "该商品不存在" << std::endl;
+        delete goodSet[num];
+        return;
+    }
+    if (it->merchant != merchant)
+    {
+        std::cout << "该商品不属于商家" << merchant << std::endl;
         delete goodSet[num];
         return;
     }

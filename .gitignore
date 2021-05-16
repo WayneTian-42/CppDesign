@@ -286,3 +286,5 @@ _deps
 
 # ---> vscode
 .vscode/*
+
+.clang-format

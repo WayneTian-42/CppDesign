@@ -24,6 +24,7 @@ class Platform
     void userInformationChange();
     void goodsInformation();
     void changeGoods();
+    void definiteType();
     void freeUser();
     void freeGoods();
 

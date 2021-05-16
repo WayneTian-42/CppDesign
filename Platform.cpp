@@ -1,4 +1,6 @@
 #include "Platform.hpp"
+#include <iostream>
+#include <string>
 
 void Platform::show()
 {
@@ -122,31 +124,12 @@ void Platform::goodsInformation()
               << "2. 按价格筛选\n"
               << "3. 按数量筛选\n"
               << "-1. 退出\n";
-    int choice, type, amount;
+    int choice, amount;
     double priceLow, priceHigh;
     std::cin >> choice;
     std::string goodsName;
     if (choice != -1)
-    {
-        std::cout << "请输入查看的货物类型：\n"
-                  << "1表示食物，2表示衣服，3表示图书\n";
-        std::cin >> type;
-        freeGoods();
-        switch (type)
-        {
-            case 1:
-                goods = new Foods();
-                break;
-            case 2:
-                goods = new Clothes();
-                break;
-            case 3:
-                goods = new Books();
-                break;
-            default:
-                break;
-        }
-    }
+        definiteType();
     switch (choice)
     {
         case 0:
@@ -172,6 +155,60 @@ void Platform::goodsInformation()
             break;
     }
     freeGoods();
+}
+void Platform::changeGoods()
+{
+    if (name.empty() || user->getUserType() == 1)
+    {
+        std::cout << "请登入商家账号后进行该操作！\n";
+        return;
+    }
+    int choice;
+    std::cout << "请选择要进行的操作\n"
+              << "1. 修改已有商品\n"
+              << "2. 添加商品\n"
+              << "-1. 退出\n";
+    std::cin >> choice;
+    std::string goodsName;
+    if (choice != -1)
+    {
+        definiteType();
+        std::cout << "输入商品名称";
+        std::cin >> goodsName;
+    }
+    switch (choice)
+    {
+        case 1:
+            goods->changeItems(goodsName, name);
+            break;
+        case 2:
+            goods->addItems(goodsName, name);
+        default:
+            break;
+    }
+    freeGoods();
+}
+void Platform::definiteType()
+{
+    int type;
+    std::cout << "请选择商品类型\n"
+              << "1表示食物，2表示衣服，3表示图书\n";
+    std::cin >> type;
+    freeGoods();
+    switch (type)
+    {
+        case 1:
+            goods = new Foods();
+            break;
+        case 2:
+            goods = new Clothes();
+            break;
+        case 3:
+            goods = new Books();
+            break;
+        default:
+            break;
+    }
 }
 void Platform::freeUser()
 {
