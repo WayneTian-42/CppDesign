@@ -36,10 +36,15 @@ void User::userRegister()
     std::cout << "Register Succeed!\n";
     num++;
 }
-void User::login()
+void User::login(const int type)
 {
     if (search())
     {
+        if (acc->t != type)
+        {
+            std::cout << "账户类型错误，请退出重新选择！";
+            return;
+        }
         std::string pwd;
         std::cout << "Input the password of the account:\n";
         std::cin >> pwd;

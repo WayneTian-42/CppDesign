@@ -67,10 +67,11 @@ void Platform::userRegisterOrLog()
                     break;
             }
             user->userRegister();
-            freeUser();
             name.clear();
             break;
         case 2:
+            if (user)
+                freeUser();
             std::cout << "请输入登录的账户类型：\n"
                       << "1表示顾客，2表示商家，3表示系统管理员\n";
             std::cin >> type;
@@ -89,7 +90,7 @@ void Platform::userRegisterOrLog()
                         user = new Admin;
                     break;
             }
-            user->login();
+            user->login(type);
             break;
         default:
             break;

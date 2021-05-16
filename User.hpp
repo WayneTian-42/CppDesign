@@ -55,7 +55,7 @@ class User
     virtual int getUserType() = 0;
     bool search();
     void userRegister();
-    void login();
+    void login(const int);
     void changePwd();
     void queryBalance();
     void buySth();
