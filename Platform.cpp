@@ -48,10 +48,9 @@ void Platform::userRegisterOrLog()
         std::cin >> type;
         std::cout << "\n输入账户名：\n";
         std::cin >> name;
+        freeUser();
         switch (type)
         {
-            if (user)
-                freeUser();
             case 1:
                 user = new Consumer(name);
                 break;
@@ -119,9 +118,8 @@ void Platform::goodsInformation()
     std::cout << "请选择筛选条件\n"
               << "0. 展示所有商品\n"
               << "1. 按名称筛选\n"
-              << "2. 按类型筛选\n"
-              << "3. 按价格筛选\n"
-              << "4. 按数量筛选\n"
+              << "2. 按价格筛选\n"
+              << "3. 按数量筛选\n"
               << "-1. 退出\n";
     int choice, type, amount;
     double priceLow, priceHigh;
@@ -130,19 +128,19 @@ void Platform::goodsInformation()
     if (choice != -1)
     {
         std::cout << "请输入查看的货物类型：\n"
-                  << "1表示食物，2表示衣服，3表示\n";
+                  << "1表示食物，2表示衣服，3表示图书\n";
         std::cin >> type;
-        std::cout << "\n输入账户名：\n";
-        std::cin >> name;
+        freeGoods();
         switch (type)
         {
-            if (user)
-                freeUser();
             case 1:
-                user = new Consumer(name);
+                goods = new Foods();
                 break;
             case 2:
-                user = new Merchant(name);
+                goods = new Clothes();
+                break;
+            case 3:
+                goods = new Books();
                 break;
             default:
                 break;
@@ -151,7 +149,7 @@ void Platform::goodsInformation()
     switch (choice)
     {
         case 0:
-            goods->search(0.0);
+            goods->search();
             break;
         case 1:
             std::cout << "请输入商品名称";
@@ -159,21 +157,20 @@ void Platform::goodsInformation()
             goods->search(goodsName);
             break;
         case 2:
-            std::cout << "请输入商品类型";
-            std::cin >> type;
-            break;
-        case 3:
             std::cout << "请输入商品最低价格与最高价格";
             std::cin >> priceLow >> priceHigh;
             //大小比较
             goods->search(priceLow, priceHigh);
             break;
-        case 4:
+        case 3:
             std::cout << "请输入商品最小数量";
             std::cin >> amount;
             goods->search(amount);
             break;
+        default:
+            break;
     }
+    freeGoods();
 }
 void Platform::freeUser()
 {
@@ -181,5 +178,13 @@ void Platform::freeUser()
     {
         delete user;
         user = nullptr;
+    }
+}
+void Platform::freeGoods()
+{
+    if (goods)
+    {
+        delete goods;
+        goods = nullptr;
     }
 }

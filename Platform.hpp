@@ -14,6 +14,7 @@ class Platform
     Platform()
     {
         user = nullptr;
+        goods = nullptr;
     }
     ~Platform()
     {
@@ -23,6 +24,7 @@ class Platform
     void userInformationChange();
     void goodsInformation();
     void freeUser();
+    void freeGoods();
 
   private:
     std::string name;

@@ -29,12 +29,12 @@ class Goods
         {
             goodSet[num] = new GoodsInfo;
             goofp >> goodSet[num]->type >> goodSet[num]->name >> goodSet[num]->amount >> goodSet[num]->price >>
-                goodSet[num]->discount;
+                goodSet[num]->discount >> goodSet[num]->merchant;
             goodsInfo.insert(*goodSet[num]);
             num++;
         }
     }
-    ~Goods()
+    virtual ~Goods()
     {
         for (int i = 0; i < num; i++)
             delete goodSet[i];
@@ -71,12 +71,16 @@ class Goods
 class Foods : public Goods
 {
   public:
+    Foods() : Goods()
+    {
+        type = 1;
+    }
     Foods(const std::string &tname) : Goods()
     {
         name = tname;
         type = 1;
     }
-    ~Foods()
+    virtual ~Foods() override
     {
     }
     virtual double getPrice() override;
@@ -87,12 +91,16 @@ class Foods : public Goods
 class Clothes : public Goods
 {
   public:
+    Clothes() : Goods()
+    {
+        type = 2;
+    }
     Clothes(const std::string &tname) : Goods()
     {
         name = tname;
         type = 2;
     }
-    ~Clothes()
+    virtual ~Clothes() override
     {
     }
     virtual double getPrice() override;
@@ -103,12 +111,16 @@ class Clothes : public Goods
 class Books : public Goods
 {
   public:
+    Books() : Goods()
+    {
+        type = 3;
+    }
     Books(const std::string &tname) : Goods()
     {
         name = tname;
         type = 3;
     }
-    ~Books()
+    virtual ~Books() override
     {
     }
     virtual double getPrice() override;
