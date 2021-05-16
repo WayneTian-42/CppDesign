@@ -48,6 +48,8 @@ void Platform::userRegisterOrLog()
     switch (choice)
     {
         case 1:
+            if (user)
+                freeUser();
             std::cout << "请输入注册的账户类型：\n"
                       << "1表示顾客，2表示商家\n";
             std::cin >> type;
@@ -56,16 +58,17 @@ void Platform::userRegisterOrLog()
                 case 1:
                     if (!user)
                         user = new Consumer(name);
-                    user->userRegister(name);
                     break;
                 case 2:
                     if (!user)
                         user = new Merchant(name);
-                    user->userRegister(name);
                     break;
                 default:
                     break;
             }
+            user->userRegister();
+            freeUser();
+            name.clear();
             break;
         case 2:
             std::cout << "请输入登录的账户类型：\n"
@@ -76,24 +79,22 @@ void Platform::userRegisterOrLog()
                 case 1:
                     if (!user)
                         user = new Consumer(name);
-                    user->login(name);
                     break;
                 case 2:
                     if (!user)
                         user = new Merchant(name);
-                    user->login(name);
                     break;
                 case 3:
                     if (!user)
                         user = new Admin;
-                    user->login("admin");
                     break;
             }
+            user->login();
             break;
         default:
             break;
     }
-    user->save();
+    // user->save();
 }
 void Platform::userInformationChange()
 {
@@ -115,10 +116,10 @@ void Platform::userInformationChange()
     switch (choice)
     {
         case 1:
-            user->changePwd(name);
+            user->changePwd();
             break;
         case 2:
-            user->queryBalance(name);
+            user->queryBalance();
             break;
         case 3:
 
@@ -126,5 +127,13 @@ void Platform::userInformationChange()
         default:
             break;
     }
-    user->save();
+    freeUser();
+}
+void Platform::freeUser()
+{
+    if (user)
+    {
+        delete user;
+        user = nullptr;
+    }
 }

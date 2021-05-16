@@ -4,6 +4,7 @@ int main()
 {
     Platform sys;
     sys.show();
+    sys.freeUser();
     /* std::string name;
     std::cout << "Please enter your name:\n";
     std::cin >> name;

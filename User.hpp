@@ -40,7 +40,7 @@ class User
             }
         }
     }
-    ~User()
+    virtual ~User()
     {
         for (int i = 0; i < num; i++)
             delete accSet[i];
@@ -54,10 +54,10 @@ class User
 
     virtual int getUserType() = 0;
     bool search();
-    void userRegister(const std::string &);
-    void login(const std::string &);
-    void changePwd(const std::string &);
-    void queryBalance(const std::string &);
+    void userRegister();
+    void login();
+    void changePwd();
+    void queryBalance();
     void buySth();
     void topUp();  //??
     int getAcc();  //??
@@ -84,7 +84,7 @@ class Consumer : public User
         name = s;
         type = 1;
     }
-    ~Consumer()
+    virtual ~Consumer() override
     {
     }
     virtual int getUserType() override
@@ -102,7 +102,7 @@ class Merchant : public User
         name = s;
         type = 2;
     }
-    ~Merchant()
+    virtual ~Merchant() override
     {
     }
     virtual int getUserType() override
@@ -119,9 +119,10 @@ class Admin : public User
   public:
     Admin()
     {
+        name = "admin";
         type = 0;
     }
-    ~Admin()
+    virtual ~Admin() override
     {
     }
     virtual int getUserType() override

@@ -19,7 +19,7 @@ bool User::search()
         acc = st;
     return (st != accInfo.end());
 }
-void User::userRegister(const std::string &userName)
+void User::userRegister()
 {
     if (search())
     {
@@ -27,7 +27,7 @@ void User::userRegister(const std::string &userName)
         return;
     }
     accSet[num] = new AccInfo;
-    accSet[num]->name = userName;
+    accSet[num]->name = name;
     std::cout << "Please enter the password:\n";
     std::cin >> accSet[num]->pwd;
     accSet[num]->t = type;
@@ -36,7 +36,7 @@ void User::userRegister(const std::string &userName)
     std::cout << "Register Succeed!\n";
     num++;
 }
-void User::login(const std::string &userName)
+void User::login()
 {
     if (search())
     {
@@ -58,7 +58,7 @@ void User::login(const std::string &userName)
         std::cout << "The account does not exist!\n";
     }
 }
-void User::changePwd(const std::string &userName)
+void User::changePwd()
 {
     if (!search())
     {
@@ -66,7 +66,7 @@ void User::changePwd(const std::string &userName)
         return;
     }
     accSet[num] = new AccInfo;
-    accSet[num]->name = userName;
+    accSet[num]->name = name;
     accSet[num]->bala = acc->bala;
     accSet[num]->t = acc->t;
     // accSet[num]≤¢Œ¥ Õ∑≈µÙ
@@ -76,7 +76,7 @@ void User::changePwd(const std::string &userName)
     accInfo.insert(*accSet[num]);
     num++;
 }
-void User::queryBalance(const std::string &userName)
+void User::queryBalance()
 {
     if (!search())
     {
@@ -90,6 +90,7 @@ void User::buySth()
 void User::save()
 {
     // logged = false;
+    // name.clear();
     accfp.close();
     accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt", std::ios::out | std::ios::trunc);
     accfp.seekg(0, std::fstream::beg);
