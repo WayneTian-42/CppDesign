@@ -105,6 +105,7 @@ class Goods
     bool existGoods();  //还没实现，忘了为什么要有这个函数
     void addItems();
     void changeItems();
+    void search();
     void search(const std::string &);
     void search(const double, const double = 100000005);
     void search(const int, const int = 100000005);

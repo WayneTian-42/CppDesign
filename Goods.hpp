@@ -53,7 +53,7 @@ class Goods
     void changeItems();
     void search();
     void search(const std::string &);
-    void search(const double, const double = 100000005);
+    void search(const double, const double);
     void search(const int, const int = 100000005);
     void discount(const int);
 
