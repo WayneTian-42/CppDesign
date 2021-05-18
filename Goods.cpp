@@ -3,12 +3,14 @@
 
 bool GoodsInfo::operator<(const GoodsInfo &go) const
 {
-    if (name == go.name && type == go.type)
+    if (name == go.name && type == go.type && merchant == go.merchant)
         return false;
     if (type != go.type)
         return type < go.type;
-    else
+    else if (name != go.name)
         return name < go.name;
+    else
+        return merchant < go.merchant;
 };
 
 void Goods::addItems(const std::string &goodsName, const std::string &merchant)
@@ -37,6 +39,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     goodSet[num] = new GoodsInfo;
     goodSet[num]->name = goodsName;
     goodSet[num]->type = type;
+    goodSet[num]->merchant = merchant;
     auto it = goodsInfo.find(*goodSet[num]);
     if (it == goodsInfo.end())
     {
