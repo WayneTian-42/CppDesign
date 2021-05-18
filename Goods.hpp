@@ -64,7 +64,7 @@ class Goods
     void discount(const int);
 
   protected:
-    std::string name;
+    std::string merchant;
     GoodsInfo *goodSet[1024];
     std::set<GoodsInfo> goodsInfo;
     int type, num;  //商品数量
@@ -83,7 +83,7 @@ class Foods : public Goods
     }
     Foods(const std::string &tname) : Goods()
     {
-        name = tname;
+        merchant = tname;
         type = 1;
     }
     virtual ~Foods() override
@@ -103,7 +103,7 @@ class Clothes : public Goods
     }
     Clothes(const std::string &tname) : Goods()
     {
-        name = tname;
+        merchant = tname;
         type = 2;
     }
     virtual ~Clothes() override
@@ -123,7 +123,7 @@ class Books : public Goods
     }
     Books(const std::string &tname) : Goods()
     {
-        name = tname;
+        merchant = tname;
         type = 3;
     }
     virtual ~Books() override

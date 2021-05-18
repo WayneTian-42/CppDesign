@@ -198,13 +198,13 @@ void Platform::definiteType()
     switch (type)
     {
         case 1:
-            goods = new Foods();
+            goods = new Foods(name);
             break;
         case 2:
-            goods = new Clothes();
+            goods = new Clothes(name);
             break;
         case 3:
-            goods = new Books();
+            goods = new Books(name);
             break;
         default:
             break;
