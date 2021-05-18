@@ -32,4 +32,5 @@ class Platform
     std::string name;
     User *user;
     Goods *goods;
+    std::vector<GoodsInfo> showGoods;
 };

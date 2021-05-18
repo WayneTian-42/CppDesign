@@ -57,10 +57,10 @@ class Goods
     bool existGoods();  //还没实现，忘了为什么要有这个函数
     void addItems(const std::string &, const std::string &);
     void changeItems(const std::string &, const std::string &);
-    void search();
-    void search(const std::string &);
-    void search(const double, const double);
-    void search(const int, const int = 100000005);
+    void search(std::vector<GoodsInfo> &);
+    void search(const std::string &, std::vector<GoodsInfo> &);
+    void search(const double, const double, std::vector<GoodsInfo> &);
+    void search(const int, std::vector<GoodsInfo> &);
     void discount(const int);
 
   protected:

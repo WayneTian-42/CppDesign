@@ -63,7 +63,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     goodsInfo.insert(*goodSet[num]);
     num++;
 }
-void Goods::search()
+void Goods::search(std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -76,12 +76,13 @@ void Goods::search()
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
                       << std::left << st.price << std::endl;
+            showGoods.emplace_back(st);
         }
     }
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const std::string &name)
+void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -94,12 +95,13 @@ void Goods::search(const std::string &name)
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
                       << std::left << st.price << std::endl;
+            showGoods.emplace_back(st);
         }
     }
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const double lowPrice, const double highPrice)
+void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -112,17 +114,18 @@ void Goods::search(const double lowPrice, const double highPrice)
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
                       << std::left << st.price << std::endl;
+            showGoods.emplace_back(st);
         }
     }
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const int lowAmount, const int highAmount)
+void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
     {
-        if (st.type == type && st.amount >= lowAmount && st.amount <= highAmount)
+        if (st.type == type && st.amount >= lowAmount && st.amount <= INT_MAX)
         {
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "数量" << std::setw(8)
@@ -130,6 +133,7 @@ void Goods::search(const int lowAmount, const int highAmount)
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.amount << std::setw(8)
                       << std::left << st.price << std::endl;
+            showGoods.emplace_back(st);
         }
     }
     if (!flg)
@@ -149,7 +153,7 @@ void Goods::discount(const int dis)
 double Foods::getPrice()
 {
     GoodsInfo tmp;
-    tmp.name = name;
+    // tmp.name = name;
     tmp.type = type;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
@@ -157,14 +161,14 @@ double Foods::getPrice()
 double Clothes::getPrice()
 {
     GoodsInfo tmp;
-    tmp.name = name;
+    // tmp.name = name;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
 }
 double Books::getPrice()
 {
     GoodsInfo tmp;
-    tmp.name = name;
+    // tmp.name = name;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
 }

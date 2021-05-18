@@ -133,23 +133,23 @@ void Platform::goodsInformation()
     switch (choice)
     {
         case 0:
-            goods->search();
+            goods->search(showGoods);
             break;
         case 1:
             std::cout << "请输入商品名称";
             std::cin >> goodsName;
-            goods->search(goodsName);
+            goods->search(goodsName, showGoods);
             break;
         case 2:
             std::cout << "请输入商品最低价格与最高价格";
             std::cin >> priceLow >> priceHigh;
             //大小比较
-            goods->search(priceLow, priceHigh);
+            goods->search(priceLow, priceHigh, showGoods);
             break;
         case 3:
             std::cout << "请输入商品最小数量";
             std::cin >> amount;
-            goods->search(amount);
+            goods->search(amount, showGoods);
             break;
         default:
             break;
