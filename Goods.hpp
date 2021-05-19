@@ -63,6 +63,7 @@ class Goods
     void search(const int, std::vector<GoodsInfo> &);
     void discount(const int);
     void solodOut(const std::string &, const std::string &, const int);
+    template <class T> void input(T &x) const;
 
   protected:
     std::string merchant;

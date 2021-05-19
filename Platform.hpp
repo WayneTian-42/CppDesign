@@ -28,6 +28,7 @@ class Platform
     void definiteType();
     void freeUser();
     void freeGoods();
+    template <class T> void input(T &x) const;
 
   private:
     std::string name;

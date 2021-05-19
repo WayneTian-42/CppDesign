@@ -13,7 +13,7 @@ void Platform::show()
                   << "3. 商品展示与购买（购买需登录）\n"
                   << "4. 商品信息修改（针对商家）\n"
                   << "-1. 退出平台" << std::endl;
-        std::cin >> action;
+        input(action);
         // system("clear");
         switch (action)
         {
@@ -42,13 +42,13 @@ void Platform::userRegisterOrLog()
               << "2. 用户登录\n"
               << "-1. 退出" << std::endl;
     int choice, type;
-    std::cin >> choice;
+    input(choice);
     std::string operation[2] = {"注册", "登录"};
     if (choice != -1)
     {
         std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
                   << "1表示顾客，2表示商家\n";
-        std::cin >> type;
+        input(type);
         std::cout << "\n输入账户名：\n";
         std::cin >> name;
         freeUser();
@@ -97,7 +97,7 @@ void Platform::userInformationChange()
               << "4. 消费\n"
               << "-1. 退出" << std::endl;
     int choice;
-    std::cin >> choice;
+    input(choice);
     if (choice == -1)
         return;
     switch (choice)
@@ -126,7 +126,7 @@ void Platform::goodsInformation()
               << "-1. 退出\n";
     int choice, amount;
     double priceLow, priceHigh;
-    std::cin >> choice;
+    input(choice);
     std::string goodsName;
     if (choice != -1)
         definiteType();
@@ -144,25 +144,26 @@ void Platform::goodsInformation()
             break;
         case 2:
             std::cout << "请输入商品最低价格与最高价格";
-            std::cin >> priceLow >> priceHigh;
+            input(priceLow);
+            input(priceHigh);
             //大小比较
             goods->search(priceLow, priceHigh, showGoods);
             break;
         case 3:
             std::cout << "请输入商品最小数量";
-            std::cin >> amount;
+            input(amount);
             goods->search(amount, showGoods);
             break;
         default:
             break;
     }
-    std::cout << "请选择操作：\n "
-              << "1. 购买商品\n"
-              << "-1. 退出\n"
-              << std::endl;
-    std::cin >> choice;
-    if (choice == 1)
-        purchaseGoods();
+    /*  std::cout << "请选择操作：\n "
+               << "1. 购买商品\n"
+               << "-1. 退出\n"
+               << std::endl;
+     std::cin >> choice;
+     if (choice == 1)
+         purchaseGoods(); */
     freeGoods();
     //清空vector
     std::vector<GoodsInfo> tmp;
@@ -215,7 +216,7 @@ void Platform::purchaseGoods()
         std::cout << "请输入要购买的数量：";
         int number;
         bool can = true;
-        std::cin >> number;
+        input(number);
         if (number > good.amount)
         {
             std::cout << "想要购买的数量超过了最大数量！";
@@ -251,7 +252,7 @@ void Platform::changeGoods()
               << "1. 修改已有商品\n"
               << "2. 添加商品\n"
               << "-1. 退出\n";
-    std::cin >> choice;
+    input(choice);
     std::string goodsName;
     if (choice != -1)
     {
@@ -276,7 +277,7 @@ void Platform::definiteType()
     int type;
     std::cout << "请选择商品类型\n"
               << "1表示食物，2表示衣服，3表示图书\n";
-    std::cin >> type;
+    input(type);
     freeGoods();
     switch (type)
     {
@@ -291,6 +292,17 @@ void Platform::definiteType()
             break;
         default:
             break;
+    }
+}
+template <class T> void Platform::input(T &x) const
+{
+    std::cin >> x;
+    while (std::cin.fail())
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "This is a illgeal input! Please enter the number between 1 and 1000\n";
+        continue;
     }
 }
 void Platform::freeUser()
