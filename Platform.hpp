@@ -22,6 +22,7 @@ class Platform
     void show();
     void userRegisterOrLog();
     void userInformationChange();
+    void purchaseGoods();
     void goodsInformation();
     void changeGoods();
     void definiteType();

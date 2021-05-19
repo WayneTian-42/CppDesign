@@ -68,6 +68,7 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
     int flg = 0;
     for (auto st : goodsInfo)
     {
+        // type > st.type就可以break了
         if (st.type == type)
         {
             if (!flg)
@@ -149,26 +150,43 @@ void Goods::discount(const int dis)
         }
     }
 }
+void Goods::solodOut(const std::string &gname, const std::string &merchant, const int amount)
+{
+    goodSet[num] = new GoodsInfo;
+    goodSet[num]->name = gname;
+    goodSet[num]->type = type;
+    goodSet[num]->merchant = merchant;
+    auto it = goodsInfo.find(*goodSet[num]);
+    goodSet[num]->price = it->price;
+    goodSet[num]->amount = it->amount;
+    goodsInfo.erase(it);
+    goodSet[num]->amount -= amount;
+    goodsInfo.insert(*goodSet[num]);
+    num++;
+}
 
-double Foods::getPrice()
+double Foods::getPrice(const std::string &name)
 {
     GoodsInfo tmp;
-    // tmp.name = name;
+    tmp.name = name;
     tmp.type = type;
+    tmp.merchant = merchant;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
 }
-double Clothes::getPrice()
+double Clothes::getPrice(const std::string &name)
 {
     GoodsInfo tmp;
-    // tmp.name = name;
+    tmp.name = name;
+    tmp.merchant = merchant;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
 }
-double Books::getPrice()
+double Books::getPrice(const std::string &name)
 {
     GoodsInfo tmp;
-    // tmp.name = name;
+    tmp.name = name;
+    tmp.merchant = merchant;
     auto st = goodsInfo.find(tmp);
     return st->price * st->discount;
 }

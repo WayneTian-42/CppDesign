@@ -54,15 +54,17 @@ class User
 
     virtual int getUserType() = 0;
     bool search();
+    void search(const std::string &);
     void userRegister();
     bool login(const int);
     void changePwd();
-    void queryBalance();
-    virtual void buySth();
+    double queryBalance(const double = 0.0);
     void topUp();  //³äÖµ
     int getAcc();  //??
+    void exchangeMoney(const std::string &, const double);
     void save();
 
+    //ÐÞ¸ÄÎªset get
   protected:
     std::string name;
     // bool logged;

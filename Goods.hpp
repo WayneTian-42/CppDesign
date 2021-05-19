@@ -53,7 +53,7 @@ class Goods
         goofp.close();
     }
 
-    virtual double getPrice() = 0;
+    virtual double getPrice(const std::string &) = 0;
     bool existGoods();  //还没实现，忘了为什么要有这个函数
     void addItems(const std::string &, const std::string &);
     void changeItems(const std::string &, const std::string &);
@@ -62,6 +62,7 @@ class Goods
     void search(const double, const double, std::vector<GoodsInfo> &);
     void search(const int, std::vector<GoodsInfo> &);
     void discount(const int);
+    void solodOut(const std::string &, const std::string &, const int);
 
   protected:
     std::string merchant;
@@ -89,7 +90,7 @@ class Foods : public Goods
     virtual ~Foods() override
     {
     }
-    virtual double getPrice() override;
+    virtual double getPrice(const std::string &) override;
 
   private:
 };
@@ -109,7 +110,7 @@ class Clothes : public Goods
     virtual ~Clothes() override
     {
     }
-    virtual double getPrice() override;
+    virtual double getPrice(const std::string &) override;
 
   private:
 };
@@ -129,7 +130,7 @@ class Books : public Goods
     virtual ~Books() override
     {
     }
-    virtual double getPrice() override;
+    virtual double getPrice(const std::string &) override;
 
   private:
 };

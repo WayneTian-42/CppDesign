@@ -1,4 +1,5 @@
 #include "User.hpp"
+#include <string>
 
 bool AccInfo::operator<(const AccInfo &ac) const
 {
@@ -18,6 +19,14 @@ bool User::search()
     if (st != accInfo.end())
         acc = st;
     return (st != accInfo.end());
+}
+void User::search(const std::string &name)
+{
+    AccInfo tmp;
+    tmp.name = name;
+    auto st = accInfo.find(tmp);
+    if (st != accInfo.end())
+        acc = st;
 }
 void User::userRegister()
 {
@@ -84,17 +93,18 @@ void User::changePwd()
     accInfo.insert(*accSet[num]);
     num++;
 }
-void User::queryBalance()
+double User::queryBalance(const double consume)
 {
     /* if (!search())
     {
         std::cout << "This account doesn't exist.";
     } */
-    std::cout << name << "，您账户当前余额为" << acc->bala << "元" << std::endl;
+
+    return acc->bala;
 }
 void User::topUp()
 {
-    queryBalance();
+    std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
     std::cout << "请输入充值金额：";
     std::cin >> money;
@@ -108,10 +118,31 @@ void User::topUp()
     accInfo.insert(*accSet[num]);
     num++;
     search();  // acc被清除掉了
-    queryBalance();
+    std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
 }
-void User::buySth()
+void User::exchangeMoney(const std::string &merchant, const double total)
 {
+    search(merchant);
+    accSet[num] = new AccInfo;
+    accSet[num]->name = merchant;
+    accSet[num]->bala = acc->bala + total;
+    accSet[num]->t = acc->t;
+    accSet[num]->pwd = acc->pwd;
+    // accSet[num]并未释放掉
+    accInfo.erase(acc);
+    accInfo.insert(*accSet[num]);
+    num++;
+
+    search();
+    accSet[num] = new AccInfo;
+    accSet[num]->name = name;
+    accSet[num]->bala = acc->bala - total;
+    accSet[num]->t = acc->t;
+    accSet[num]->pwd = acc->pwd;
+    // accSet[num]并未释放掉
+    accInfo.erase(acc);
+    accInfo.insert(*accSet[num]);
+    num++;
 }
 void User::save()
 {
