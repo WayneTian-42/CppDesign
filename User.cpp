@@ -1,5 +1,7 @@
 #include "User.hpp"
 #include <string>
+#include <conio.h>
+#include <windows.h>
 
 bool AccInfo::operator<(const AccInfo &ac) const
 {
@@ -37,12 +39,22 @@ void User::userRegister()
     }
     accSet[num] = new AccInfo;
     accSet[num]->name = name;
-    std::cout << "Please enter the password:\n";
-    std::cin >> accSet[num]->pwd;
+
+    // std::cin >> accSet[num]->pwd;
+    while (1)
+    {
+        std::cout << "输入密码:\n";
+        std::string confirm;
+        confirmPwd(accSet[num]->pwd);
+        std::cout << "请再次输入密码确认:\n";
+        confirmPwd(confirm);
+        if (accSet[num]->pwd == confirm)
+            break;
+    }
     accSet[num]->t = type;
     accSet[num]->bala = 0;
     accInfo.insert(*accSet[num]);
-    std::cout << "Register Succeed!\n";
+    std::cout << "注册成功!\n";
     num++;
 }
 bool User::login(const int type)
@@ -55,23 +67,23 @@ bool User::login(const int type)
             return false;
         }
         std::string pwd;
-        std::cout << "Input the password of the account:\n";
-        std::cin >> pwd;
+        std::cout << "请输入密码:\n";
+        confirmPwd(pwd);
         if (pwd != acc->pwd)
         {
-            std::cout << "Wrong password!\n";
+            std::cout << "密码错误!\n";
             return false;
         }
         else
         {
-            std::cout << "Successfully logged in!\n";
+            std::cout << "登录成功!\n";
             return true;
             // logged = true;
         }
     }
     else
     {
-        std::cout << "The account does not exist!\n";
+        std::cout << "账号不存在!\n";
         return false;
     }
 }
@@ -79,19 +91,67 @@ void User::changePwd()
 {
     if (!search())
     {
-        std::cout << "This account doesn't exist.";
+        std::cout << "账号不存在！";
         return;
     }
     accSet[num] = new AccInfo;
     accSet[num]->name = name;
     accSet[num]->bala = acc->bala;
     accSet[num]->t = acc->t;
+    accSet[num]->pwd = acc->pwd;
     // accSet[num]并未释放掉
     accInfo.erase(acc);
-    std::cout << "Please enter the new password:\n";
-    std::cin >> accSet[num]->pwd;
+    std::cout << "输入旧密码:\n";
+    std::string confirm;
+    confirmPwd(confirm);
+    if (confirm != acc->pwd)
+    {
+        std::cout << "密码错误，已退出！\n";
+        delete accSet[num];
+        return;
+    }
+    while (1)
+    {
+        std::cout << "输入新密码:\n";
+        accSet[num]->pwd.erase();
+        confirmPwd(accSet[num]->pwd);
+        std::cout << "请再次输入密码确认:\n";
+        confirm.erase();
+        confirmPwd(confirm);
+        if (accSet[num]->pwd == confirm)
+            break;
+        else
+            std::cout << "两次密码不一致，请重新输入！\n";
+    }
+    std::cout << "修改成功！\n";
     accInfo.insert(*accSet[num]);
     num++;
+}
+void User::confirmPwd(std::string &pwd)
+{
+    while (1)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == VK_BACK)
+        {
+            if (!pwd.empty())
+            {
+                std::cout << "\b \b" << std::flush;
+                pwd.erase(pwd.length() - 1);
+            }
+        }
+        else if (ch == VK_RETURN)
+        {
+            std::cout << std::endl;
+            break;
+        }
+        else
+        {
+            pwd += ch;
+            _putch('*');
+        }
+    }
 }
 double User::queryBalance(const double consume)
 {
@@ -117,7 +177,7 @@ void User::topUp()
     accInfo.erase(acc);
     accInfo.insert(*accSet[num]);
     num++;
-    search();  // acc被清除掉了
+    search();  // acc被清除掉了,好像不会清除掉
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
 }
 void User::exchangeMoney(const std::string &merchant, const double total)

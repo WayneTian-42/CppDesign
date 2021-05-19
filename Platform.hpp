@@ -26,7 +26,9 @@ class Platform
     void goodsInformation();
     void changeGoods();
     void definiteType();
+    void refreshUser();
     void freeUser();
+    void refreshGoods();
     void freeGoods();
     template <class T> void input(T &x) const;
 

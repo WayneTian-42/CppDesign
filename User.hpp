@@ -58,6 +58,7 @@ class User
     void userRegister();
     bool login(const int);
     void changePwd();
+    void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
     void topUp();  //≥‰÷µ
     int getAcc();  //??
