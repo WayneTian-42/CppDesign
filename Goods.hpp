@@ -11,7 +11,7 @@ struct GoodsInfo
     std::string name, merchant;
     double price, discount;
     int type, amount;
-    bool operator<(const GoodsInfo &ac) const;
+    bool operator==(const GoodsInfo &ac) const;
 };
 
 class Goods
@@ -28,22 +28,19 @@ class Goods
         }
         while (goofp.peek() != EOF)
         {
-            goodSet[num] = new GoodsInfo;
-            goofp >> goodSet[num]->type >> goodSet[num]->name >> goodSet[num]->amount >> goodSet[num]->price >>
-                goodSet[num]->discount >> goodSet[num]->merchant;
-            if (goodSet[num]->name.empty())
-                delete goodSet[num];
+            GoodsInfo goodTemp;
+            goofp >> goodTemp.type >> goodTemp.name >> goodTemp.amount >> goodTemp.price >> goodTemp.discount >>
+                goodTemp.merchant;
+            if (goodTemp.name.empty())
+                continue;
             else
             {
-                goodsInfo.insert(*goodSet[num]);
-                num++;
+                goodsInfo.emplace_back(goodTemp);
             }
         }
     }
     virtual ~Goods()
     {
-        for (int i = 0; i < num; i++)
-            delete goodSet[i];
         goofp.close();
         goofp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\GoodsInfo.txt", std::ios::out | std::ios::trunc);
         goofp.seekg(0, std::fstream::beg);
@@ -54,25 +51,26 @@ class Goods
     }
 
     virtual double getPrice(const std::string &) = 0;
-    bool existGoods();  //还没实现，忘了为什么要有这个函数
     void addItems(const std::string &, const std::string &);
     void changeItems(const std::string &, const std::string &);
     void search(std::vector<GoodsInfo> &);
     void search(const std::string &, std::vector<GoodsInfo> &);
     void search(const double, const double, std::vector<GoodsInfo> &);
     void search(const int, std::vector<GoodsInfo> &);
-    void discount(const double);
-    void solodOut(const std::string &, const std::string &, const int);
+    void atDiscount(const double);
+    // void solodOut(const std::string &, const std::string &, const int);
+    template <typename T> void input(T &) const;
+    void copyInfo(GoodsInfo &);
 
   protected:
-    std::string merchant;
-    GoodsInfo *goodSet[1024];
-    std::set<GoodsInfo> goodsInfo;
-    int type, num;  //商品数量
-    double price;
+    std::string name, merchant;
+    int type, amount;
+    double price, discount;
 
   private:
     std::fstream goofp;
+    std::vector<GoodsInfo> goodsInfo;
+    int num;
 };
 
 class Foods : public Goods

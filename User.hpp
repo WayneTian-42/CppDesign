@@ -108,10 +108,10 @@ class Merchant : public User
     {
         return type;
     }
-    void changeGoods();
+    // void changeGoods();
 
   private:
-    std::vector<Goods> goods;
+    // std::vector<Goods> goods;
 };
 class Admin : public User
 {

@@ -287,7 +287,7 @@ void Platform::changeGoods()
                 std::cout << "折扣不合理，已退出！\n";
                 return;
             }
-            goods->discount(dis);
+            goods->atDiscount(dis);
             std::cout << "打折成功";
             break;
         case 1:
