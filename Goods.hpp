@@ -61,6 +61,7 @@ class Goods
     // void solodOut(const std::string &, const std::string &, const int);
     template <typename T> void input(T &) const;
     void copyInfo(GoodsInfo &);
+    void copyInfo(const std::vector<GoodsInfo>::iterator &);
 
   protected:
     std::string name, merchant;

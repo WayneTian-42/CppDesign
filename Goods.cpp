@@ -1,7 +1,9 @@
 #include "Goods.hpp"
 #include <algorithm>
 #include <iostream>
+#include <stdio.h>
 #include <string>
+#include <cstring>
 
 bool GoodsInfo::operator==(const GoodsInfo &go) const
 {
@@ -48,28 +50,30 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         std::cout << "该商品不属于商家" << merchant << std::endl;
         return;
     }
+    copyInfo(it);
     //更改为用户可选修改哪些内容，没有检测非法输入
+    getchar();
     std::string change;
     std::cout << "请修改商品信息：\n"
               << "名称（输入回车表示不修改）\n";
     std::getline(std::cin, change);
-    if (!change.size())
+    if (!change.empty())
         name = change;
     std::cout << "种类（输入回车表示不修改）\n";
     std::getline(std::cin, change);
-    if (!change.size())
+    if (!change.empty())
         type = std::stoi(change);
     std::cout << "单价（输入回车表示不修改）\n";
     std::getline(std::cin, change);
-    if (!change.size())
+    if (!change.empty())
         price = std::stod(change);
     std::cout << "数量（输入回车表示不修改）\n";
     std::getline(std::cin, change);
-    if (!change.size())
+    if (!change.empty())
         amount = std::stoi(change);
     std::cout << "折扣（输入回车表示不修改）\n";
     std::getline(std::cin, change);
-    if (!change.size())
+    if (!change.empty())
         discount = std::stod(change);
     copyInfo(tmp);
     *it = tmp;
@@ -206,7 +210,12 @@ void Goods::copyInfo(GoodsInfo &des)
     des.price = price;
     des.discount = discount;
 }
-
+void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
+{
+    amount = sou->amount;
+    price = sou->price;
+    discount = sou->discount;
+}
 double Foods::getPrice(const std::string &name)
 {
     return price * discount;
