@@ -216,6 +216,7 @@ void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
     price = sou->price;
     discount = sou->discount;
 }
+//现在还没用
 double Foods::getPrice(const std::string &name)
 {
     return price * discount;
