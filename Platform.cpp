@@ -177,7 +177,7 @@ void Platform::goodsInformation()
     std::vector<GoodsInfo> tmp;
     showGoods.swap(tmp);
 }
-void Platform::purchaseGoods()
+/* void Platform::purchaseGoods()
 {
     std::string gname, merchant;
     std::cout << "输入想要购买的货物：\n";
@@ -247,7 +247,7 @@ void Platform::purchaseGoods()
             user->exchangeMoney(merchant, good.price * number);
         }
     }
-}
+} */
 void Platform::changeGoods()
 {
     if (name.empty() || user->getUserType() == 1)

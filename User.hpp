@@ -12,7 +12,7 @@ struct AccInfo
     std::string name, pwd;
     double bala;
     int t;
-    bool operator<(const AccInfo &ac) const;
+    bool operator==(const AccInfo &ac) const;
 };
 
 class User
@@ -29,21 +29,19 @@ class User
         }
         while (accfp.peek() != EOF)
         {
-            accSet[num] = new AccInfo;
-            accfp >> accSet[num]->name >> accSet[num]->pwd >> accSet[num]->t >> accSet[num]->bala;
-            if (accSet[num]->name.empty())
-                delete accSet[num];
+            AccInfo accTemp;
+            accfp >> accTemp.name >> accTemp.pwd >> accTemp.t >> accTemp.bala;
+            if (accTemp.name.empty())
+                continue;
             else
             {
-                accInfo.insert(*accSet[num]);
-                num++;
+                accInfo.emplace_back(accTemp);
+                // num++;
             }
         }
     }
     virtual ~User()
     {
-        for (int i = 0; i < num; i++)
-            delete accSet[i];
         accfp.close();
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt", std::ios::out | std::ios::trunc);
         accfp.seekg(0, std::fstream::beg);
@@ -60,23 +58,20 @@ class User
     void changePwd();
     void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
-    void topUp();  //³äÖµ
-    int getAcc();  //??
-    void exchangeMoney(const std::string &, const double);
-    void save();
+    void topUp();
+    // void exchangeMoney(const std::string &, const double);
+    // void save();
 
     //ÐÞ¸ÄÎªset get
   protected:
-    std::string name;
+    std::string name, password;
     // bool logged;
     int type;
     double balance;
 
   private:
     std::fstream accfp;
-    AccInfo *accSet[1024];
-    std::set<AccInfo> accInfo;
-    std::set<AccInfo>::iterator acc;
+    std::vector<AccInfo> accInfo;
     int num;
 };
 
