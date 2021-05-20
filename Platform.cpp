@@ -49,7 +49,7 @@ void Platform::userRegisterOrLog()
         std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
                   << "1表示顾客，2表示商家\n";
         input(type);
-        if (type > 3 || type < 1)
+        if (type > 2 || type < 0)
         {
             std::cout << "没有该类型账户，已退出\n";
             return;
@@ -59,6 +59,9 @@ void Platform::userRegisterOrLog()
         freeUser();
         switch (type)
         {
+            case 0:
+                user = new Admin();
+                break;
             case 1:
                 user = new Consumer(name);
                 break;
@@ -124,7 +127,7 @@ void Platform::userInformationChange()
 void Platform::goodsInformation()
 {
     std::cout << "请选择筛选条件\n"
-              << "0. 展示所有商品\n"
+              << "0. 展示某类商品\n"
               << "1. 按名称筛选\n"
               << "2. 按价格筛选\n"
               << "3. 按数量筛选\n"
@@ -253,20 +256,40 @@ void Platform::changeGoods()
         return;
     }
     int choice;
+    double dis;
     std::cout << "请选择要进行的操作\n"
               << "1. 修改已有商品\n"
               << "2. 添加商品\n"
               << "其他数字 退出\n";
     input(choice);
     std::string goodsName;
-    if (choice > 0 && choice < 3)
+    if (choice >= 0 && choice < 3)
     {
         definiteType();
-        std::cout << "输入商品名称";
-        std::cin >> goodsName;
+        if (choice)
+        {
+            std::cout << "输入商品名称";
+            std::cin >> goodsName;
+        }
     }
     switch (choice)
     {
+        case 0:
+            if (user->getUserType())
+            {
+                std::cout << "没有权限!\n";
+                return;
+            }
+            std::cout << "请输入要给出的折扣(用小数表示，0-1之间):\n";
+            input(dis);
+            if (dis < 0 || dis > 1)
+            {
+                std::cout << "折扣不合理，已退出！\n";
+                return;
+            }
+            goods->discount(dis);
+            std::cout << "打折成功";
+            break;
         case 1:
             goods->changeItems(goodsName, name);
             break;
@@ -284,6 +307,11 @@ void Platform::definiteType()
               << "1表示食物，2表示衣服，3表示图书\n";
     input(type);
     freeGoods();
+    while (type < 1 || type > 3)
+    {
+        std::cout << "没有该类型商品，请重新输入\n";
+        input(type);
+    }
     switch (type)
     {
         case 1:

@@ -61,7 +61,7 @@ class Goods
     void search(const std::string &, std::vector<GoodsInfo> &);
     void search(const double, const double, std::vector<GoodsInfo> &);
     void search(const int, std::vector<GoodsInfo> &);
-    void discount(const int);
+    void discount(const double);
     void solodOut(const std::string &, const std::string &, const int);
 
   protected:
