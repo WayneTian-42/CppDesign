@@ -102,7 +102,7 @@ void Platform::userInformationChange()
               << "1. 修改密码\n"
               << "2. 余额查询\n"
               << "3. 余额充值\n"
-              << "4. 消费\n"
+              << "4. 购物车管理\n"
               << "其他数字 退出" << std::endl;
     int choice;
     input(choice);
@@ -118,6 +118,8 @@ void Platform::userInformationChange()
             break;
         case 3:
             user->topUp();
+            break;
+        case 4:
             break;
         default:
             break;

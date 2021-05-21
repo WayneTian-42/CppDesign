@@ -1,11 +1,7 @@
 #pragma once
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <set>
 #include <cstdlib>
 #include "Goods.hpp"
+#include "Order.hpp"
 
 struct AccInfo
 {
@@ -68,6 +64,7 @@ class User
     // bool logged;
     int type;
     double balance;
+    Order myorder;
 
   private:
     std::fstream accfp;

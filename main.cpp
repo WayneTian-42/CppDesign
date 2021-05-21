@@ -5,6 +5,7 @@ int main()
     Platform sys;
     sys.show();
     sys.freeUser();
+    sys.freeGoods();
     /* std::string name;
     std::cout << "Please enter your name:\n";
     std::cin >> name;
