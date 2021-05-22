@@ -47,7 +47,6 @@ void User::userRegister()
     tmp.bala = 0;
     accInfo.emplace_back(tmp);
     std::cout << "注册成功!\n";
-    num++;
 }
 bool User::login(const int type)
 {
@@ -56,7 +55,7 @@ bool User::login(const int type)
     {
         if (accInfo[pos].t != type)
         {
-            std::cout << "账户类型错误，请退出重新选择！";
+            std::cout << "账户类型错误，请退出重新选择！\n";
             return false;
         }
         std::string pwd;
@@ -73,6 +72,7 @@ bool User::login(const int type)
             password = pwd;
             this->type = type;
             balance = accInfo[pos].bala;
+            num = pos;
             return true;
             // logged = true;
         }
@@ -90,7 +90,7 @@ void User::changePwd()
         std::cout << "账号不存在！";
         return;
     }
-    AccInfo tmp;
+    std::string pwd;
     std::cout << "输入旧密码:\n";
     std::string confirm;
     confirmPwd(confirm);
@@ -102,20 +102,19 @@ void User::changePwd()
     while (1)
     {
         std::cout << "输入新密码:\n";
-        tmp.pwd.erase();
-        confirmPwd(tmp.pwd);
+        pwd.erase();
+        confirmPwd(pwd);
         std::cout << "请再次输入密码确认:\n";
         confirm.erase();
         confirmPwd(confirm);
-        if (tmp.pwd == confirm)
+        if (pwd == confirm)
             break;
         else
             std::cout << "两次密码不一致，请重新输入！\n";
     }
-    accInfo[num].pwd = tmp.pwd;
+    password = pwd;
+    accInfo[num].pwd = pwd;
     std::cout << "修改成功！\n";
-
-    num++;
 }
 void User::confirmPwd(std::string &pwd)
 {
