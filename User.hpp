@@ -55,6 +55,7 @@ class User
     void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
     void topUp();
+    void transferPayments();
     // void exchangeMoney(const std::string &, const double);
     // void save();
 
@@ -65,6 +66,7 @@ class User
     int type;
     double balance;
     Order myorder;
+    std::vector<std::pair<GoodsInfo, int>> finalOrder;
 
   private:
     std::fstream accfp;

@@ -82,10 +82,26 @@ void Order::chooseAmount(const GoodsInfo &good)
         else
         {
             std::cout << "已添加到购物车\n";
-            preorder.emplace_back(std::make_pair(good, number));
+            //相同商品只会产生一次记录
+            addGoods(good, number);
             break;
         }
     }
+}
+void Order::addGoods(const GoodsInfo &good, const int num)
+{
+    bool flg = true;
+    for (auto &it : preorder)
+    {
+        if (it.first.name == good.name && it.first.merchant == good.merchant)
+        {
+            it.second += num;
+            flg = false;
+            break;
+        }
+    }
+    if (flg)
+        preorder.emplace_back(std::make_pair(good, num));
 }
 void Order::showOrder()
 {
@@ -94,8 +110,9 @@ void Order::showOrder()
         std::cout << "购物车已清空！\n";
         return;
     }
+    std::cout << "购物车如下：\n";
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-              << std::left << "数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
+              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
               << std::endl;
     for (auto it : preorder)
     {
@@ -155,7 +172,65 @@ void Order::deleteGoods()
         return;
     }
     std::cout << name << "数量为" << preorder[pos].second << std::endl;
+    std::cout << "请输入要修改的数量（正数表示增加，负数表示）";
+    int number;
+    input(number);
+    preorder[pos].second += number;
 }
+void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
+{
+    showOrder();
+    if (preorder.empty())
+        return;
+    std::cout << "请输入每种商品要购买的数量\n";
+    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
+              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
+              << std::endl;
+    for (auto &it : preorder)
+    {
+        int amount;
+        bool flg = true;
+        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
+                  << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
+                  << std::setw(20) << std::left << it.first.merchant << std::endl;
+        while (flg)
+        {
+            input(amount);
+            if (amount < 0)
+                std::cout << "不能购买负数个商品，请重新输入\n";
+            else if (amount > it.first.amount)
+                std::cout << "商家没有这么多商品，请重新输入\n";
+            else if (amount > it.second)
+                std::cout << "不能超出购物车内数量，请重新输入\n";
+            else
+            {
+                it.second -= amount;
+                finalOrder.emplace_back(std::make_pair(it.first, amount));
+                flg = false;
+            }
+        }
+    }
+    std::cout << "最终订单如下：\n";
+    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
+              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left << "总价"
+              << std::endl;
+    for (auto it : finalOrder)
+    {
+        double total = it.first.price * it.first.discount * it.second;
+        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
+                  << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
+                  << std::setw(8) << std::left << total << std::endl;
+        sum += total;
+    }
+    std::cout << "所有商品总价格为" << sum << "元\n";
+}
+double Order::getToatalPrice()
+{
+    return sum;
+}
+/* void Order::transferPayments()
+{
+} */
 
 void Order::definiteType(int type)
 {
