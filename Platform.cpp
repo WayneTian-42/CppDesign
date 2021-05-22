@@ -50,7 +50,7 @@ void Platform::userRegisterOrLog()
         std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
                   << "1表示顾客，2表示商家\n";
         input(type);
-        if (type > 2 || type < 0)
+        if (type > 2 || type < 0 || (type == 0 && choice == 1))
         {
             std::cout << "没有该类型账户，已退出\n";
             return;
