@@ -55,6 +55,7 @@ class User
     double queryBalance(const double = 0.0);
     void topUp();
     void orderManagement(std::vector<GoodsInfo> &);
+    void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
     void transferPayments();
     void input(int &) const;
     // void exchangeMoney(const std::string &, const double);

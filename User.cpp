@@ -172,47 +172,57 @@ void User::transferPayments()
     for (auto it : finalOrder)
     {
         int pos = search(it.first.merchant);
-        double singlePrice = it.first.price * it.first.amount * it.second;
+        double singlePrice = it.first.price * it.first.discount * it.second;
         accInfo[pos].bala += singlePrice;
         // 修改数量
         balance -= singlePrice;
+        myorder.changeAmountOfGoods(it.first.name, it.first.merchant, it.first.type, it.second);
     }
-    std::vector<std::pair<GoodsInfo, int>> temp;
-    finalOrder.swap(temp);
+    std::cout << "交易成功！\n";
     int pos = search(name);
     accInfo[pos].bala = balance;
+    myorder.clearPrice();
+    return;
 }
 void User::orderManagement(std::vector<GoodsInfo> &showGoods)
 {
-    std::cout << "请选择操作\n"
-              << "1. 加入购物车\n"
-              << "2. 展示购物车\n"
-              << "3. 修改购物车信息\n"
-              << "4. 生成订单\n"
-              << "其他数字 退出\n";
     int choice;
-    input(choice);
-    if (choice < 1 || choice > 4)
-        return;
-    switch (choice)
+    do
     {
-        case 1:
-            myorder.preAddGoods(showGoods);
-            break;
-        case 2:
-            myorder.showOrder();
-            break;
-        case 3:
-            myorder.deleteGoods();
-            break;
-        case 4:
-            myorder.generateOrder(finalOrder);
-            break;
-        default:
-            break;
-    }
+        std::cout << "请选择操作\n"
+                  << "1. 加入购物车\n"
+                  << "2. 展示购物车\n"
+                  << "3. 修改购物车信息\n"
+                  << "4. 生成订单\n"
+                  << "其他数字 退出\n";
+        input(choice);
+        if (choice < 1 || choice > 4)
+            return;
+        switch (choice)
+        {
+            case 1:
+                myorder.preAddGoods(showGoods);
+                break;
+            case 2:
+                myorder.showOrder();
+                break;
+            case 3:
+                myorder.deleteGoods();
+                break;
+            case 4:
+                myorder.generateOrder(finalOrder);
+                transferPayments();
+                break;
+            default:
+                break;
+        }
+    } while (choice < 5 && choice > 0);
 }
 
+void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &des)
+{
+    des = finalOrder;
+}
 void User::input(int &x) const
 {
     std::cin >> x;

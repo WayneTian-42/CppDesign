@@ -8,9 +8,11 @@ class Order
   public:
     Order()
     {
+        goods = nullptr;
     }
     ~Order()
     {
+        freeGoods();
     }
     void preAddGoods(std::vector<GoodsInfo> &);
     void chooseGoods(std::vector<GoodsInfo> &, GoodsInfo &);
@@ -22,7 +24,8 @@ class Order
     void changeAmount();
     void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
     double getToatalPrice();
-    void changeAmountOfGoods(const std::string &, const std::string &);
+    void clearPrice();
+    void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
     // void transferPayments();
 
     void definiteType();

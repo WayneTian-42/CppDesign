@@ -174,14 +174,18 @@ void Goods::atDiscount(const double dis)
         }
     }
 }
-void Goods::changeAmountOfGoods(const std::string &name, const std::string &merchant, const int amount)
+void Goods::changeAmountOfGoods(const std::string &name, const std::string &merchant, const int type, const int amount)
 {
     GoodsInfo tmp;
     tmp.name = name;
     tmp.merchant = merchant;
+    tmp.type = type;
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
+    if (it == goodsInfo.end())
+        std::cout << "fuk\n";
     it->amount -= amount;
 }
+
 template <typename T> void Goods::input(T &x) const
 {
     std::cin >> x;

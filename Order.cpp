@@ -210,6 +210,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
             }
         }
     }
+    std::cout << "****************************************************************";
     std::cout << "最终订单如下：\n";
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
               << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left << "总价"
@@ -228,8 +229,16 @@ double Order::getToatalPrice()
 {
     return sum;
 }
-void Order::changeAmountOfGoods(const std::string &name, const std::string &merchant)
+void Order::clearPrice()
 {
+    sum = 0;
+}
+void Order::changeAmountOfGoods(const std::string &name, const std::string &merchant, const int type, const int amount)
+{
+    freeGoods();
+    goods = new Books();
+    goods->changeAmountOfGoods(name, merchant, type, amount);
+    freeGoods();
 }
 /* void Order::transferPayments()
 {
