@@ -5,11 +5,10 @@
 #include <vector>
 
 // goods可以删除掉
-void Order::preAddGoods(std::vector<GoodsInfo> &showGoods, int type)
+void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
 {
-    definiteType(type);
-    if (!type)
-        goods->search(showGoods);
+    definiteType();
+    goods->search(showGoods);
     GoodsInfo good;
     chooseGoods(showGoods, good);
     chooseAmount(good);
@@ -161,7 +160,7 @@ int Order::search(const std::string &name)
 }
 void Order::deleteGoods()
 {
-    definiteType(0);
+    definiteType();
     showOrder();
     std::string name;
     std::cout << "输入要修改数量的商品:\n";
@@ -236,8 +235,9 @@ void Order::changeAmountOfGoods(const std::string &name, const std::string &merc
 {
 } */
 
-void Order::definiteType(int type)
+void Order::definiteType()
 {
+    int type;
     if (!type)
     {
         std::cout << "请选择商品类型\n"

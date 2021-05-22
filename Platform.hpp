@@ -21,6 +21,7 @@ class Platform
     void purchaseGoods();
     void goodsInformation();
     void changeGoods();
+
     void definiteType();
     void refreshUser();
     void freeUser();
@@ -33,4 +34,5 @@ class Platform
     User *user;
     Goods *goods;
     std::vector<GoodsInfo> showGoods;
+    std::vector<std::pair<GoodsInfo, int>> changeInformation;
 };

@@ -12,7 +12,7 @@ class Order
     ~Order()
     {
     }
-    void preAddGoods(std::vector<GoodsInfo> &, int = 0);
+    void preAddGoods(std::vector<GoodsInfo> &);
     void chooseGoods(std::vector<GoodsInfo> &, GoodsInfo &);
     void chooseAmount(const GoodsInfo &);
     void addGoods(const GoodsInfo &, const int);
@@ -25,7 +25,7 @@ class Order
     void changeAmountOfGoods(const std::string &, const std::string &);
     // void transferPayments();
 
-    void definiteType(int);
+    void definiteType();
     void freeGoods();
     template <typename T> void input(T &) const;
 

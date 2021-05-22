@@ -54,8 +54,9 @@ class User
     void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
     void topUp();
-    void orderManagement();
+    void orderManagement(std::vector<GoodsInfo> &);
     void transferPayments();
+    void input(int &) const;
     // void exchangeMoney(const std::string &, const double);
     // void save();
 

@@ -1,6 +1,9 @@
 #include "User.hpp"
 #include <algorithm>
 #include <string>
+#include <limits>
+#include <iostream>
+// 头文件用来实现星号显示密码
 #include <conio.h>
 #include <windows.h>
 
@@ -180,7 +183,49 @@ void User::transferPayments()
     int pos = search(name);
     accInfo[pos].bala = balance;
 }
+void User::orderManagement(std::vector<GoodsInfo> &showGoods)
+{
+    std::cout << "请选择操作\n"
+              << "1. 加入购物车\n"
+              << "2. 展示购物车\n"
+              << "3. 修改购物车信息\n"
+              << "4. 生成订单\n"
+              << "其他数字 退出\n";
+    int choice;
+    input(choice);
+    if (choice < 1 || choice > 4)
+        return;
+    switch (choice)
+    {
+        case 1:
+            myorder.preAddGoods(showGoods);
+            break;
+        case 2:
+            myorder.showOrder();
+            break;
+        case 3:
+            myorder.deleteGoods();
+            break;
+        case 4:
+            myorder.generateOrder(finalOrder);
+            break;
+        default:
+            break;
+    }
+}
 
+void User::input(int &x) const
+{
+    std::cin >> x;
+    while (std::cin.fail())
+    {
+        std::cin.clear();
+        std::cin.ignore(LLONG_MAX, '\n');
+        std::cout << "输入不合法，请输入数字\n";
+        std::cin >> x;
+        continue;
+    }
+}
 /* void User::exchangeMoney(const std::string &merchant, const double total)
 {
     search(merchant);
