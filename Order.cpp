@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-// goodsÂèØ‰ª•Âà†Èô§Êéâ
+// goodsø…“‘…æ≥˝µÙ
 void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
 {
     definiteType();
@@ -13,12 +13,12 @@ void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
     chooseGoods(showGoods, good);
     chooseAmount(good);
 }
-//‰øÆÊîπÊü•ÊâæÁ≠ñÁï•
+//–ﬁ∏ƒ≤È’“≤ﬂ¬‘
 void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
 {
-    std::cout << "ËæìÂÖ•Ë¥≠‰π∞ÁöÑÂïÜÂìÅÂêçÁß∞Ôºö\n";
+    std::cout << " ‰»Îπ∫¬Úµƒ…Ã∆∑√˚≥∆£∫\n";
     std::string gname, merchant;
-    std::cout << "ËæìÂÖ•ÊÉ≥Ë¶ÅË¥≠‰π∞ÁöÑË¥ßÁâ©Ôºö\n";
+    std::cout << " ‰»ÎœÎ“™π∫¬ÚµƒªıŒÔ£∫\n";
     int flg = 1, num = 0;
     while (1)
     {
@@ -33,7 +33,7 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
             }
         }
         if (!num)
-            std::cout << "Ê≤°ÊúâËØ•ÂïÜÂìÅÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•ÂïÜÂìÅ\n";
+            std::cout << "√ª”–∏√…Ã∆∑£¨«Î÷ÿ–¬ ‰»Î…Ã∆∑\n";
         else
             break;
     }
@@ -42,7 +42,7 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
         bool flg = false;
         while (!flg)
         {
-            std::cout << "ËØ•ÂïÜÂìÅÂ§ö‰∏™ÂïÜÂÆ∂Âú®ÂîÆÂçñÔºåËØ∑ËæìÂÖ•ÊÉ≥Ë¥≠‰π∞ÁöÑÂïÜÂÆ∂Âêç\n";
+            std::cout << "∏√…Ã∆∑∂‡∏ˆ…Ãº“‘⁄ €¬Ù£¨«Î ‰»ÎœÎπ∫¬Úµƒ…Ãº“√˚\n";
             std::cin >> merchant;
             for (auto it : showGoods)
             {
@@ -54,13 +54,13 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
                 }
             }
             if (!flg)
-                std::cout << "Ê≤°ÊúâËØ•ÂïÜÂÆ∂ÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•ÂïÜÂÆ∂\n";
+                std::cout << "√ª”–∏√…Ãº“£¨«Î÷ÿ–¬ ‰»Î…Ãº“\n";
         }
     }
 }
 void Order::chooseAmount(const GoodsInfo &good)
 {
-    std::cout << "ËØ∑ËæìÂÖ•Ë¶ÅË¥≠‰π∞ÁöÑÊï∞Èáè(0Ë°®Á§∫ÂèñÊ∂àÂä†ÂÖ•Ë¥≠Áâ©ËΩ¶)Ôºö";
+    std::cout << "«Î ‰»Î“™π∫¬Úµƒ ˝¡ø(0±Ì æ»°œ˚º”»Îπ∫ŒÔ≥µ)£∫";
     int number;
     bool can = true;
     input(number);
@@ -68,21 +68,21 @@ void Order::chooseAmount(const GoodsInfo &good)
     {
         if (number > good.amount)
         {
-            std::cout << "ÊÉ≥Ë¶ÅË¥≠‰π∞ÁöÑÊï∞ÈáèË∂ÖËøá‰∫ÜÊúÄÂ§ßÊï∞ÈáèÔºÅ";
+            std::cout << "œÎ“™π∫¬Úµƒ ˝¡ø≥¨π˝¡À◊Ó¥Û ˝¡ø£°";
         }
         else if (number < 0)
         {
-            std::cout << "‰∏çËÉΩ‰π∞ÈùûÊ≠£Êï∞‰∏™ÂïÜÂìÅ";
+            std::cout << "≤ªƒ‹¬Ú∑«’˝ ˝∏ˆ…Ã∆∑";
         }
         else if (number == 0)
         {
-            std::cout << "Â∑≤ÈÄÄÂá∫\n";
+            std::cout << "“—ÕÀ≥ˆ\n";
             break;
         }
         else
         {
-            std::cout << "Â∑≤Ê∑ªÂä†Âà∞Ë¥≠Áâ©ËΩ¶\n";
-            //Áõ∏ÂêåÂïÜÂìÅÂè™‰ºö‰∫ßÁîü‰∏ÄÊ¨°ËÆ∞ÂΩï
+            std::cout << "“—ÃÌº”µΩπ∫ŒÔ≥µ\n";
+            //œ‡Õ¨…Ã∆∑÷ªª·≤˙…˙“ª¥Œº«¬º
             addGoods(good, number);
             break;
         }
@@ -107,12 +107,12 @@ void Order::showOrder()
 {
     if (preorder.empty())
     {
-        std::cout << "Ë¥≠Áâ©ËΩ¶Â∑≤Ê∏ÖÁ©∫ÔºÅ\n";
+        std::cout << "π∫ŒÔ≥µ“—«Âø’£°\n";
         return;
     }
-    std::cout << "Ë¥≠Áâ©ËΩ¶Â¶Ç‰∏ãÔºö\n";
-    std::cout << std::setw(20) << std::left << "ÂêçÁß∞" << std::setw(8) << std::left << "‰ª∑Ê†º" << std::setw(8)
-              << std::left << "Ë¥≠‰π∞Êï∞Èáè" << std::setw(8) << std::left << "ÊäòÊâ£" << std::setw(20) << std::left << "ÂïÜÂÆ∂"
+    std::cout << "π∫ŒÔ≥µ»Áœ¬£∫\n";
+    std::cout << std::setw(20) << std::left << "√˚≥∆" << std::setw(8) << std::left << "º€∏Ò" << std::setw(8)
+              << std::left << "π∫¬Ú ˝¡ø" << std::setw(8) << std::left << "’€ø€" << std::setw(20) << std::left << "…Ãº“"
               << std::endl;
     for (auto it : preorder)
     {
@@ -141,7 +141,7 @@ int Order::search(const std::string &name)
         while (!flg)
         {
             std::string merchant;
-            std::cout << "ËØ•ÂïÜÂìÅË¥≠Áâ©ËΩ¶ÂÜÖÊúâÂ§öÁßçÔºåËØ∑ËæìÂÖ•ÊÉ≥Ë¥≠‰π∞ÁöÑÂïÜÂÆ∂Âêç\n";
+            std::cout << "∏√…Ã∆∑π∫ŒÔ≥µƒ⁄”–∂‡÷÷£¨«Î ‰»ÎœÎπ∫¬Úµƒ…Ãº“√˚\n";
             std::cin >> merchant;
             for (int i = 0; i < num.size(); i++)
             {
@@ -153,7 +153,7 @@ int Order::search(const std::string &name)
                 }
             }
             if (!flg)
-                std::cout << "Ê≤°ÊúâËØ•ÂïÜÂÆ∂ÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•ÂïÜÂÆ∂\n";
+                std::cout << "√ª”–∏√…Ãº“£¨«Î÷ÿ–¬ ‰»Î…Ãº“\n";
         }
     }
     return pos;
@@ -163,16 +163,16 @@ void Order::deleteGoods()
     definiteType();
     showOrder();
     std::string name;
-    std::cout << "ËæìÂÖ•Ë¶Å‰øÆÊîπÊï∞ÈáèÁöÑÂïÜÂìÅ:\n";
+    std::cout << " ‰»Î“™–ﬁ∏ƒ ˝¡øµƒ…Ã∆∑:\n";
     std::cin >> name;
     int pos = search(name);
     if (pos == -1)
     {
-        std::cout << "Ê≤°ÊúâËØ•ÂïÜÂìÅÔºåÂ∑≤ÈÄÄÂá∫\n";
+        std::cout << "√ª”–∏√…Ã∆∑£¨“—ÕÀ≥ˆ\n";
         return;
     }
-    std::cout << name << "Êï∞Èáè‰∏∫" << preorder[pos].second << std::endl;
-    std::cout << "ËØ∑ËæìÂÖ•Ë¶Å‰øÆÊîπÁöÑÊï∞ÈáèÔºàÊ≠£Êï∞Ë°®Á§∫Â¢ûÂä†ÔºåË¥üÊï∞Ë°®Á§∫Ôºâ";
+    std::cout << name << " ˝¡øŒ™" << preorder[pos].second << std::endl;
+    std::cout << "«Î ‰»Î“™–ﬁ∏ƒµƒ ˝¡ø£®’˝ ˝±Ì æ‘ˆº”£¨∏∫ ˝±Ì æ£©";
     int number;
     input(number);
     preorder[pos].second += number;
@@ -182,9 +182,9 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
     showOrder();
     if (preorder.empty())
         return;
-    std::cout << "ËØ∑ËæìÂÖ•ÊØèÁßçÂïÜÂìÅË¶ÅË¥≠‰π∞ÁöÑÊï∞Èáè\n";
-    std::cout << std::setw(20) << std::left << "ÂêçÁß∞" << std::setw(8) << std::left << "‰ª∑Ê†º" << std::setw(8)
-              << std::left << "Ë¥≠‰π∞Êï∞Èáè" << std::setw(8) << std::left << "ÊäòÊâ£" << std::setw(20) << std::left << "ÂïÜÂÆ∂"
+    std::cout << "«Î ‰»Î√ø÷÷…Ã∆∑“™π∫¬Úµƒ ˝¡ø\n";
+    std::cout << std::setw(20) << std::left << "√˚≥∆" << std::setw(8) << std::left << "º€∏Ò" << std::setw(8)
+              << std::left << "π∫¬Ú ˝¡ø" << std::setw(8) << std::left << "’€ø€" << std::setw(20) << std::left << "…Ãº“"
               << std::endl;
     for (auto &it : preorder)
     {
@@ -197,11 +197,11 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
         {
             input(amount);
             if (amount < 0)
-                std::cout << "‰∏çËÉΩË¥≠‰π∞Ë¥üÊï∞‰∏™ÂïÜÂìÅÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•\n";
+                std::cout << "≤ªƒ‹π∫¬Ú∏∫ ˝∏ˆ…Ã∆∑£¨«Î÷ÿ–¬ ‰»Î\n";
             else if (amount > it.first.amount)
-                std::cout << "ÂïÜÂÆ∂Ê≤°ÊúâËøô‰πàÂ§öÂïÜÂìÅÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•\n";
+                std::cout << "…Ãº“√ª”–’‚√¥∂‡…Ã∆∑£¨«Î÷ÿ–¬ ‰»Î\n";
             else if (amount > it.second)
-                std::cout << "‰∏çËÉΩË∂ÖÂá∫Ë¥≠Áâ©ËΩ¶ÂÜÖÊï∞ÈáèÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•\n";
+                std::cout << "≤ªƒ‹≥¨≥ˆπ∫ŒÔ≥µƒ⁄ ˝¡ø£¨«Î÷ÿ–¬ ‰»Î\n";
             else
             {
                 it.second -= amount;
@@ -210,9 +210,9 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
             }
         }
     }
-    std::cout << "ÊúÄÁªàËÆ¢ÂçïÂ¶Ç‰∏ãÔºö\n";
-    std::cout << std::setw(20) << std::left << "ÂêçÁß∞" << std::setw(8) << std::left << "‰ª∑Ê†º" << std::setw(8)
-              << std::left << "Ë¥≠‰π∞Êï∞Èáè" << std::setw(8) << std::left << "ÊäòÊâ£" << std::setw(8) << std::left << "ÊÄª‰ª∑"
+    std::cout << "◊Ó÷’∂©µ•»Áœ¬£∫\n";
+    std::cout << std::setw(20) << std::left << "√˚≥∆" << std::setw(8) << std::left << "º€∏Ò" << std::setw(8)
+              << std::left << "π∫¬Ú ˝¡ø" << std::setw(8) << std::left << "’€ø€" << std::setw(8) << std::left << "◊‹º€"
               << std::endl;
     for (auto it : finalOrder)
     {
@@ -222,7 +222,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
                   << std::setw(8) << std::left << total << std::endl;
         sum += total;
     }
-    std::cout << "ÊâÄÊúâÂïÜÂìÅÊÄª‰ª∑Ê†º‰∏∫" << sum << "ÂÖÉ\n";
+    std::cout << "À˘”–…Ã∆∑◊‹º€∏ÒŒ™" << sum << "‘™\n";
 }
 double Order::getToatalPrice()
 {
@@ -240,13 +240,13 @@ void Order::definiteType()
     int type;
     if (!type)
     {
-        std::cout << "ËØ∑ÈÄâÊã©ÂïÜÂìÅÁ±ªÂûã\n"
-                  << "1Ë°®Á§∫È£üÁâ©Ôºå2Ë°®Á§∫Ë°£ÊúçÔºå3Ë°®Á§∫Âõæ‰π¶\n";
+        std::cout << "«Î—°‘Ò…Ã∆∑¿‡–Õ\n"
+                  << "1±Ì æ ≥ŒÔ£¨2±Ì æ“¬∑˛£¨3±Ì æÕº È\n";
         input(type);
     }
     while (type < 1 || type > 3)
     {
-        std::cout << "Ê≤°ÊúâËØ•Á±ªÂûãÂïÜÂìÅÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•\n";
+        std::cout << "√ª”–∏√¿‡–Õ…Ã∆∑£¨«Î÷ÿ–¬ ‰»Î\n";
         input(type);
     }
     freeGoods();
@@ -280,7 +280,7 @@ template <typename T> void Order::input(T &x) const
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "ËæìÂÖ•‰∏çÂêàÊ≥ïÔºåËØ∑ËæìÂÖ•Êï∞Â≠ó\n";
+        std::cout << " ‰»Î≤ª∫œ∑®£¨«Î ‰»Î ˝◊÷\n";
         std::cin >> x;
         continue;
     }
