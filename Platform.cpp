@@ -120,6 +120,7 @@ void Platform::userInformationChange()
             user->topUp();
             break;
         case 4:
+            user->orderManagement();
             break;
         default:
             break;

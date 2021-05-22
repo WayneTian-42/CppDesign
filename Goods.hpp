@@ -58,6 +58,7 @@ class Goods
     void search(const double, const double, std::vector<GoodsInfo> &);
     void search(const int, std::vector<GoodsInfo> &);
     void atDiscount(const double);
+    void changeAmountOfGoods(const std::string &, const std::string &, const int);
     // void solodOut(const std::string &, const std::string &, const int);
     template <typename T> void input(T &) const;
     void copyInfo(GoodsInfo &);

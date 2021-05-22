@@ -174,21 +174,14 @@ void Goods::atDiscount(const double dis)
         }
     }
 }
-/* void Goods::solodOut(const std::string &gname, const std::string &merchant, const int amount)
+void Goods::changeAmountOfGoods(const std::string &name, const std::string &merchant, const int amount)
 {
     GoodsInfo tmp;
-
-    tmp.name = gname;
-    tmp.type = type;
+    tmp.name = name;
     tmp.merchant = merchant;
-    auto it = goodsInfo.find(*goodSet[num]);
-    tmp.price = it->price;
-    tmp.amount = it->amount;
-    goodsInfo.erase(it);
-    tmp.amount -= amount;
-    goodsInfo.insert(*goodSet[num]);
-    num++;
-} */
+    auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
+    it->amount -= amount;
+}
 template <typename T> void Goods::input(T &x) const
 {
     std::cin >> x;

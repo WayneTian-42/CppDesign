@@ -22,6 +22,7 @@ class Order
     void changeAmount();
     void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
     double getToatalPrice();
+    void changeAmountOfGoods(const std::string &, const std::string &);
     // void transferPayments();
 
     void definiteType(int);

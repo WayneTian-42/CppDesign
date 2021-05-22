@@ -9,35 +9,19 @@ bool AccInfo::operator==(const AccInfo &ac) const
     return (this->name == ac.name);
 };
 
-bool User::search()
+int User::search(const std::string &name)
 {
     AccInfo tmp;
+    int pos = -1;
     tmp.name = name;
     auto st = std::find(accInfo.begin(), accInfo.end(), tmp);
     if (st != accInfo.end())
-    {
-        type = st->t;
-        balance = st->bala;
-        password = st->pwd;
-        num = st - accInfo.begin();
-    }
-    return (st != accInfo.end());
-}
-void User::search(const std::string &name)
-{
-    AccInfo tmp;
-    tmp.name = name;
-    auto st = std::find(accInfo.begin(), accInfo.end(), tmp);
-    if (st != accInfo.end())
-    {
-        type = st->t;
-        balance = st->bala;
-        password = st->pwd;
-    }
+        pos = st - accInfo.begin();
+    return pos;
 }
 void User::userRegister()
 {
-    if (search())
+    if (search(name) == -1)
     {
         std::cout << "该用户名已存在！\n";
         return;
@@ -62,11 +46,12 @@ void User::userRegister()
     std::cout << "注册成功!\n";
     num++;
 }
-bool User::login(const int t)
+bool User::login(const int type)
 {
-    if (search())
+    int pos = search(name);
+    if (pos != -1)
     {
-        if (type != t)
+        if (accInfo[pos].t != type)
         {
             std::cout << "账户类型错误，请退出重新选择！";
             return false;
@@ -74,7 +59,7 @@ bool User::login(const int t)
         std::string pwd;
         std::cout << "请输入密码:\n";
         confirmPwd(pwd);
-        if (pwd != password)
+        if (pwd != accInfo[pos].pwd)
         {
             std::cout << "密码错误!\n";
             return false;
@@ -82,6 +67,9 @@ bool User::login(const int t)
         else
         {
             std::cout << "登录成功!\n";
+            password = pwd;
+            this->type = type;
+            balance = accInfo[pos].bala;
             return true;
             // logged = true;
         }
@@ -94,7 +82,7 @@ bool User::login(const int t)
 }
 void User::changePwd()
 {
-    if (!search())
+    if (search(name) == -1)
     {
         std::cout << "账号不存在！";
         return;
@@ -171,6 +159,28 @@ void User::topUp()
     accInfo[num].bala = balance;
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
 }
+void User::transferPayments()
+{
+    std::string tmp = name;
+    if (myorder.getToatalPrice() > balance)
+    {
+        std::cout << "余额不足，请充值后付款";
+        return;
+    }
+    for (auto it : finalOrder)
+    {
+        int pos = search(it.first.merchant);
+        double singlePrice = it.first.price * it.first.amount * it.second;
+        accInfo[pos].bala += singlePrice;
+        // 修改数量
+        balance -= singlePrice;
+    }
+    std::vector<std::pair<GoodsInfo, int>> temp;
+    finalOrder.swap(temp);
+    int pos = search(name);
+    accInfo[pos].bala = balance;
+}
+
 /* void User::exchangeMoney(const std::string &merchant, const double total)
 {
     search(merchant);

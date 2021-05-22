@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 
+// goods可以删除掉
 void Order::preAddGoods(std::vector<GoodsInfo> &showGoods, int type)
 {
     definiteType(type);
@@ -227,6 +228,9 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
 double Order::getToatalPrice()
 {
     return sum;
+}
+void Order::changeAmountOfGoods(const std::string &name, const std::string &merchant)
+{
 }
 /* void Order::transferPayments()
 {

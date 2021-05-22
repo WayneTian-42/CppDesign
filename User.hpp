@@ -47,14 +47,14 @@ class User
     }
 
     virtual int getUserType() = 0;
-    bool search();
-    void search(const std::string &);
+    int search(const std::string &);
     void userRegister();
     bool login(const int);
     void changePwd();
     void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
     void topUp();
+    void orderManagement();
     void transferPayments();
     // void exchangeMoney(const std::string &, const double);
     // void save();
