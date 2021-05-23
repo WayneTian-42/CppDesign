@@ -9,35 +9,19 @@ bool AccInfo::operator==(const AccInfo &ac) const
     return (this->name == ac.name);
 };
 
-bool User::search()
+int User::search(const std::string &name)
 {
     AccInfo tmp;
+    int pos = -1;
     tmp.name = name;
     auto st = std::find(accInfo.begin(), accInfo.end(), tmp);
     if (st != accInfo.end())
-    {
-        type = st->t;
-        balance = st->bala;
-        password = st->pwd;
-        num = st - accInfo.begin();
-    }
-    return (st != accInfo.end());
-}
-void User::search(const std::string &name)
-{
-    AccInfo tmp;
-    tmp.name = name;
-    auto st = std::find(accInfo.begin(), accInfo.end(), tmp);
-    if (st != accInfo.end())
-    {
-        type = st->t;
-        balance = st->bala;
-        password = st->pwd;
-    }
+        pos = st - accInfo.begin();
+    return pos;
 }
 void User::userRegister()
 {
-    if (search())
+    if (search(name) == -1)
     {
         std::cout << "该用户名已存在！\n";
         return;
@@ -60,21 +44,21 @@ void User::userRegister()
     tmp.bala = 0;
     accInfo.emplace_back(tmp);
     std::cout << "注册成功!\n";
-    num++;
 }
-bool User::login(const int t)
+bool User::login(const int type)
 {
-    if (search())
+    int pos = search(name);
+    if (pos != -1)
     {
-        if (type != t)
+        if (accInfo[pos].t != type)
         {
-            std::cout << "账户类型错误，请退出重新选择！";
+            std::cout << "用户类型错误，请退出重新选择！\n";
             return false;
         }
         std::string pwd;
         std::cout << "请输入密码:\n";
         confirmPwd(pwd);
-        if (pwd != password)
+        if (pwd != accInfo[pos].pwd)
         {
             std::cout << "密码错误!\n";
             return false;
@@ -82,6 +66,10 @@ bool User::login(const int t)
         else
         {
             std::cout << "登录成功!\n";
+            password = pwd;
+            this->type = type;
+            balance = accInfo[pos].bala;
+            num = pos;
             return true;
             // logged = true;
         }
@@ -94,12 +82,12 @@ bool User::login(const int t)
 }
 void User::changePwd()
 {
-    if (!search())
+    if (search(name) == -1)
     {
         std::cout << "账号不存在！";
         return;
     }
-    AccInfo tmp;
+    std::string pwd;
     std::cout << "输入旧密码:\n";
     std::string confirm;
     confirmPwd(confirm);
@@ -111,20 +99,19 @@ void User::changePwd()
     while (1)
     {
         std::cout << "输入新密码:\n";
-        tmp.pwd.erase();
-        confirmPwd(tmp.pwd);
+        pwd.erase();
+        confirmPwd(pwd);
         std::cout << "请再次输入密码确认:\n";
         confirm.erase();
         confirmPwd(confirm);
-        if (tmp.pwd == confirm)
+        if (pwd == confirm)
             break;
         else
             std::cout << "两次密码不一致，请重新输入！\n";
     }
-    accInfo[num].pwd = tmp.pwd;
+    password = pwd;
+    accInfo[num].pwd = pwd;
     std::cout << "修改成功！\n";
-
-    num++;
 }
 void User::confirmPwd(std::string &pwd)
 {

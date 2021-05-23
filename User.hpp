@@ -51,8 +51,7 @@ class User
     }
 
     virtual int getUserType() = 0;
-    bool search();
-    void search(const std::string &);
+    int search(const std::string &);
     void userRegister();
     bool login(const int);
     void changePwd();
