@@ -10,7 +10,7 @@ void Platform::show()
         std::cout << "选择操作：\n"
                   << "1. 用户注册&登录\n"
                   << "2. 用户信息查看&修改（登录后）\n"
-                  << "3. 商品展示与购买（购买需登录）\n"
+                  << "3. 商品展示\n"
                   << "4. 商品信息修改（针对商家）\n"
                   << "其他数字 退出平台" << std::endl;
         input(action);
@@ -32,6 +32,7 @@ void Platform::show()
             default:
                 break;
         }
+        std::cout << std::endl;
     } while (action > 0 && action < 5);
     std::cout << "感谢使用！\n" << std::endl;
 }
@@ -44,7 +45,7 @@ void Platform::userRegisterOrLog()
     int choice, type;
     input(choice);
     std::string operation[2] = {"注册", "登录"};
-    if (choice != -1)
+    if (choice == 1 || choice == 2)
     {
         std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
                   << "1表示顾客，2表示商家\n";
@@ -60,7 +61,7 @@ void Platform::userRegisterOrLog()
         switch (type)
         {
             case 0:
-                user = new Admin();
+                user = new Admin(name);
                 break;
             case 1:
                 user = new Consumer(name);
@@ -98,41 +99,42 @@ void Platform::userInformationChange()
         std::cout << "请登录后操作\n";
         return;
     }
-    std::cout << name << ", 请选择操作：\n"
-              << "1. 修改密码\n"
-              << "2. 余额查询\n"
-              << "3. 余额充值\n"
-              << "4. 消费\n"
-              << "其他数字 退出" << std::endl;
     int choice;
-    input(choice);
-    if (choice == -1)
-        return;
-    switch (choice)
+    do
     {
-        case 1:
-            user->changePwd();
-            break;
-        case 2:
-            std::cout << name << "，您当前账户余额为" << user->queryBalance() << "元\n";
-            break;
-        case 3:
-            user->topUp();
-            break;
-        default:
-            break;
-    }
+        std::cout << name << ", 请选择操作：\n"
+                  << "1. 修改密码\n"
+                  << "2. 余额查询\n"
+                  << "3. 余额充值与消费\n"
+                  << "其他数字 退出" << std::endl;
+        input(choice);
+        switch (choice)
+        {
+            case 1:
+                user->changePwd();
+                break;
+            case 2:
+                std::cout << name << "，您当前账户余额为" << user->queryBalance() << "元\n";
+                break;
+            case 3:
+                user->topUp();
+                break;
+            default:
+                break;
+        }
+    } while (choice > 0 && choice < 4);
     // freeUser();
 }
 void Platform::goodsInformation()
 {
+    int choice;
     std::cout << "请选择筛选条件\n"
               << "0. 展示某类商品\n"
               << "1. 按名称筛选\n"
               << "2. 按价格筛选\n"
               << "3. 按数量筛选\n"
               << "其他数字 退出\n";
-    int choice, amount;
+    int amount;
     double priceLow, priceHigh;
     input(choice);
     std::string goodsName;
@@ -256,48 +258,51 @@ void Platform::changeGoods()
         return;
     }
     int choice;
-    double dis;
-    std::cout << "请选择要进行的操作\n"
-              << "1. 修改已有商品\n"
-              << "2. 添加商品\n"
-              << "其他数字 退出\n";
-    input(choice);
-    std::string goodsName;
-    if (choice >= 0 && choice < 3)
+    do
     {
-        definiteType();
-        if (choice)
+        double dis;
+        std::cout << "请选择要进行的操作\n"
+                  << "1. 修改已有商品\n"
+                  << "2. 添加商品\n"
+                  << "其他数字 退出\n";
+        input(choice);
+        std::string goodsName;
+        if (choice >= 0 && choice < 3)
         {
-            std::cout << "输入商品名称";
-            std::cin >> goodsName;
+            definiteType();
+            if (choice)
+            {
+                std::cout << "输入商品名称";
+                std::cin >> goodsName;
+            }
         }
-    }
-    switch (choice)
-    {
-        case 0:
-            if (user->getUserType())
-            {
-                std::cout << "没有权限!\n";
-                return;
-            }
-            std::cout << "请输入要给出的折扣(用小数表示，0-1之间):\n";
-            input(dis);
-            if (dis < 0 || dis > 1)
-            {
-                std::cout << "折扣不合理，已退出！\n";
-                return;
-            }
-            goods->atDiscount(dis);
-            std::cout << "打折成功";
-            break;
-        case 1:
-            goods->changeItems(goodsName, name);
-            break;
-        case 2:
-            goods->addItems(goodsName, name);
-        default:
-            break;
-    }
+        switch (choice)
+        {
+            case 0:
+                if (user->getUserType())
+                {
+                    std::cout << "没有权限!\n";
+                    return;
+                }
+                std::cout << "请输入要给出的折扣(用小数表示，0-1之间):\n";
+                input(dis);
+                if (dis < 0 || dis > 1)
+                {
+                    std::cout << "折扣不合理，已退出！\n";
+                    return;
+                }
+                goods->atDiscount(dis);
+                std::cout << "打折成功";
+                break;
+            case 1:
+                goods->changeItems(goodsName, name);
+                break;
+            case 2:
+                goods->addItems(goodsName, name);
+            default:
+                break;
+        }
+    } while (choice > 0 && choice < 3);
     freeGoods();
 }
 void Platform::definiteType()
@@ -330,11 +335,12 @@ void Platform::definiteType()
 template <class T> void Platform::input(T &x) const
 {
     std::cin >> x;
-    while (std::cin.fail())
+
+    while (std::cin.fail() || std::cin.get() != '\n')
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "输入不合法，请输入数字\n";
+        std::cout << "输入不合法，请输入整型数字\n";
         std::cin >> x;
         continue;
     }

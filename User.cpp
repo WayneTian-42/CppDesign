@@ -152,7 +152,7 @@ void User::topUp()
 {
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
-    std::cout << "请输入充值金额：";
+    std::cout << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
     std::cin >> money;
     balance += money;
     accInfo[num].bala = balance;
