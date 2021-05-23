@@ -117,9 +117,9 @@ class Merchant : public User
 class Admin : public User
 {
   public:
-    Admin()
+    Admin(const std::string s) : User()
     {
-        name = "admin";
+        name = s;
         type = 0;
     }
     virtual ~Admin() override

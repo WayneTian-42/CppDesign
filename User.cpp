@@ -55,7 +55,7 @@ bool User::login(const int type)
     {
         if (accInfo[pos].t != type)
         {
-            std::cout << "账户类型错误，请退出重新选择！\n";
+            std::cout << "用户类型错误，请退出重新选择！\n";
             return false;
         }
         std::string pwd;
@@ -155,7 +155,7 @@ void User::topUp()
 {
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
-    std::cout << "请输入充值金额：";
+    std::cout << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
     std::cin >> money;
     balance += money;
     accInfo[num].bala = balance;
