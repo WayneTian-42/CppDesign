@@ -60,7 +60,7 @@ class Goods
     void atDiscount(const double);
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
     // void solodOut(const std::string &, const std::string &, const int);
-    template <typename T> void input(T &) const;
+    template <typename T> void input(T &, bool = false) const;
     void copyInfo(GoodsInfo &);
     void copyInfo(const std::vector<GoodsInfo>::iterator &);
 

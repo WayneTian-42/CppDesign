@@ -63,19 +63,19 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     double temp2;
     std::cout << "种类（输入回车表示不修改）\n";
     temp = type;
-    input(temp);
+    input(temp, true);
     type = temp;
     std::cout << "单价（输入回车表示不修改）\n";
     temp2 = price;
-    input(temp2);
+    input(temp2, true);
     price = temp2;
     std::cout << "数量（输入回车表示不修改）\n";
     temp = amount;
-    input(temp);
+    input(temp, true);
     amount = temp;
     std::cout << "折扣（输入回车表示不修改）\n";
     temp2 = discount;
-    input(temp2);
+    input(temp2, true);
     discount = temp2;
     copyInfo(tmp);
     *it = tmp;
@@ -188,9 +188,12 @@ void Goods::changeAmountOfGoods(const std::string &name, const std::string &merc
     it->amount -= amount;
 }
 
-template <typename T> void Goods::input(T &x) const
+template <typename T> void Goods::input(T &x, bool mode) const
 {
     std::cin >> x;
+    if (mode)
+        if (std::cin.get() == '\n')
+            return;
     while (std::cin.fail() || std::cin.get() != '\n')
     {
         std::cin.clear();
