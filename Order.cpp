@@ -11,7 +11,8 @@ void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
     goods->search(showGoods);
     GoodsInfo good;
     chooseGoods(showGoods, good);
-    chooseAmount(good);
+    if (!good.name.empty())
+        chooseAmount(good);
 }
 //修改查找策略
 void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
@@ -56,6 +57,11 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
             if (!flg)
                 std::cout << "没有该商家，请重新输入商家\n";
         }
+    }
+    if (good.merchant == name)
+    {
+        std::cout << "不能购买自己的商品，已退出！\n";
+        good.name.erase();
     }
 }
 void Order::chooseAmount(const GoodsInfo &good)
@@ -244,6 +250,10 @@ void Order::changeAmountOfGoods(const std::string &name, const std::string &merc
 {
 } */
 
+void Order::setName(const std::string &name)
+{
+    this->name = name;
+}
 void Order::definiteType()
 {
     int type;

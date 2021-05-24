@@ -28,6 +28,7 @@ class Order
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
     // void transferPayments();
 
+    void setName(const std::string &);
     void definiteType();
     void freeGoods();
     template <typename T> void input(T &) const;
@@ -35,6 +36,7 @@ class Order
   private:
     std::vector<std::pair<GoodsInfo, int>> preorder;
     Goods *goods;
+    std::string name;
     int lineNum;
     double sum = 0;
     std::fstream ordfp;

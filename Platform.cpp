@@ -107,6 +107,7 @@ void Platform::userInformationChange()
                   << "1. 修改密码\n"
                   << "2. 余额查询\n"
                   << "3. 余额充值与消费\n"
+                  << "4. 购物车管理\n"
                   << "其他数字 退出" << std::endl;
         input(choice);
         switch (choice)
@@ -120,10 +121,12 @@ void Platform::userInformationChange()
             case 3:
                 user->topUp();
                 break;
+            case 4:
+                user->orderManagement(showGoods);
             default:
                 break;
         }
-    } while (choice > 0 && choice < 4);
+    } while (choice > 0 && choice < 5);
     // freeUser();
 }
 void Platform::goodsInformation()

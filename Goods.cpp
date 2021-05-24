@@ -59,22 +59,24 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     std::getline(std::cin, change);
     if (!change.empty())
         name = change;
+    int temp;
+    double temp2;
     std::cout << "种类（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
-    if (!change.empty())
-        type = std::stoi(change);
+    temp = type;
+    input(temp);
+    type = temp;
     std::cout << "单价（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
-    if (!change.empty())
-        price = std::stod(change);
+    temp2 = price;
+    input(temp2);
+    price = temp2;
     std::cout << "数量（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
-    if (!change.empty())
-        amount = std::stoi(change);
+    temp = amount;
+    input(temp);
+    amount = temp;
     std::cout << "折扣（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
-    if (!change.empty())
-        discount = std::stod(change);
+    temp2 = discount;
+    input(temp2);
+    discount = temp2;
     copyInfo(tmp);
     *it = tmp;
 }
@@ -189,7 +191,7 @@ void Goods::changeAmountOfGoods(const std::string &name, const std::string &merc
 template <typename T> void Goods::input(T &x) const
 {
     std::cin >> x;
-    while (std::cin.fail())
+    while (std::cin.fail() || std::cin.get() != '\n')
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

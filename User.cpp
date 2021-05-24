@@ -187,6 +187,7 @@ void User::transferPayments()
 void User::orderManagement(std::vector<GoodsInfo> &showGoods)
 {
     int choice;
+    myorder.setName(name);
     do
     {
         std::cout << "ÇëÑ¡Ôñ²Ù×÷\n"
