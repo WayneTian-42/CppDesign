@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <cstring>
+#include <map>
 #include "Goods.hpp"
 #include "User.hpp"
 
@@ -34,5 +35,7 @@ class Platform
     User *user;
     Goods *goods;
     std::vector<GoodsInfo> showGoods;
+    //保存订单数据
+    std::map<std::string, std::vector<std::pair<GoodsInfo, int>>> orderInformation;
     std::vector<std::pair<GoodsInfo, int>> changeInformation;
 };
