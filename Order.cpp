@@ -17,9 +17,8 @@ void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
 //修改查找策略
 void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
 {
-    std::cout << "输入购买的商品名称：\n";
     std::string gname, merchant;
-    std::cout << "输入想要购买的货物：\n";
+    std::cout << "输入想要购买的商品：\n";
     int flg = 1, num = 0;
     while (1)
     {
@@ -245,6 +244,14 @@ void Order::changeAmountOfGoods(const std::string &name, const std::string &merc
     goods = new Books();
     goods->changeAmountOfGoods(name, merchant, type, amount);
     freeGoods();
+}
+void Order::setOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+{
+    preorder = tmp;
+}
+void Order::getPreorder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+{
+    tmp = preorder;
 }
 /* void Order::transferPayments()
 {

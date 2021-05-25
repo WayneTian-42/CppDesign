@@ -54,6 +54,8 @@ class User
     void orderManagement(std::vector<GoodsInfo> &);
     void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
     void transferPayments();
+    void setOrder(std::vector<std::pair<GoodsInfo, int>> &);
+    void quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &);
     // void input(int &) const;
     // void exchangeMoney(const std::string &, const double);
     // void save();

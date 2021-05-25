@@ -26,6 +26,8 @@ class Order
     double getToatalPrice();
     void clearPrice();
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
+    void setOrder(std::vector<std::pair<GoodsInfo, int>> &);
+    void getPreorder(std::vector<std::pair<GoodsInfo, int>> &);
     // void transferPayments();
 
     void setName(const std::string &);

@@ -230,6 +230,14 @@ template <typename T> void User::input(T &x) const
         continue;
     }
 }
+void User::setOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+{
+    myorder.setOrder(tmp);
+}
+void User::quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+{
+    myorder.getPreorder(tmp);
+}
 /* void User::exchangeMoney(const std::string &merchant, const double total)
 {
     std::cin >> x;

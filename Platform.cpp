@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <utility>
 
 void Platform::show()
 {
@@ -45,6 +46,7 @@ void Platform::userCenter()
             std::cout << "选择操作：\n"
                       << "1. 用户信息查询与修改\n"
                       << "2. 注销登录\n"
+                      << "3. 购物车管理\n"
                       << "其他数字 退出" << std::endl;
             input(choice);
             switch (choice)
@@ -55,10 +57,13 @@ void Platform::userCenter()
                 case 2:
                     userQuit();
                     return;
+                case 3:
+                    user->orderManagement(showGoods);
+                    break;
                 default:
                     break;
             }
-        } while (choice > 0 && choice < 3);
+        } while (choice > 0 && choice < 4);
     }
 }
 void Platform::userRegisterOrLog()
@@ -111,6 +116,12 @@ void Platform::userRegisterOrLog()
                 freeUser();
                 name.clear();
             }
+            else
+            {
+                auto mt = orderInformation.find(name);
+                if (mt != orderInformation.end())
+                    user->setOrder(mt->second);
+            }
             break;
         default:
             break;
@@ -131,7 +142,6 @@ void Platform::userInformationChange()
                   << "1. 修改密码\n"
                   << "2. 余额查询\n"
                   << "3. 余额充值与消费\n"
-                  << "4. 购物车管理\n"
                   << "其他数字 退出" << std::endl;
         input(choice);
         switch (choice)
@@ -145,18 +155,20 @@ void Platform::userInformationChange()
             case 3:
                 user->topUp();
                 break;
-            case 4:
-                user->orderManagement(showGoods);
             default:
                 break;
         }
-    } while (choice > 0 && choice < 5);
+    } while (choice > 0 && choice < 4);
     // freeUser();
 }
 void Platform::userQuit()
 {
-    name.clear();
     std::cout << "已退出！\n";
+    std::vector<std::pair<GoodsInfo, int>> tmp;
+    user->quitToGetOrder(tmp);
+    orderInformation.insert(std::make_pair(name, tmp));
+    name.clear();
+    showGoods.clear();
     freeUser();
 }
 void Platform::goodsInformation()
@@ -218,7 +230,7 @@ void Platform::goodsInformation()
 }
 void Platform::changeGoods()
 {
-    if (/* name.empty() ||  */ user->getUserType() == 1)
+    if (name.empty() || user->getUserType() == 1)
     {
         std::cout << "请登入商家账号后进行该操作！\n";
         return;
