@@ -62,6 +62,8 @@ class Goods
     void atDiscount(const double);
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
     // void solodOut(const std::string &, const std::string &, const int);
+    //更新订单内商品剩余数量
+    void updateInfo(std::vector<std::pair<GoodsInfo, int>> &);
     bool isInt(const std::string &);
     bool isFloat(const std::string &);
     template <typename T> void input(T &) const;

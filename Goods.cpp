@@ -145,7 +145,9 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
                       << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
                       << std::endl;
-            showGoods.emplace_back(st);
+            auto vt = std::find(showGoods.begin(), showGoods.end(), st);
+            if (vt == showGoods.end())
+                showGoods.emplace_back(st);
         }
     }
     if (!flg)
@@ -167,7 +169,9 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
                       << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
                       << std::endl;
-            showGoods.emplace_back(st);
+            auto vt = std::find(showGoods.begin(), showGoods.end(), st);
+            if (vt == showGoods.end())
+                showGoods.emplace_back(st);
         }
     }
     if (!flg)
@@ -189,7 +193,9 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
                       << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
                       << std::endl;
-            showGoods.emplace_back(st);
+            auto vt = std::find(showGoods.begin(), showGoods.end(), st);
+            if (vt == showGoods.end())
+                showGoods.emplace_back(st);
         }
     }
     if (!flg)
@@ -211,7 +217,9 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
                       << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
                       << std::endl;
-            showGoods.emplace_back(st);
+            auto vt = std::find(showGoods.begin(), showGoods.end(), st);
+            if (vt == showGoods.end())
+                showGoods.emplace_back(st);
         }
     }
     if (!flg)
@@ -239,7 +247,14 @@ void Goods::changeAmountOfGoods(const std::string &name, const std::string &merc
         std::cout << "fuk\n";
     it->amount -= amount;
 }
-
+void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder)
+{
+    for (auto &vt : preorder)
+    {
+        auto gt = std::find(goodsInfo.begin(), goodsInfo.end(), vt.first);
+        vt.first = *gt;
+    }
+}
 // template <typename T> void Goods::input(T &x, bool mode) const
 
 bool Goods::changeInt(int &type)

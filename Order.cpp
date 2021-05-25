@@ -13,6 +13,9 @@ void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
     chooseGoods(showGoods, good);
     if (!good.name.empty())
         chooseAmount(good);
+    // std::vector<GoodsInfo> tmp;
+    // showGoods.swap(tmp);
+    // showGoods.erase(); 引用不能清空
 }
 //修改查找策略
 void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
@@ -68,16 +71,16 @@ void Order::chooseAmount(const GoodsInfo &good)
     std::cout << "请输入要购买的数量(0表示取消加入购物车)：";
     int number;
     bool can = true;
-    input(number);
     while (1)
     {
+        input(number);
         if (number > good.amount)
         {
-            std::cout << "想要购买的数量超过了最大数量！";
+            std::cout << "想要购买的数量超过了最大数量，请重新输入\n";
         }
         else if (number < 0)
         {
-            std::cout << "不能买非正数个商品";
+            std::cout << "不能买非正数个商品，请重新输入\n";
         }
         else if (number == 0)
         {
@@ -98,6 +101,7 @@ void Order::addGoods(const GoodsInfo &good, const int num)
     bool flg = true;
     for (auto &it : preorder)
     {
+        // 种类
         if (it.first.name == good.name && it.first.merchant == good.merchant)
         {
             it.second += num;

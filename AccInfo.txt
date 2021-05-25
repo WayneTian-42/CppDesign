@@ -1,4 +1,4 @@
-admin admin888 0 1.00014e+06
+admin admin888 0 1.00024e+06
 bupt 8988 1 0
 cpp ppc 2 0
 hb wjw 1 32

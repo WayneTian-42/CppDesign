@@ -8,6 +8,15 @@ class Order
   public:
     Order()
     {
+        goods = new Foods();
+        goods->updateInfo(preorder);
+        delete goods;
+        goods = new Clothes();
+        goods->updateInfo(preorder);
+        delete goods;
+        goods = new Books();
+        goods->updateInfo(preorder);
+        delete goods;
         goods = nullptr;
     }
     ~Order()
