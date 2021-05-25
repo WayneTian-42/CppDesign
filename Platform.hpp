@@ -27,7 +27,7 @@ class Platform
     void freeUser();
     void refreshGoods();
     void freeGoods();
-    template <class T> void input(T &x) const;
+    template <typename T> void input(T &x) const;
 
   private:
     std::string name;

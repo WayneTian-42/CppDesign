@@ -268,7 +268,7 @@ void Platform::definiteType()
             break;
     }
 }
-template <class T> void Platform::input(T &x) const
+template <typename T> void Platform::input(T &x) const
 {
     std::cin >> x;
 

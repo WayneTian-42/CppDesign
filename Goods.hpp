@@ -8,7 +8,7 @@
 
 struct GoodsInfo
 {
-    std::string name, merchant;
+    std::string name, merchant, discription;
     double price, discount;
     int type, amount;
     bool operator==(const GoodsInfo &ac) const;
@@ -29,8 +29,8 @@ class Goods
         while (goofp.peek() != EOF)
         {
             GoodsInfo goodTemp;
-            goofp >> goodTemp.type >> goodTemp.name >> goodTemp.amount >> goodTemp.price >> goodTemp.discount >>
-                goodTemp.merchant;
+            goofp >> goodTemp.type >> goodTemp.name >> goodTemp.discription >> goodTemp.amount >> goodTemp.price >>
+                goodTemp.discount >> goodTemp.merchant;
             if (goodTemp.name.empty())
                 continue;
             else
@@ -45,14 +45,16 @@ class Goods
         goofp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\GoodsInfo.txt", std::ios::out | std::ios::trunc);
         goofp.seekg(0, std::fstream::beg);
         for (auto st : goodsInfo)
-            goofp << st.type << " " << st.name << " " << st.amount << " " << st.price << " " << st.discount << " "
-                  << st.merchant << std::endl;
+            goofp << st.type << " " << st.name << " " << st.discription << " " << st.amount << " " << st.price << " "
+                  << st.discount << " " << st.merchant << std::endl;
         goofp.close();
     }
 
     virtual double getPrice(const std::string &) = 0;
     void addItems(const std::string &, const std::string &);
     void changeItems(const std::string &, const std::string &);
+    bool changeInt(int &);
+    bool changeDouble(double &);
     void search(std::vector<GoodsInfo> &);
     void search(const std::string &, std::vector<GoodsInfo> &);
     void search(const double, const double, std::vector<GoodsInfo> &);
@@ -60,12 +62,14 @@ class Goods
     void atDiscount(const double);
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
     // void solodOut(const std::string &, const std::string &, const int);
-    template <typename T> void input(T &, bool = false) const;
+    bool isInt(const std::string &);
+    bool isFloat(const std::string &);
+    template <typename T> void input(T &) const;
     void copyInfo(GoodsInfo &);
     void copyInfo(const std::vector<GoodsInfo>::iterator &);
 
   protected:
-    std::string name, merchant;
+    std::string name, merchant, discription;
     int type, amount;
     double price, discount;
 
