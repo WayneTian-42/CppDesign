@@ -20,8 +20,10 @@ class Platform
     {
     }
     void show();
+    void userCenter();
     void userRegisterOrLog();
     void userInformationChange();
+    void userQuit();
     void purchaseGoods();
     void goodsInformation();
     void changeGoods();

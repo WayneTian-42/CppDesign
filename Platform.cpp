@@ -8,33 +8,57 @@ void Platform::show()
     do
     {
         std::cout << "选择操作：\n"
-                  << "1. 用户注册&登录\n"
-                  << "2. 用户信息查看&修改（登录后）\n"
-                  << "3. 商品展示\n"
-                  << "4. 商品信息修改（针对商家）\n"
+                  << "1. 用户中心\n"
+                  << "2. 商品展示\n"
+                  << "3. 商品信息修改（针对商家）\n"
                   << "其他数字 退出平台" << std::endl;
         input(action);
         // system("clear");
         switch (action)
         {
             case 1:
-                userRegisterOrLog();
+                userCenter();
                 break;
             case 2:
-                userInformationChange();
-                break;
-            case 3:
                 goodsInformation();
                 break;
-            case 4:
+            case 3:
                 changeGoods();
                 break;
             default:
                 break;
         }
         std::cout << std::endl;
-    } while (action > 0 && action < 5);
+    } while (action > 0 && action < 4);
     std::cout << "感谢使用！\n" << std::endl;
+}
+void Platform::userCenter()
+{
+    if (name.empty())
+        userRegisterOrLog();
+    else
+    {
+        int choice;
+        do
+        {
+            std::cout << "选择操作：\n"
+                      << "1. 用户信息查询与修改\n"
+                      << "2. 注销登录\n"
+                      << "其他数字 退出" << std::endl;
+            input(choice);
+            switch (choice)
+            {
+                case 1:
+                    userInformationChange();
+                    break;
+                case 2:
+                    userQuit();
+                    return;
+                default:
+                    break;
+            }
+        } while (choice > 0 && choice < 3);
+    }
 }
 void Platform::userRegisterOrLog()
 {
@@ -94,11 +118,11 @@ void Platform::userRegisterOrLog()
 }
 void Platform::userInformationChange()
 {
-    if (name.empty())
+    /* if (name.empty())
     {
         std::cout << "请登录后操作\n";
         return;
-    }
+    } */
     int choice;
     do
     {
@@ -124,6 +148,12 @@ void Platform::userInformationChange()
         }
     } while (choice > 0 && choice < 4);
     // freeUser();
+}
+void Platform::userQuit()
+{
+    name.clear();
+    std::cout << "已退出！\n";
+    freeUser();
 }
 void Platform::goodsInformation()
 {
@@ -181,7 +211,7 @@ void Platform::goodsInformation()
 }
 void Platform::changeGoods()
 {
-    if (name.empty() || user->getUserType() == 1)
+    if (/* name.empty() ||  */ user->getUserType() == 1)
     {
         std::cout << "请登入商家账号后进行该操作！\n";
         return;
