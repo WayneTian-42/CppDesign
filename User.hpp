@@ -18,7 +18,7 @@ struct AccInfo
 class User
 {
   public:
-    User() : /* logged(false), */ type(0), balance(0)
+    User() : type(0), balance(0)
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -34,10 +34,7 @@ class User
             if (accTemp.name.empty())
                 continue;
             else
-            {
                 accInfo.emplace_back(accTemp);
-                // num++;
-            }
         }
     }
     virtual ~User()
@@ -58,8 +55,7 @@ class User
     void confirmPwd(std::string &);
     double queryBalance(const double = 0.0);
     void topUp();
-    // void exchangeMoney(const std::string &, const double);
-    // void save();
+    template <typename T> void input(T &) const;
 
     //ÐÞ¸ÄÎªset get
   protected:
@@ -107,10 +103,8 @@ class Merchant : public User
     {
         return type;
     }
-    // void changeGoods();
 
   private:
-    // std::vector<Goods> goods;
 };
 class Admin : public User
 {

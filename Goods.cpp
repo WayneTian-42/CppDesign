@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <cstring>
+#include <regex>
 
 bool GoodsInfo::operator==(const GoodsInfo &go) const
 {
@@ -22,13 +23,35 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
         std::cout << "该商品已存在\n";
         return;
     }
-
+    std::cout << "请输入商品描述\n";
+    std::cin >> discount;
     std::cout << "请输入商品单价\n";
-    input(price);
+    while (1)
+    {
+        input(price);
+        if (price > 0)
+            break;
+        else
+            std::cout << "请重新输入一个正数！\n";
+    }
     std::cout << "请输入商品数量\n";
-    input(amount);
+    while (1)
+    {
+        input(amount);
+        if (amount > 0)
+            break;
+        else
+            std::cout << "请重新输入一个正数！\n";
+    }
     std::cout << "请输入商品折扣\n";
-    input(discount);
+    while (1)
+    {
+        input(discount);
+        if (discount > 0)
+            break;
+        else
+            std::cout << "请重新输入一个正数！\n";
+    }
     copyInfo(tmp);
     goodsInfo.emplace_back(tmp);
 }
@@ -59,22 +82,49 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     std::getline(std::cin, change);
     if (!change.empty())
         name = change;
+    std::cout << "描述（输入回车表示不修改）\n";
+    std::getline(std::cin, change);
+    if (!change.empty())
+        discription = change;
     std::cout << "种类（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    while (!changeInt(type))
+    {
+    }
+    /* std::getline(std::cin, change);
     if (!change.empty())
-        type = std::stoi(change);
+        type = std::stoi(change); */
     std::cout << "单价（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    while (!changeDouble(price))
+    {
+    }
+    /* std::getline(std::cin, change);
     if (!change.empty())
-        price = std::stod(change);
+        price = std::stod(change); */
     std::cout << "数量（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    while (!changeInt(amount))
+    {
+    }
+    /* std::getline(std::cin, change);
     if (!change.empty())
-        amount = std::stoi(change);
+        amount = std::stoi(change); */
     std::cout << "折扣（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    while (1)
+    {
+        double dis = discount;
+        if (changeDouble(dis))
+        {
+            if (dis > 1.0)
+                continue;
+            else
+            {
+                discount = dis;
+                break;
+            }
+        }
+    }
+    /* std::getline(std::cin, change);
     if (!change.empty())
-        discount = std::stod(change);
+        discount = std::stod(change); */
     copyInfo(tmp);
     *it = tmp;
 }
@@ -87,13 +137,14 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
         if (st.type == type)
         {
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-                          << std::left << "折扣" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
+                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.price << std::setw(8)
-                      << std::left << st.discount << std::setw(8) << std::left << st.amount << std::setw(20)
-                      << std::left << st.merchant << std::endl;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
+                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
+                      << std::endl;
             showGoods.emplace_back(st);
         }
     }
@@ -108,13 +159,14 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
         if (st.name == name && st.type == type)
         {
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-                          << std::left << "折扣" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
+                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.price << std::setw(8)
-                      << std::left << st.discount << std::setw(8) << std::left << st.amount << std::setw(20)
-                      << std::left << st.merchant << std::endl;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
+                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
+                      << std::endl;
             showGoods.emplace_back(st);
         }
     }
@@ -129,13 +181,14 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
         if (st.type == type && st.price * st.discount >= lowPrice && st.price * st.discount <= highPrice)
         {
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-                          << std::left << "折扣" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
+                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.price << std::setw(8)
-                      << std::left << st.discount << std::setw(8) << std::left << st.amount << std::setw(20)
-                      << std::left << st.merchant << std::endl;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
+                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
+                      << std::endl;
             showGoods.emplace_back(st);
         }
     }
@@ -150,13 +203,14 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
         if (st.type == type && st.amount >= lowAmount && st.amount <= INT_MAX)
         {
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-                          << std::left << "折扣" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
+                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(8) << std::left << st.price << std::setw(8)
-                      << std::left << st.discount << std::setw(8) << std::left << st.amount << std::setw(20)
-                      << std::left << st.merchant << std::endl;
+            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
+                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
+                      << std::endl;
             showGoods.emplace_back(st);
         }
     }
@@ -174,21 +228,63 @@ void Goods::atDiscount(const double dis)
         }
     }
 }
-/* void Goods::solodOut(const std::string &gname, const std::string &merchant, const int amount)
-{
-    GoodsInfo tmp;
 
-    tmp.name = gname;
-    tmp.type = type;
-    tmp.merchant = merchant;
-    auto it = goodsInfo.find(*goodSet[num]);
-    tmp.price = it->price;
-    tmp.amount = it->amount;
-    goodsInfo.erase(it);
-    tmp.amount -= amount;
-    goodsInfo.insert(*goodSet[num]);
-    num++;
-} */
+bool Goods::changeInt(int &type)
+{
+    std::string tmp;
+    std::getline(std::cin, tmp);
+    if (tmp.empty())
+        return true;
+    if (isInt(tmp))
+    {
+        int t = std::stoi(tmp);
+        if (t < 1 || t > 3)
+        {
+            std::cout << "输入不合法，没有该种类商品！\n";
+            return false;
+        }
+        type = t;
+        return true;
+    }
+    else
+    {
+        std::cout << "输入不合法，请输入数字！\n";
+        return false;
+    }
+}
+bool Goods::changeDouble(double &type)
+{
+    std::string tmp;
+    std::getline(std::cin, tmp);
+    if (tmp.empty())
+        return true;
+    if (isFloat(tmp))
+    {
+        double t = std::stod(tmp);
+        if (t < 0.0)
+        {
+            std::cout << "输入不合法，请输入正数！\n";
+            return false;
+        }
+        type = t;
+        return true;
+    }
+    else
+    {
+        std::cout << "输入不合法，请输入数字！\n";
+        return false;
+    }
+}
+bool Goods::isInt(const std::string &input)
+{
+    std::regex rx("^[0-9]+$");  //+号表示多次匹配
+    return std::regex_match(input, rx);
+}
+bool Goods::isFloat(const std::string &input)
+{
+    std::regex rx("^[0-9]+(.[0-9]+)?$");
+    return std::regex_match(input, rx);
+}
 template <typename T> void Goods::input(T &x) const
 {
     std::cin >> x;
@@ -205,6 +301,7 @@ void Goods::copyInfo(GoodsInfo &des)
 {
     des.name = name;
     des.merchant = merchant;
+    des.discription = discription;
     des.type = type;
     des.amount = amount;
     des.price = price;
@@ -215,6 +312,7 @@ void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
     amount = sou->amount;
     price = sou->price;
     discount = sou->discount;
+    discription = sou->discription;
 }
 //现在还没用
 double Foods::getPrice(const std::string &name)

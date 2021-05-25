@@ -179,77 +179,6 @@ void Platform::goodsInformation()
     std::vector<GoodsInfo> tmp;
     showGoods.swap(tmp);
 }
-/* void Platform::purchaseGoods()
-{
-    std::string gname, merchant;
-    std::cout << "输入想要购买的货物：\n";
-    int flg = 1, num = 0;
-    GoodsInfo good;
-    while (flg != -1)
-    {
-        std::cin >> gname;
-        for (auto it : showGoods)
-        {
-            if (it.name == gname)
-            {
-                good = it;
-                merchant = it.merchant;
-                num++;
-            }
-        }
-        if (!num)
-        {
-            std::cout << "没有该商品，请选择操作\n"
-                      << "1. 重新输入商品\n"
-                      << "其他数字 退出\n";
-        }
-        else
-            break;
-    }
-    if (!num)
-        return;
-    else if (num > 1)
-    {
-        std::cout << "该商品多个商家在售卖，请输入想购买的商家名\n";
-        std::cin >> merchant;
-        for (auto it : showGoods)
-        {
-            if (it.name == gname && it.merchant == merchant)
-            {
-                good = it;
-                num++;
-            }
-        }
-    }
-    if (num)
-    {
-        std::cout << "请输入要购买的数量：";
-        int number;
-        bool can = true;
-        input(number);
-        if (number > good.amount)
-        {
-            std::cout << "想要购买的数量超过了最大数量！";
-            can = false;
-        }
-        else if (number < 0)
-        {
-            std::cout << "不能买负数个商品";
-            can = false;
-        }
-        if (good.price * number > user->queryBalance())
-        {
-            std::cout << "余额不足！";
-            can = false;
-        }
-        if (can)
-        {
-            std::cout << "交易成功！\n";
-            goods->solodOut(gname, good.merchant, number);
-            user->exchangeMoney(merchant, good.price * number);
-        }
-    }
-} */
 void Platform::changeGoods()
 {
     if (name.empty() || user->getUserType() == 1)
@@ -332,7 +261,7 @@ void Platform::definiteType()
             break;
     }
 }
-template <class T> void Platform::input(T &x) const
+template <typename T> void Platform::input(T &x) const
 {
     std::cin >> x;
 

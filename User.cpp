@@ -1,6 +1,6 @@
 #include "User.hpp"
 #include <algorithm>
-#include <string>
+#include <limits>
 #include <conio.h>
 #include <windows.h>
 
@@ -29,7 +29,6 @@ void User::userRegister()
     AccInfo tmp;
     tmp.name = name;
 
-    // std::cin >> accSet[num]->pwd;
     while (1)
     {
         std::cout << "输入密码:\n";
@@ -71,7 +70,6 @@ bool User::login(const int type)
             balance = accInfo[pos].bala;
             num = pos;
             return true;
-            // logged = true;
         }
     }
     else
@@ -113,6 +111,7 @@ void User::changePwd()
     accInfo[num].pwd = pwd;
     std::cout << "修改成功！\n";
 }
+
 void User::confirmPwd(std::string &pwd)
 {
     while (1)
@@ -141,11 +140,6 @@ void User::confirmPwd(std::string &pwd)
 }
 double User::queryBalance(const double consume)
 {
-    /* if (!search())
-    {
-        std::cout << "This account doesn't exist.";
-    } */
-
     return balance;
 }
 void User::topUp()
@@ -153,41 +147,20 @@ void User::topUp()
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
     std::cout << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
-    std::cin >> money;
+    input(money);
     balance += money;
     accInfo[num].bala = balance;
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
 }
-/* void User::exchangeMoney(const std::string &merchant, const double total)
+template <typename T> void User::input(T &x) const
 {
-    search(merchant);
-    accSet[num] = new AccInfo;
-    tmpname = merchant;
-    tmpbala = acc->bala + total;
-    tmpt = acc->t;
-    tmppwd = acc->pwd;
-    // accSet[num]并未释放掉
-    accInfo.erase(acc);
-    accInfo.insert(*accSet[num]);
-
-    search();
-    accSet[num] = new AccInfo;
-    tmpname = name;
-    tmpbala = acc->bala - total;
-    tmpt = acc->t;
-    tmppwd = acc->pwd;
-    // accSet[num]并未释放掉
-    accInfo.erase(acc);
-    accInfo.insert(*accSet[num]);
-} */
-/* void User::save()
-{
-    // logged = false;
-    // name.clear();
-    accfp.close();
-    accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt", std::ios::out | std::ios::trunc);
-    accfp.seekg(0, std::fstream::beg);
-    for (auto st : accInfo)
-        accfp << st.name << " " << st.pwd << " " << st.t << " " << st.bala << std::endl;
-    accfp.close();
-} */
+    std::cin >> x;
+    while (std::cin.fail() || std::cin.get() != '\n')
+    {
+        std::cin.clear();
+        std::cin.ignore(LLONG_MAX, '\n');
+        std::cout << "输入不合法，请输入数字\n";
+        std::cin >> x;
+        continue;
+    }
+}
