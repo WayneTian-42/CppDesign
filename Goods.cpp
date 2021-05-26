@@ -244,7 +244,7 @@ void Goods::changeAmountOfGoods(const std::string &name, const std::string &merc
     tmp.type = type;
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it == goodsInfo.end())
-        std::cout << "fuk\n";
+        std::cout << "error\n";
     it->amount -= amount;
 }
 void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder)

@@ -165,9 +165,14 @@ void User::topUpAndDown()
 void User::transferPayments()
 {
     std::string tmp = name;
+    if (finalOrder.empty())
+    {
+        std::cout << "没有订单需要支付\n";
+        return;
+    }
     if (myorder.getToatalPrice() > balance)
     {
-        std::cout << "余额不足，请充值后付款";
+        std::cout << "余额不足，请充值后付款\n";
         return;
     }
     for (auto it : finalOrder)
@@ -177,8 +182,8 @@ void User::transferPayments()
         accInfo[pos].bala += singlePrice;
         // 修改数量
         balance -= singlePrice;
-        myorder.changeAmountOfGoods(it.first.name, it.first.merchant, it.first.type, it.second);
     }
+    finalOrder.clear();
     std::cout << "交易成功！\n";
     int pos = search(name);
     accInfo[pos].bala = balance;
@@ -189,16 +194,18 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
 {
     int choice;
     myorder.setName(name);
-    do
+    while (1)
     {
         std::cout << "请选择操作\n"
                   << "1. 加入购物车\n"
                   << "2. 展示购物车\n"
                   << "3. 修改购物车信息\n"
                   << "4. 生成订单\n"
+                  << "5. 支付订单\n"
+                  << "6. 取消订单\n"
                   << "其他数字 退出\n";
         input(choice);
-        if (choice < 1 || choice > 4)
+        if (choice < 1 || choice > 6)
             return;
         switch (choice)
         {
@@ -212,15 +219,33 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                 myorder.deleteGoods();
                 break;
             case 4:
-                myorder.generateOrder(finalOrder, balance);
+                if (finalOrder.empty())
+                    myorder.generateOrder(finalOrder);
+                else
+                    std::cout << "请支付上一个订单后再生成订单!\n";
+                break;
+            case 5:
                 transferPayments();
+                break;
+            case 6:
+                cancelOrder();
                 break;
             default:
                 break;
         }
-    } while (choice < 5 && choice > 0);
+    }
 }
-
+void User::cancelOrder()
+{
+    if (finalOrder.empty())
+    {
+        std::cout << "没有订单，已退出\n";
+        return;
+    }
+    for (auto it : finalOrder)
+        myorder.changeAmountOfGoods(it.first.name, it.first.merchant, it.first.type, -it.second);
+}
+// 啥用？
 void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &des)
 {
     des = finalOrder;

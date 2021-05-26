@@ -31,7 +31,7 @@ class Order
     int search(const std::string &);
     void deleteGoods();
     void changeAmount();
-    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &, const int);
+    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
     double getToatalPrice();
     void clearPrice();
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
@@ -52,3 +52,10 @@ class Order
     double sum = 0;
     std::fstream ordfp;
 };
+/*
+1 2 1
+hb wjw
+1 3 1 1
+雪糕 200
+4 200
+*/

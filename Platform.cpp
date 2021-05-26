@@ -117,8 +117,9 @@ void Platform::userRegisterOrLog()
             }
             else
             {
-                auto mt = orderInformation.find(name);
-                if (mt != orderInformation.end())
+                auto mt = orderInfo.find(name);
+                // auto st =
+                if (mt != orderInfo.end())
                     user->setOrder(mt->second);
             }
             break;
@@ -156,9 +157,9 @@ void Platform::userInformationChange()
 void Platform::userQuit()
 {
     std::cout << "ÒÑÍË³ö£¡\n";
-    std::vector<std::pair<GoodsInfo, int>> tmp;
-    user->quitToGetOrder(tmp);
-    orderInformation.insert(std::make_pair(name, tmp));
+    std::vector<std::pair<GoodsInfo, int>> tmp1, tmp2;
+    user->quitToGetOrder(tmp1, tmp2);
+    orderInfo.insert(std::make_pair(name, tmp1));
     name.clear();
     showGoods.clear();
     freeUser();

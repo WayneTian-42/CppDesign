@@ -171,6 +171,11 @@ void Order::deleteGoods()
 {
     definiteType();
     showOrder();
+    if (preorder.empty())
+    {
+        std::cout << "不能修改，已退出！\n";
+        return;
+    }
     std::string name;
     std::cout << "输入要修改数量的商品:\n";
     std::cin >> name;
@@ -186,7 +191,7 @@ void Order::deleteGoods()
     input(number);
     preorder[pos].second += number;
 }
-void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, const int balance)
+void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
 {
     showOrder();
     if (preorder.empty())
@@ -195,32 +200,37 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, co
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
               << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
               << std::endl;
-    auto pt = preorder;
-    for (auto &it : pt)
+    for (auto it = preorder.begin(); !preorder.empty() && it != preorder.end(); it++)
     {
         int amount;
         bool flg = true;
-        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
-                  << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
-                  << std::setw(20) << std::left << it.first.merchant << std::endl;
+        std::cout << std::setw(20) << std::left << it->first.name << std::setw(8) << std::left << it->first.price
+                  << std::setw(8) << std::left << it->second << std::setw(8) << std::left << it->first.discount
+                  << std::setw(20) << std::left << it->first.merchant << std::endl;
         while (flg)
         {
             input(amount);
             if (amount < 0)
                 std::cout << "不能购买负数个商品，请重新输入\n";
-            else if (amount > it.first.amount)
+            else if (amount > it->first.amount)
                 std::cout << "商家没有这么多商品，请重新输入\n";
-            else if (amount > it.second)
+            else if (amount > it->second)
                 std::cout << "不能超出购物车内数量，请重新输入\n";
             else
             {
-                it.second -= amount;
-                finalOrder.emplace_back(std::make_pair(it.first, amount));
+                finalOrder.emplace_back(std::make_pair(it->first, amount));
+                if (amount == it->second)
+                {
+                    preorder.erase(it);
+                    changeAmountOfGoods(it->first.name, it->first.merchant, it->first.type, amount);
+                }
+                else
+                    it->second -= amount;
                 flg = false;
             }
         }
     }
-    std::cout << "****************************************************************";
+    std::cout << "****************************************************************\n";
     std::cout << "最终订单如下：\n";
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
               << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left << "总价"
@@ -234,8 +244,6 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, co
         sum += total;
     }
     std::cout << "所有商品总价格为" << sum << "元\n";
-    if (sum <= balance)
-        preorder = pt;
 }
 double Order::getToatalPrice()
 {

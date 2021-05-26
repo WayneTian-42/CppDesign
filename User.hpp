@@ -62,8 +62,9 @@ class User
     void orderManagement(std::vector<GoodsInfo> &);
     void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
     void transferPayments();
-    void setOrder(std::vector<std::pair<GoodsInfo, int>> &);
-    void quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &);
+    void cancelOrder();
+    void setOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<std::pair<GoodsInfo, int>> &);
+    void quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<std::pair<GoodsInfo, int>> &);
     template <typename T> void input(T &x) const;  // ¼ì²âÊäÈë
 
     //ĞŞ¸ÄÎªset get
