@@ -191,8 +191,9 @@ void Platform::goodsInformation()
             goods->search(goodsName, showGoods);
             break;
         case 2:
-            std::cout << "请输入商品最低价格与最高价格";
+            std::cout << "请输入商品最低价格\n";
             input(priceLow);
+            std::cout << "请输入商品最高价格\n";
             input(priceHigh);
             //大小比较
             if (priceLow > priceHigh || priceLow < 0 || priceHigh < 0)

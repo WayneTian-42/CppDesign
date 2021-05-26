@@ -150,7 +150,14 @@ void User::topUpAndDown()
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
     std::cout << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
-    input(money);
+    while (1)
+    {
+        input(money);
+        if (balance + money < 0)
+            std::cout << "余额不能为负，请重新输入\n";
+        else
+            break;
+    }
     balance += money;
     accInfo[num].bala = balance;
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
