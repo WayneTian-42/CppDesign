@@ -26,9 +26,9 @@ class Platform
     void show();                                   // 展示基础界面
     void userCenter();                             // 用户中心界面
     void userRegisterOrLog();                      // 注册登录功能
-    void userInformationChange();                  // 修改用户信息
+    void userInformationChange() const;            // 修改用户信息
     void userQuit();                               // 用户退出
-    void purchaseGoods();                          // 购买商品
+    void purchaseGoods() const;                    // 购买商品，实验二
     void goodsInformation();                       // 商品信息
     void changeGoods();                            // 修改商品信息
     void definiteType();                           // 确定商品种类

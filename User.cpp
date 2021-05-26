@@ -9,7 +9,7 @@ bool AccInfo::operator==(const AccInfo &ac) const
     return (this->name == ac.name);
 };
 
-int User::search(const std::string &userName)
+int User::search(const std::string &userName) const
 {
     AccInfo tmp;
     int pos = -1;
@@ -112,7 +112,7 @@ void User::changePwd()
     std::cout << "修改成功！\n";
 }
 
-void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
+void User::confirmPwd(std::string &tmpPwd) const  //确认密码，实现用*代替字符
 {
     while (1)
     {
@@ -138,7 +138,7 @@ void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
         }
     }
 }
-double User::queryBalance()
+double User::queryBalance() const
 {
     return balance;
 }

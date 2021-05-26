@@ -114,7 +114,7 @@ void Platform::userRegisterOrLog()
             break;
     }
 }
-void Platform::userInformationChange()
+void Platform::userInformationChange() const
 {
     int choice;
     do

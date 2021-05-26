@@ -55,15 +55,15 @@ class User
         accfp.close();
     }
 
-    virtual int getUserType() = 0;                 // 纯虚函数，返回用户类型
-    int search(const std::string &userName);       // 查找用户名是否存在，若存在返回在数组中位置
-    void userRegister();                           // 用户注册
-    bool login(const int userType);                // 用户登录
-    void changePwd();                              // 修改密码
-    void confirmPwd(std::string &tmpPwd);          // 确认密码是否正确
-    double queryBalance();                         // 查询余额
-    void topUpAndDown();                           // 修改余额
-    template <typename T> void input(T &x) const;  // 检测输入
+    virtual int getUserType() = 0;                  // 纯虚函数，返回用户类型
+    int search(const std::string &userName) const;  // 查找用户名是否存在，若存在返回在数组中位置
+    void userRegister();                            // 用户注册
+    bool login(const int userType);                 // 用户登录
+    void changePwd();                               // 修改密码
+    void confirmPwd(std::string &tmpPwd) const;     // 确认密码是否正确
+    double queryBalance() const;                    // 查询余额
+    void topUpAndDown();                            // 修改余额
+    template <typename T> void input(T &x) const;   // 检测输入
 
     //修改为set get
   protected:

@@ -132,7 +132,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     copyInfo(tmp);  //将内容更新回数组
     *it = tmp;
 }
-void Goods::search(std::vector<GoodsInfo> &showGoods)
+void Goods::search(std::vector<GoodsInfo> &showGoods) const
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -155,7 +155,7 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
+void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods) const
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -177,7 +177,7 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods)
+void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods) const
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -199,7 +199,7 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
-void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
+void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods) const
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -229,7 +229,7 @@ void Goods::atDiscount(const double dis)
             st.discount = dis;
 }
 
-bool Goods::changeInt(int &number)
+bool Goods::changeInt(int &number) const
 {
     std::string tmp;
     std::getline(std::cin, tmp);
@@ -252,7 +252,7 @@ bool Goods::changeInt(int &number)
         return false;
     }
 }
-bool Goods::changeDouble(double &number)
+bool Goods::changeDouble(double &number) const
 {
     std::string tmp;
     std::getline(std::cin, tmp);
@@ -275,12 +275,12 @@ bool Goods::changeDouble(double &number)
         return false;
     }
 }
-bool Goods::isInt(const std::string &input)
+bool Goods::isInt(const std::string &input) const
 {
     std::regex rx("^[0-9]+$");  //+号表示多次匹配
     return std::regex_match(input, rx);
 }
-bool Goods::isFloat(const std::string &input)
+bool Goods::isFloat(const std::string &input) const
 {
     std::regex rx("^[0-9]+(.[0-9]+)?$");
     return std::regex_match(input, rx);
@@ -297,7 +297,7 @@ template <typename T> void Goods::input(T &x) const
         continue;
     }
 }
-void Goods::copyInfo(GoodsInfo &des)
+void Goods::copyInfo(GoodsInfo &des) const
 {
     des.name = name;
     des.merchant = merchant;
@@ -314,16 +314,16 @@ void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
     discount = sou->discount;
     discription = sou->discription;
 }
-//现在还没用
-double Foods::getPrice()
+
+double Foods::getPrice() const
 {
     return price * discount;
 }
-double Clothes::getPrice()
+double Clothes::getPrice() const
 {
     return price * discount;
 }
-double Books::getPrice()
+double Books::getPrice() const
 {
     return price * discount;
 }
