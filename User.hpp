@@ -55,7 +55,7 @@ class User
         accfp.close();
     }
 
-    virtual int getUserType() = 0;                  // 纯虚函数，返回用户类型
+    virtual int getUserType() const = 0;            // 纯虚函数，返回用户类型
     int search(const std::string &userName) const;  // 查找用户名是否存在，若存在返回在数组中位置
     void userRegister();                            // 用户注册
     bool login(const int userType);                 // 用户登录
@@ -93,7 +93,7 @@ class Consumer : public User
     virtual ~Consumer() override
     {
     }
-    virtual int getUserType() override
+    virtual int getUserType() const override
     {
         return type;
     }
@@ -115,7 +115,7 @@ class Merchant : public User
     virtual ~Merchant() override
     {
     }
-    virtual int getUserType() override
+    virtual int getUserType() const override
     {
         return type;
     }
@@ -137,7 +137,7 @@ class Admin : public User
     virtual ~Admin() override
     {
     }
-    virtual int getUserType() override
+    virtual int getUserType() const override
     {
         return type;
     }
