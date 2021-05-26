@@ -186,7 +186,7 @@ void Order::deleteGoods()
     input(number);
     preorder[pos].second += number;
 }
-void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
+void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, const int balance)
 {
     showOrder();
     if (preorder.empty())
@@ -195,7 +195,8 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
               << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
               << std::endl;
-    for (auto &it : preorder)
+    auto pt = preorder;
+    for (auto &it : pt)
     {
         int amount;
         bool flg = true;
@@ -233,6 +234,8 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
         sum += total;
     }
     std::cout << "所有商品总价格为" << sum << "元\n";
+    if (sum <= balance)
+        preorder = pt;
 }
 double Order::getToatalPrice()
 {

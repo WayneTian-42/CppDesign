@@ -205,7 +205,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                 myorder.deleteGoods();
                 break;
             case 4:
-                myorder.generateOrder(finalOrder);
+                myorder.generateOrder(finalOrder, balance);
                 transferPayments();
                 break;
             default:

@@ -31,7 +31,7 @@ class Order
     int search(const std::string &);
     void deleteGoods();
     void changeAmount();
-    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
+    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &, const int);
     double getToatalPrice();
     void clearPrice();
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
