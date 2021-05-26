@@ -86,8 +86,22 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     if (!change.empty())
         discription = change;
     std::cout << "种类（输入回车表示不修改）\n";
-    while (!changeInt(type))
+    while (1)
     {
+        int t = type;
+        if (changeInt(t))
+        {
+            if (t > 3 || t < 1)
+            {
+                std::cout << "没有该种类商品，请重新输入\n";
+                continue;
+            }
+            else
+            {
+                type = t;
+                break;
+            }
+        }
     }
     std::cout << "单价（输入回车表示不修改）\n";
     while (!changeDouble(price))
@@ -104,7 +118,10 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         if (changeDouble(dis))
         {
             if (dis > 1.0)
+            {
+                std::cout << "折扣不合理，请重新输入\n";
                 continue;
+            }
             else
             {
                 discount = dis;
@@ -212,7 +229,7 @@ void Goods::atDiscount(const double dis)
             st.discount = dis;
 }
 
-bool Goods::changeInt(int &type)
+bool Goods::changeInt(int &number)
 {
     std::string tmp;
     std::getline(std::cin, tmp);
@@ -221,21 +238,21 @@ bool Goods::changeInt(int &type)
     if (isInt(tmp))
     {
         int t = std::stoi(tmp);
-        if (t < 1 || t > 3)
+        /* if (t < 0)
         {
-            std::cout << "输入不合法，没有该种类商品！\n";
+            std::cout << "输入不合法，请输入正数！\n";
             return false;
-        }
-        type = t;
+        } */
+        number = t;
         return true;
     }
     else
     {
-        std::cout << "输入不合法，请输入数字！\n";
+        std::cout << "输入不合法，请输入正数！\n";
         return false;
     }
 }
-bool Goods::changeDouble(double &type)
+bool Goods::changeDouble(double &number)
 {
     std::string tmp;
     std::getline(std::cin, tmp);
@@ -244,12 +261,12 @@ bool Goods::changeDouble(double &type)
     if (isFloat(tmp))
     {
         double t = std::stod(tmp);
-        if (t < 0.0)
+        /* if (t < 0.0)
         {
             std::cout << "输入不合法，请输入正数！\n";
             return false;
-        }
-        type = t;
+        } */
+        number = t;
         return true;
     }
     else
