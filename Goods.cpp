@@ -55,13 +55,13 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     copyInfo(tmp);
     goodsInfo.emplace_back(tmp);
 }
-//改成把该商家商品全部显示
+
 void Goods::changeItems(const std::string &goodsName, const std::string &merchant)
 {
     name = goodsName;
     this->merchant = merchant;
     GoodsInfo tmp;
-    copyInfo(tmp);
+    copyInfo(tmp);  // 当前信息拷贝到tmp中，然后查找
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it == goodsInfo.end())
     {
@@ -74,8 +74,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         return;
     }
     copyInfo(it);
-    //更改为用户可选修改哪些内容，没有检测非法输入
-    getchar();
+    getchar();  // 读入上一次输入的回车，防止干扰下面的输入
     std::string change;
     std::cout << "请修改商品信息：\n"
               << "名称（输入回车表示不修改）\n";
@@ -90,23 +89,14 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     while (!changeInt(type))
     {
     }
-    /* std::getline(std::cin, change);
-    if (!change.empty())
-        type = std::stoi(change); */
     std::cout << "单价（输入回车表示不修改）\n";
     while (!changeDouble(price))
     {
     }
-    /* std::getline(std::cin, change);
-    if (!change.empty())
-        price = std::stod(change); */
     std::cout << "数量（输入回车表示不修改）\n";
     while (!changeInt(amount))
     {
     }
-    /* std::getline(std::cin, change);
-    if (!change.empty())
-        amount = std::stoi(change); */
     std::cout << "折扣（输入回车表示不修改）\n";
     while (1)
     {
@@ -122,10 +112,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
             }
         }
     }
-    /* std::getline(std::cin, change);
-    if (!change.empty())
-        discount = std::stod(change); */
-    copyInfo(tmp);
+    copyInfo(tmp);  //将内容更新回数组
     *it = tmp;
 }
 void Goods::search(std::vector<GoodsInfo> &showGoods)
@@ -133,9 +120,9 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
     int flg = 0;
     for (auto st : goodsInfo)
     {
-        // type > st.type就可以break了
         if (st.type == type)
         {
+            // 格式化输出
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
                           << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
@@ -221,12 +208,8 @@ void Goods::atDiscount(const double dis)
 {
     int begin = num;
     for (auto &st : goodsInfo)
-    {
         if (st.type == type)
-        {
             st.discount = dis;
-        }
-    }
 }
 
 bool Goods::changeInt(int &type)
@@ -315,15 +298,15 @@ void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
     discription = sou->discription;
 }
 //现在还没用
-double Foods::getPrice(const std::string &name)
+double Foods::getPrice()
 {
     return price * discount;
 }
-double Clothes::getPrice(const std::string &name)
+double Clothes::getPrice()
 {
     return price * discount;
 }
-double Books::getPrice(const std::string &name)
+double Books::getPrice()
 {
     return price * discount;
 }

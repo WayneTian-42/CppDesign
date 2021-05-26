@@ -13,7 +13,6 @@ void Platform::show()
                   << "3. 商品信息修改（针对商家）\n"
                   << "其他数字 退出平台" << std::endl;
         input(action);
-        // system("clear");
         switch (action)
         {
             case 1:
@@ -34,9 +33,9 @@ void Platform::show()
 }
 void Platform::userCenter()
 {
-    if (name.empty())
+    if (name.empty())  // 未登录情况下只能注册或登录
         userRegisterOrLog();
-    else
+    else  // 已登录
     {
         int choice;
         do
@@ -74,7 +73,7 @@ void Platform::userRegisterOrLog()
         std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
                   << "1表示顾客，2表示商家\n";
         input(type);
-        if (type > 2 || type < 0 || (type == 0 && choice == 1))
+        if (type > 2 || type < 0 || (type == 0 && choice == 1))  // 只有登录时能选择管理员类型
         {
             std::cout << "没有该类型账户，已退出\n";
             return;
@@ -105,7 +104,7 @@ void Platform::userRegisterOrLog()
             name.clear();
             break;
         case 2:
-            if (!user->login(type))
+            if (!user->login(type))  // 登录失败情况下
             {
                 freeUser();
                 name.clear();
@@ -114,15 +113,9 @@ void Platform::userRegisterOrLog()
         default:
             break;
     }
-    // user->save();
 }
 void Platform::userInformationChange()
 {
-    /* if (name.empty())
-    {
-        std::cout << "请登录后操作\n";
-        return;
-    } */
     int choice;
     do
     {
@@ -141,13 +134,12 @@ void Platform::userInformationChange()
                 std::cout << name << "，您当前账户余额为" << user->queryBalance() << "元\n";
                 break;
             case 3:
-                user->topUp();
+                user->topUpAndDown();
                 break;
             default:
                 break;
         }
     } while (choice > 0 && choice < 4);
-    // freeUser();
 }
 void Platform::userQuit()
 {
@@ -187,7 +179,10 @@ void Platform::goodsInformation()
             input(priceLow);
             input(priceHigh);
             //大小比较
-            goods->search(priceLow, priceHigh, showGoods);
+            if (priceLow > priceHigh || priceLow < 0 || priceHigh < 0)
+                std::cout << "输入错误，已退出！\n";
+            else
+                goods->search(priceLow, priceHigh, showGoods);
             break;
         case 3:
             std::cout << "请输入商品最小数量";
@@ -197,6 +192,7 @@ void Platform::goodsInformation()
         default:
             break;
     }
+    // 实验二
     /*  std::cout << "请选择操作：\n "
                << "1. 购买商品\n"
                << "其他数字 退出\n"
@@ -211,7 +207,8 @@ void Platform::goodsInformation()
 }
 void Platform::changeGoods()
 {
-    if (/* name.empty() ||  */ user->getUserType() == 1)
+    // 未登录情况下
+    if (name.empty() || user->getUserType() == 1)
     {
         std::cout << "请登入商家账号后进行该操作！\n";
         return;
@@ -231,7 +228,7 @@ void Platform::changeGoods()
             definiteType();
             if (choice)
             {
-                std::cout << "输入商品名称";
+                std::cout << "输入商品名称\n";
                 std::cin >> goodsName;
             }
         }
@@ -299,7 +296,7 @@ template <typename T> void Platform::input(T &x) const
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "输入不合法，请输入整型数字\n";
+        std::cout << "输入不合法，请输入数字\n";
         std::cin >> x;
         continue;
     }
