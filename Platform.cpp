@@ -76,15 +76,15 @@ void Platform::userRegisterOrLog()
     std::string operation[2] = {"注册", "登录"};
     if (choice == 1 || choice == 2)
     {
-        std::cout << "请输入" << operation[choice - 1] << "的账户类型：\n"
+        std::cout << "请输入" << operation[choice - 1] << "的用户类型：\n"
                   << "1表示顾客，2表示商家\n";
         input(type);
         if (type > 2 || type < 0 || (type == 0 && choice == 1))  // 只有登录时能选择管理员类型
         {
-            std::cout << "没有该类型账户，已退出\n";
+            std::cout << "没有该类型用户，已退出\n";
             return;
         }
-        std::cout << "输入账户名：\n";
+        std::cout << "输入用户名：\n";
         std::cin >> name;
         freeUser();
         switch (type)
@@ -191,15 +191,21 @@ void Platform::goodsInformation()
             goods->search(goodsName, showGoods);
             break;
         case 2:
-            std::cout << "请输入商品最低价格\n";
-            input(priceLow);
-            std::cout << "请输入商品最高价格\n";
-            input(priceHigh);
-            //大小比较
-            if (priceLow > priceHigh || priceLow < 0 || priceHigh < 0)
-                std::cout << "输入错误，已退出！\n";
-            else
-                goods->search(priceLow, priceHigh, showGoods);
+            while (1)
+            {
+                std::cout << "请输入商品最低价格\n";
+                input(priceLow);
+                std::cout << "请输入商品最高价格\n";
+                input(priceHigh);
+                //大小比较
+                if (priceLow > priceHigh || priceLow < 0 || priceHigh < 0)
+                    std::cout << "输入错误，请重新输入！\n";
+                else
+                {
+                    goods->search(priceLow, priceHigh, showGoods);
+                    break;
+                }
+            }
             break;
         case 3:
             std::cout << "请输入商品最小数量";

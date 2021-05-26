@@ -77,7 +77,7 @@ bool User::login(const int userType)
     }
     else
     {
-        std::cout << "账号不存在!\n";
+        std::cout << "用户不存在!\n";
         return false;
     }
 }
@@ -85,7 +85,7 @@ void User::changePwd()
 {
     if (search(name) == -1)
     {
-        std::cout << "账号不存在！";
+        std::cout << "用户不存在！";
         return;
     }
     std::string pwd;
