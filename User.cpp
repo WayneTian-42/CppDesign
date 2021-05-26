@@ -12,11 +12,11 @@ bool AccInfo::operator==(const AccInfo &ac) const
     return (this->name == ac.name);
 };
 
-int User::search(const std::string &name)
+int User::search(const std::string &userName)
 {
     AccInfo tmp;
     int pos = -1;
-    tmp.name = name;
+    tmp.name = userName;
     auto st = std::find(accInfo.begin(), accInfo.end(), tmp);
     if (st != accInfo.end())
         pos = st - accInfo.begin();
@@ -39,7 +39,7 @@ void User::userRegister()
         confirmPwd(tmp.pwd);
         std::cout << "请再次输入密码确认:\n";
         confirmPwd(confirm);
-        if (tmp.pwd == confirm)
+        if (tmp.pwd == confirm)  // 直至两次密码相同才设定成功
             break;
     }
     tmp.t = type;
@@ -47,12 +47,12 @@ void User::userRegister()
     accInfo.emplace_back(tmp);
     std::cout << "注册成功!\n";
 }
-bool User::login(const int type)
+bool User::login(const int userType)
 {
     int pos = search(name);
     if (pos != -1)
     {
-        if (accInfo[pos].t != type)
+        if (accInfo[pos].t != userType)
         {
             std::cout << "用户类型错误，请退出重新选择！\n";
             return false;
@@ -69,7 +69,7 @@ bool User::login(const int type)
         {
             std::cout << "登录成功!\n";
             password = pwd;
-            this->type = type;
+            this->type = userType;
             balance = accInfo[pos].bala;
             num = pos;
             return true;
@@ -115,37 +115,37 @@ void User::changePwd()
     std::cout << "修改成功！\n";
 }
 
-void User::confirmPwd(std::string &pwd)
+void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
 {
     while (1)
     {
         char ch;
-        ch = _getch();
-        if (ch == VK_BACK)
+        ch = _getch();      //读取一个字符并且不显示到屏幕上
+        if (ch == VK_BACK)  //输入backspace
         {
-            if (!pwd.empty())
+            if (!tmpPwd.empty())
             {
                 std::cout << "\b \b" << std::flush;
-                pwd.erase(pwd.length() - 1);
+                tmpPwd.erase(tmpPwd.length() - 1);  // 清除掉读入的上一个字符
             }
         }
-        else if (ch == VK_RETURN)
+        else if (ch == VK_RETURN)  // 输入回车
         {
             std::cout << std::endl;
             break;
         }
         else
         {
-            pwd += ch;
-            _putch('*');
+            tmpPwd += ch;  // 读入字符
+            _putch('*');   // 输出*
         }
     }
 }
-double User::queryBalance(const double consume)
+double User::queryBalance()
 {
     return balance;
 }
-void User::topUp()
+void User::topUpAndDown()
 {
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
