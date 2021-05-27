@@ -3,3 +3,5 @@ hb wjw 1 3200
 wjw hb 2 262
 张三 qwer 1 66
 李四 321abc 2 200
+kzy  1 0
+lzy gg 1 10000

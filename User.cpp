@@ -21,7 +21,7 @@ int User::search(const std::string &userName) const
 }
 void User::userRegister()
 {
-    if (search(name) == -1)
+    if (search(name) != -1)
     {
         std::cout << "该用户名已存在！\n";
         return;

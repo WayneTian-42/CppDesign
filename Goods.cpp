@@ -24,7 +24,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
         return;
     }
     std::cout << "请输入商品描述\n";
-    std::cin >> discount;
+    std::cin >> discription;
     std::cout << "请输入商品单价\n";
     while (1)
     {
@@ -47,11 +47,12 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     while (1)
     {
         input(discount);
-        if (discount > 0)
+        if (discount > 0 && discount <= 1)
             break;
         else
-            std::cout << "请重新输入一个正数！\n";
+            std::cout << "请重新输入一个0至1之间的数！\n";
     }
+    std::cout << "添加成功！\n";
     copyInfo(tmp);
     goodsInfo.emplace_back(tmp);
 }

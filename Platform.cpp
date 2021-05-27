@@ -29,7 +29,7 @@ void Platform::show()
         }
         std::cout << std::endl;
     } while (action > 0 && action < 4);
-    std::cout << "感谢使用！\n" << std::endl;
+    std::cout << "感谢使用！" << std::endl;
 }
 void Platform::userCenter()
 {
@@ -230,7 +230,7 @@ void Platform::changeGoods()
                   << "其他数字 退出\n";
         input(choice);
         std::string goodsName;
-        if (choice >= 0 && choice < 3)
+        if ((choice > 0 && choice < 3) || (choice == 0 && user->getUserType() == 0))
         {
             definiteType();
             if (choice)
@@ -245,7 +245,7 @@ void Platform::changeGoods()
                 if (user->getUserType())
                 {
                     std::cout << "没有权限!\n";
-                    return;
+                    break;
                 }
                 std::cout << "请输入要给出的折扣(用小数表示，0-1之间):\n";
                 input(dis);
