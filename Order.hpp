@@ -9,13 +9,13 @@ class Order
     Order()
     {
         goods = new Foods();
-        goods->updateInfo(preorder);
+        goods->updateInfo(shoppingCart);
         delete goods;
         goods = new Clothes();
-        goods->updateInfo(preorder);
+        goods->updateInfo(shoppingCart);
         delete goods;
         goods = new Books();
-        goods->updateInfo(preorder);
+        goods->updateInfo(shoppingCart);
         delete goods;
         goods = nullptr;
     }
@@ -27,7 +27,7 @@ class Order
     void chooseGoods(std::vector<GoodsInfo> &, GoodsInfo &);
     void chooseAmount(const GoodsInfo &);
     void addGoods(const GoodsInfo &, const int);
-    void showOrder();
+    void showShoppingCart();
     int search(const std::string &);
     void deleteGoods();
     void changeAmount();
@@ -35,8 +35,8 @@ class Order
     double getToatalPrice();
     void clearPrice();
     void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
-    void setOrder(std::vector<std::pair<GoodsInfo, int>> &);
-    void getPreorder(std::vector<std::pair<GoodsInfo, int>> &);
+    void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
+    void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     // void transferPayments();
 
     void setName(const std::string &);
@@ -45,7 +45,7 @@ class Order
     template <typename T> void input(T &) const;
 
   private:
-    std::vector<std::pair<GoodsInfo, int>> preorder;
+    std::vector<std::pair<GoodsInfo, int>> shoppingCart;
     Goods *goods;
     std::string name;
     int lineNum;

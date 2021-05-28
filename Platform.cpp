@@ -117,10 +117,13 @@ void Platform::userRegisterOrLog()
             }
             else
             {
-                auto mt = orderInfo.find(name);
+                auto mt = shoppingCart.find(name);
                 // auto st =
-                if (mt != orderInfo.end())
-                    user->setOrder(mt->second);
+                if (mt != shoppingCart.end())
+                    user->setShoppingCart(mt->second);
+                mt = finalOrder.find(name);
+                if (mt != finalOrder.end())
+                    user->setFinalOrder(mt->second);
             }
             break;
         default:
@@ -157,9 +160,11 @@ void Platform::userInformationChange() const
 void Platform::userQuit()
 {
     std::cout << "ÒÑÍË³ö£¡\n";
-    std::vector<std::pair<GoodsInfo, int>> tmp1, tmp2;
-    user->quitToGetOrder(tmp1, tmp2);
-    orderInfo.insert(std::make_pair(name, tmp1));
+    std::vector<std::pair<GoodsInfo, int>> shoppingcart, order;
+    user->getShoppingCart(shoppingcart);
+    shoppingCart.insert(std::make_pair(name, shoppingcart));
+    user->getFinalOrder(order);
+    finalOrder.insert(std::make_pair(name, order));
     name.clear();
     showGoods.clear();
     freeUser();

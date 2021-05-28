@@ -99,7 +99,7 @@ void Order::chooseAmount(const GoodsInfo &good)
 void Order::addGoods(const GoodsInfo &good, const int num)
 {
     bool flg = true;
-    for (auto &it : preorder)
+    for (auto &it : shoppingCart)
     {
         // 种类
         if (it.first.name == good.name && it.first.merchant == good.merchant)
@@ -110,33 +110,32 @@ void Order::addGoods(const GoodsInfo &good, const int num)
         }
     }
     if (flg)
-        preorder.emplace_back(std::make_pair(good, num));
+        shoppingCart.emplace_back(std::make_pair(good, num));
 }
-void Order::showOrder()
+void Order::showShoppingCart()
 {
-    if (preorder.empty())
+    if (shoppingCart.empty())
     {
         std::cout << "购物车已清空！\n";
         return;
     }
     std::cout << "购物车如下：\n";
-    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
-              << std::endl;
-    for (auto it : preorder)
+    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "现价" << std::setw(8)
+              << std::left << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
+    for (auto it : shoppingCart)
     {
-        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
-                  << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
-                  << std::setw(20) << std::left << it.first.merchant << std::endl;
+        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
+                  << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
+                  << std::left << it.first.merchant << std::endl;
     }
 }
 int Order::search(const std::string &name)
 {
     int pos;
     std::vector<int> num;
-    for (int i = 0; i < preorder.size(); i++)
+    for (int i = 0; i < shoppingCart.size(); i++)
     {
-        if (preorder[i].first.name == name)
+        if (shoppingCart[i].first.name == name)
         {
             pos = i;
             num.emplace_back(i);
@@ -154,7 +153,7 @@ int Order::search(const std::string &name)
             std::cin >> merchant;
             for (int i = 0; i < num.size(); i++)
             {
-                if (preorder[num[i]].first.merchant == merchant)
+                if (shoppingCart[num[i]].first.merchant == merchant)
                 {
                     pos = i;
                     flg = true;
@@ -170,8 +169,8 @@ int Order::search(const std::string &name)
 void Order::deleteGoods()
 {
     definiteType();
-    showOrder();
-    if (preorder.empty())
+    showShoppingCart();
+    if (shoppingCart.empty())
     {
         std::cout << "不能修改，已退出！\n";
         return;
@@ -185,22 +184,22 @@ void Order::deleteGoods()
         std::cout << "没有该商品，已退出\n";
         return;
     }
-    std::cout << name << "数量为" << preorder[pos].second << std::endl;
+    std::cout << name << "数量为" << shoppingCart[pos].second << std::endl;
     std::cout << "请输入要修改的数量（正数表示增加，负数表示）";
     int number;
     input(number);
-    preorder[pos].second += number;
+    shoppingCart[pos].second += number;
 }
 void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
 {
-    showOrder();
-    if (preorder.empty())
+    showShoppingCart();
+    if (shoppingCart.empty())
         return;
     std::cout << "请输入每种商品要购买的数量\n";
     std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
               << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
               << std::endl;
-    for (auto it = preorder.begin(); !preorder.empty() && it != preorder.end(); it++)
+    for (auto it = shoppingCart.begin(); !shoppingCart.empty() && it != shoppingCart.end(); it++)
     {
         int amount;
         bool flg = true;
@@ -221,7 +220,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
                 finalOrder.emplace_back(std::make_pair(it->first, amount));
                 if (amount == it->second)
                 {
-                    preorder.erase(it);
+                    shoppingCart.erase(it);
                     changeAmountOfGoods(it->first.name, it->first.merchant, it->first.type, amount);
                 }
                 else
@@ -260,13 +259,13 @@ void Order::changeAmountOfGoods(const std::string &name, const std::string &merc
     goods->changeAmountOfGoods(name, merchant, type, amount);
     freeGoods();
 }
-void Order::setOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+void Order::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)
 {
-    preorder = tmp;
+    shoppingCart = tmp;
 }
-void Order::getPreorder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+void Order::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)
 {
-    tmp = preorder;
+    tmp = shoppingCart;
 }
 /* void Order::transferPayments()
 {

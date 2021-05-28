@@ -60,11 +60,15 @@ class User
     double queryBalance() const;                    // 查询余额
     void topUpAndDown();                            // 修改余额
     void orderManagement(std::vector<GoodsInfo> &);
-    void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
+
     void transferPayments();
+    void showOrder();
     void cancelOrder();
-    void setOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<std::pair<GoodsInfo, int>> &);
-    void quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<std::pair<GoodsInfo, int>> &);
+    void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);  // 获取购物车
+    void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
+    void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);  // 获取订单
+    void setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
+
     template <typename T> void input(T &x) const;  // 检测输入
 
     //修改为set get

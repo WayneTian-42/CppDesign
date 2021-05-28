@@ -201,8 +201,9 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                   << "2. 展示购物车\n"
                   << "3. 修改购物车信息\n"
                   << "4. 生成订单\n"
-                  << "5. 支付订单\n"
-                  << "6. 取消订单\n"
+                  << "5. 展示订单\n"
+                  << "6. 支付订单\n"
+                  << "7. 取消订单\n"
                   << "其他数字 退出\n";
         input(choice);
         if (choice < 1 || choice > 6)
@@ -213,7 +214,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                 myorder.preAddGoods(showGoods);
                 break;
             case 2:
-                myorder.showOrder();
+                myorder.showShoppingCart();
                 break;
             case 3:
                 myorder.deleteGoods();
@@ -225,14 +226,34 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                     std::cout << "请支付上一个订单后再生成订单!\n";
                 break;
             case 5:
-                transferPayments();
+                showOrder();
                 break;
             case 6:
+                transferPayments();
+                break;
+            case 7:
                 cancelOrder();
                 break;
             default:
                 break;
         }
+    }
+}
+void User::showOrder()
+{
+    if (finalOrder.empty())
+    {
+        std::cout << "没有订单！\n";
+        return;
+    }
+    std::cout << "您的订单如下：\n";
+    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
+              << std::left << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
+    for (auto it : finalOrder)
+    {
+        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
+                  << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
+                  << std::left << it.first.merchant << std::endl;
     }
 }
 void User::cancelOrder()
@@ -244,11 +265,6 @@ void User::cancelOrder()
     }
     for (auto it : finalOrder)
         myorder.changeAmountOfGoods(it.first.name, it.first.merchant, it.first.type, -it.second);
-}
-// 啥用？
-void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &des)
-{
-    des = finalOrder;
 }
 template <typename T> void User::input(T &x) const
 {
@@ -262,13 +278,21 @@ template <typename T> void User::input(T &x) const
         continue;
     }
 }
-void User::setOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+void User::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &dest)
 {
-    myorder.setOrder(tmp);
+    myorder.getShoppingCart(dest);
 }
-void User::quitToGetOrder(std::vector<std::pair<GoodsInfo, int>> &tmp)
+void User::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &sou)
 {
-    myorder.getPreorder(tmp);
+    myorder.setShoppingCart(sou);
+}
+void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &dest)
+{
+    dest = finalOrder;
+}
+void User::setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &sou)
+{
+    finalOrder = sou;
 }
 /* void User::exchangeMoney(const std::string &merchant, const double total)
 {

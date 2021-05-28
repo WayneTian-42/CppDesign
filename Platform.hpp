@@ -39,6 +39,6 @@ class Platform
     Goods *goods;                      // 商品指针
     std::vector<GoodsInfo> showGoods;  // 展示的商品,用于实验二
     //保存订单数据
-    std::map<std::string, std::vector<std::pair<GoodsInfo, int>>> orderInfo, shopInfo;
+    std::map<std::string, std::vector<std::pair<GoodsInfo, int>>> shoppingCart, finalOrder;
     std::vector<std::pair<GoodsInfo, int>> changeInfo;
 };

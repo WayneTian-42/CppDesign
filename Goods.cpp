@@ -143,13 +143,14 @@ void Goods::search(std::vector<GoodsInfo> &showGoods) const
             // 格式化输出
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
+                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
+                          << "商家" << std::endl;
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
-                      << std::endl;
+                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount
+                      << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
@@ -167,13 +168,14 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods) c
         {
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
+                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
+                          << "商家" << std::endl;
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
-                      << std::endl;
+                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount
+                      << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
@@ -191,13 +193,14 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
         {
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
+                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
+                          << "商家" << std::endl;
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
-                      << std::endl;
+                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount
+                      << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
@@ -215,13 +218,14 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods) const
         {
             if (!flg)
                 std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "价格" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "数量" << std::setw(20) << std::left << "商家" << std::endl;
+                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
+                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
+                          << "商家" << std::endl;
             flg++;
             std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
                       << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.amount << std::setw(20) << std::left << st.merchant
-                      << std::endl;
+                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount
+                      << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
