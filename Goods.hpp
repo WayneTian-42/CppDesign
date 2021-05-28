@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <map>
 #include <string>
 #include <vector>
 // #include <set>
@@ -15,6 +16,7 @@ struct GoodsInfo
     std::string name, merchant, discription;
     double price, discount;
     int type, amount;
+    std::map<std::string, int> sold;
     bool operator==(const GoodsInfo &) const;
 };
 /**
@@ -36,6 +38,7 @@ class Goods  // 构造函数，读入商品数据
         while (goofp.peek() != EOF)
         {
             GoodsInfo goodTemp;
+            // goodTemp.sold = 0;
             goofp >> goodTemp.type >> goodTemp.name >> goodTemp.discription >> goodTemp.amount >> goodTemp.price >>
                 goodTemp.discount >> goodTemp.merchant;
             if (goodTemp.name.empty())  // 略过空行
@@ -65,7 +68,8 @@ class Goods  // 构造函数，读入商品数据
     void search(const double, const double, std::vector<GoodsInfo> &) const;  // 重载，按价格查找商品
     void search(const int, std::vector<GoodsInfo> &) const;                   // 重载，按数量查找商品
     void atDiscount(const double);                                            // 对某种类商品打折
-    void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
+    void preorderGoods(const std::string &, const std::string &, const std::string &, const int);
+    void soldOut(const std::string &);
     //更新订单内商品剩余数量
     void updateInfo(std::vector<std::pair<GoodsInfo, int>> &);
     bool isInt(const std::string &) const;                    // 正则表达式判断输入是否为int类型
@@ -79,6 +83,7 @@ class Goods  // 构造函数，读入商品数据
     int type, amount;
     double price, discount;
     std::vector<GoodsInfo> goodsInfo;
+    std::map<std::string, int> consumerBuy;  //保存被订单锁住的数量
 
   private:
     std::fstream goofp;

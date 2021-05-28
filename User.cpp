@@ -264,7 +264,7 @@ void User::cancelOrder()
         return;
     }
     for (auto it : finalOrder)
-        myorder.changeAmountOfGoods(it.first.name, it.first.merchant, it.first.type, -it.second);
+        myorder.preorderGoods(it.first.name, it.first.merchant, 0);
 }
 template <typename T> void User::input(T &x) const
 {

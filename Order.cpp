@@ -221,7 +221,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
                 if (amount == it->second)
                 {
                     shoppingCart.erase(it);
-                    changeAmountOfGoods(it->first.name, it->first.merchant, it->first.type, amount);
+                    preorderGoods(it->first.name, it->first.merchant, amount);
                 }
                 else
                     it->second -= amount;
@@ -252,11 +252,30 @@ void Order::clearPrice()
 {
     sum = 0;
 }
-void Order::changeAmountOfGoods(const std::string &name, const std::string &merchant, const int type, const int amount)
+void Order::preorderGoods(const std::string &goodsName, const std::string &merchant, const int amount)
 {
     freeGoods();
+    goods = new Foods();
+    goods->preorderGoods(goodsName, merchant, name, amount);
+    freeGoods();
+    goods = new Clothes();
+    goods->preorderGoods(goodsName, merchant, name, amount);
+    freeGoods();
     goods = new Books();
-    goods->changeAmountOfGoods(name, merchant, type, amount);
+    goods->preorderGoods(goodsName, merchant, name, amount);
+    freeGoods();
+}
+void Order::soldOut()
+{
+    freeGoods();
+    goods = new Foods();
+    goods->soldOut(name);
+    freeGoods();
+    goods = new Clothes();
+    goods->soldOut(name);
+    freeGoods();
+    goods = new Books();
+    goods->soldOut(name);
     freeGoods();
 }
 void Order::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)

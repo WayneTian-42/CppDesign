@@ -34,7 +34,8 @@ class Order
     void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
     double getToatalPrice();
     void clearPrice();
-    void changeAmountOfGoods(const std::string &, const std::string &, const int, const int);
+    void preorderGoods(const std::string &, const std::string &, const int);
+    void soldOut();
     void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     // void transferPayments();
