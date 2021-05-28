@@ -264,9 +264,7 @@ void Goods::preorderGoods(const std::string &name, const std::string &merchant, 
     tmp.type = type;
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it != goodsInfo.end())
-        it->sold.insert(std::make_pair(consumer, amount));
-    else
-        std::cout << "error\n";
+        it->sold[consumer] = amount;
 }
 void Goods::soldOut(const std::string &consumer)
 {

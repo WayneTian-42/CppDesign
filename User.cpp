@@ -206,7 +206,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                   << "7. 取消订单\n"
                   << "其他数字 退出\n";
         input(choice);
-        if (choice < 1 || choice > 6)
+        if (choice < 1 || choice > 7)
             return;
         switch (choice)
         {
@@ -265,6 +265,7 @@ void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
+    std::cout << "订单已取消！\n";
 }
 template <typename T> void User::input(T &x) const
 {
