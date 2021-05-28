@@ -59,11 +59,11 @@ class User
     void confirmPwd(std::string &tmpPwd) const;     // 确认密码是否正确
     double queryBalance() const;                    // 查询余额
     void topUpAndDown();                            // 修改余额
-    void orderManagement(std::vector<GoodsInfo> &);
+    void orderManagement(std::vector<GoodsInfo> &, std::vector<GoodsInfo> &);
 
     void transferPayments();
     void showOrder();
-    void cancelOrder();
+    void cancelOrder(std::vector<GoodsInfo> &);
     void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);  // 获取购物车
     void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);  // 获取订单

@@ -264,12 +264,13 @@ void Goods::preorderGoods(const std::string &name, const std::string &merchant, 
     tmp.type = type;
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it != goodsInfo.end())
+        it->sold.insert(std::make_pair(consumer, amount));
+    else
         std::cout << "error\n";
-    it->sold.insert(std::make_pair(consumer, amount));
 }
 void Goods::soldOut(const std::string &consumer)
 {
-    for (auto gt : goodsInfo)
+    for (auto &gt : goodsInfo)
     {
         gt.amount -= gt.sold[consumer];
         gt.sold.erase(consumer);
@@ -373,7 +374,17 @@ void Goods::copyInfo(const std::vector<GoodsInfo>::iterator &sou)
     discount = sou->discount;
     discription = sou->discription;
 }
-
+void Goods::getGoods(std::vector<GoodsInfo> &des) const
+{
+    des = goodsInfo;
+}
+void Goods::setGoods(const std::vector<GoodsInfo> &sou)
+{
+    for (int i = 0; i < sou.size(); i++)
+    {
+        goodsInfo[i].sold = sou[i].sold;
+    }
+}
 double Foods::getPrice() const
 {
     return price * discount;

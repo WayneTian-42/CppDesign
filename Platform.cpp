@@ -57,7 +57,7 @@ void Platform::userCenter()
                     userQuit();
                     return;
                 case 3:
-                    user->orderManagement(showGoods);
+                    user->orderManagement(showGoods, allGoods);
                     break;
                 default:
                     break;
@@ -186,6 +186,8 @@ void Platform::goodsInformation()
         definiteType();
     else
         return;
+    goods->setGoods(allGoods);
+    goods->getGoods(allGoods);
     switch (choice)
     {
         case 0:
@@ -229,7 +231,7 @@ void Platform::goodsInformation()
                   << std::endl;
         std::cin >> choice;
         if (choice == 1)
-            user->orderManagement(showGoods);
+            user->orderManagement(showGoods, allGoods);
     }
     // 实验二
     /*  std::cout << "请选择操作：\n "
@@ -239,6 +241,7 @@ void Platform::goodsInformation()
      std::cin >> choice;
      if (choice == 1)
          purchaseGoods(); */
+    goods->getGoods(allGoods);
     freeGoods();
     //清空vector
     std::vector<GoodsInfo> tmp;
@@ -265,6 +268,8 @@ void Platform::changeGoods()
         if ((choice > 0 && choice < 3) || (choice == 0 && user->getUserType() == 0))
         {
             definiteType();
+            goods->setGoods(allGoods);
+            goods->getGoods(allGoods);
             if (choice)
             {
                 std::cout << "输入商品名称\n";
@@ -298,6 +303,7 @@ void Platform::changeGoods()
                 break;
         }
     } while (choice > 0 && choice < 3);
+    goods->getGoods(allGoods);
     freeGoods();
 }
 void Platform::definiteType()

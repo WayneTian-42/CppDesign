@@ -5,9 +5,10 @@
 #include <vector>
 
 // goodsø…“‘…æ≥˝µÙ
-void Order::preAddGoods(std::vector<GoodsInfo> &showGoods)
+void Order::preAddGoods(std::vector<GoodsInfo> &showGoods, std::vector<GoodsInfo> &goodsInfo)
 {
     definiteType();
+    goods->setGoods(goodsInfo);
     goods->search(showGoods);
     GoodsInfo good;
     chooseGoods(showGoods, good);
@@ -190,7 +191,7 @@ void Order::deleteGoods()
     input(number);
     shoppingCart[pos].second += number;
 }
-void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
+void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, std::vector<GoodsInfo> &goodsInfo)
 {
     showShoppingCart();
     if (shoppingCart.empty())
@@ -219,12 +220,10 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder)
             {
                 finalOrder.emplace_back(std::make_pair(it->first, amount));
                 if (amount == it->second)
-                {
                     shoppingCart.erase(it);
-                    preorderGoods(it->first.name, it->first.merchant, amount);
-                }
                 else
                     it->second -= amount;
+                preorderGoods(goodsInfo, it->first.name, it->first.merchant, amount);
                 flg = false;
             }
         }
@@ -252,30 +251,43 @@ void Order::clearPrice()
 {
     sum = 0;
 }
-void Order::preorderGoods(const std::string &goodsName, const std::string &merchant, const int amount)
+void Order::preorderGoods(std::vector<GoodsInfo> &goodsInfo, const std::string &goodsName, const std::string &merchant,
+                          const int amount)
 {
     freeGoods();
     goods = new Foods();
+    goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
+    goods->getGoods(goodsInfo);
     freeGoods();
     goods = new Clothes();
+    goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
+    goods->getGoods(goodsInfo);
     freeGoods();
     goods = new Books();
+    goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
+    goods->getGoods(goodsInfo);
     freeGoods();
 }
-void Order::soldOut()
+void Order::soldOut(std::vector<GoodsInfo> &goodsInfo)
 {
     freeGoods();
     goods = new Foods();
+    goods->setGoods(goodsInfo);
     goods->soldOut(name);
+    goods->getGoods(goodsInfo);
     freeGoods();
     goods = new Clothes();
+    goods->setGoods(goodsInfo);
     goods->soldOut(name);
+    goods->getGoods(goodsInfo);
     freeGoods();
     goods = new Books();
+    goods->setGoods(goodsInfo);
     goods->soldOut(name);
+    goods->getGoods(goodsInfo);
     freeGoods();
 }
 void Order::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)

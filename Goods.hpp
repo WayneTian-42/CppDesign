@@ -77,6 +77,8 @@ class Goods  // 构造函数，读入商品数据
     template <typename T> void input(T &) const;              //检测非法输入
     void copyInfo(GoodsInfo &) const;                         //将类中数据成员信息拷贝到临时变量中
     void copyInfo(const std::vector<GoodsInfo>::iterator &);  //将数组中数据成员信息拷贝到数据成员中
+    void getGoods(std::vector<GoodsInfo> &) const;
+    void setGoods(const std::vector<GoodsInfo> &);
 
   protected:
     std::string name, merchant, discription;

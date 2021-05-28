@@ -23,7 +23,7 @@ class Order
     {
         freeGoods();
     }
-    void preAddGoods(std::vector<GoodsInfo> &);
+    void preAddGoods(std::vector<GoodsInfo> &, std::vector<GoodsInfo> &);
     void chooseGoods(std::vector<GoodsInfo> &, GoodsInfo &);
     void chooseAmount(const GoodsInfo &);
     void addGoods(const GoodsInfo &, const int);
@@ -31,11 +31,11 @@ class Order
     int search(const std::string &);
     void deleteGoods();
     void changeAmount();
-    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &);
+    void generateOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<GoodsInfo> &);
     double getToatalPrice();
     void clearPrice();
-    void preorderGoods(const std::string &, const std::string &, const int);
-    void soldOut();
+    void preorderGoods(std::vector<GoodsInfo> &, const std::string &, const std::string &, const int);
+    void soldOut(std::vector<GoodsInfo> &);
     void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
     // void transferPayments();
@@ -57,6 +57,6 @@ class Order
 1 2 1
 hb wjw
 1 3 1 1
-雪糕 200
-4 200
+雪糕 20
+4 20
 */

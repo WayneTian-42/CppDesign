@@ -190,7 +190,7 @@ void User::transferPayments()
     myorder.clearPrice();
     return;
 }
-void User::orderManagement(std::vector<GoodsInfo> &showGoods)
+void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsInfo> &goodsInfo)
 {
     int choice;
     myorder.setName(name);
@@ -211,7 +211,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
         switch (choice)
         {
             case 1:
-                myorder.preAddGoods(showGoods);
+                myorder.preAddGoods(showGoods, goodsInfo);
                 break;
             case 2:
                 myorder.showShoppingCart();
@@ -221,7 +221,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                 break;
             case 4:
                 if (finalOrder.empty())
-                    myorder.generateOrder(finalOrder);
+                    myorder.generateOrder(finalOrder, goodsInfo);
                 else
                     std::cout << "请支付上一个订单后再生成订单!\n";
                 break;
@@ -232,7 +232,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods)
                 transferPayments();
                 break;
             case 7:
-                cancelOrder();
+                cancelOrder(goodsInfo);
                 break;
             default:
                 break;
@@ -256,7 +256,7 @@ void User::showOrder()
                   << std::left << it.first.merchant << std::endl;
     }
 }
-void User::cancelOrder()
+void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
 {
     if (finalOrder.empty())
     {
@@ -264,7 +264,7 @@ void User::cancelOrder()
         return;
     }
     for (auto it : finalOrder)
-        myorder.preorderGoods(it.first.name, it.first.merchant, 0);
+        myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
 }
 template <typename T> void User::input(T &x) const
 {

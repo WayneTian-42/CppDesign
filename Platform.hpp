@@ -15,6 +15,9 @@ class Platform
     Platform()
     {
         user = nullptr;
+        goods = new Foods();
+        goods->getGoods(allGoods);
+        delete goods;
         goods = nullptr;
     }
     ~Platform()
@@ -34,9 +37,10 @@ class Platform
     template <typename T> void input(T &x) const;  // 检查输入
 
   private:
-    std::string name;                  // 用户名
-    User *user;                        // 用户指针
-    Goods *goods;                      // 商品指针
+    std::string name;  // 用户名
+    User *user;        // 用户指针
+    Goods *goods;      // 商品指针
+    std::vector<GoodsInfo> allGoods;
     std::vector<GoodsInfo> showGoods;  // 展示的商品,用于实验二
     //保存订单数据
     std::map<std::string, std::vector<std::pair<GoodsInfo, int>>> shoppingCart, finalOrder;
