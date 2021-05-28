@@ -170,7 +170,7 @@ void Platform::goodsInformation()
             goods->search(showGoods);
             break;
         case 1:
-            std::cout << "请输入商品名称";
+            std::cout << "请输入商品名称\n";
             std::cin >> goodsName;
             goods->search(goodsName, showGoods);
             break;
