@@ -255,17 +255,17 @@ void Order::preorderGoods(std::vector<GoodsInfo> &goodsInfo, const std::string &
                           const int amount)
 {
     freeGoods();
-    goods = new Foods();
+    goods = new Foods(client, server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Clothes();
+    goods = new Clothes(client, server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Books();
+    goods = new Books(client, server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
@@ -274,17 +274,17 @@ void Order::preorderGoods(std::vector<GoodsInfo> &goodsInfo, const std::string &
 void Order::soldOut(std::vector<GoodsInfo> &goodsInfo)
 {
     freeGoods();
-    goods = new Foods();
+    goods = new Foods(client, server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Clothes();
+    goods = new Clothes(client, server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Books();
+    goods = new Books(client, server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
@@ -324,13 +324,13 @@ void Order::definiteType()
     switch (type)
     {
         case 1:
-            goods = new Foods();
+            goods = new Foods(client, server);
             break;
         case 2:
-            goods = new Clothes();
+            goods = new Clothes(client, server);
             break;
         case 3:
-            goods = new Books();
+            goods = new Books(client, server);
             break;
         default:
             break;
@@ -350,7 +350,7 @@ template <typename T> void Order::input(T &x) const
     while (std::cin.fail())
     {
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(LLONG_MAX, '\n');
         std::cout << "输入不合法，请输入数字\n";
         std::cin >> x;
         continue;

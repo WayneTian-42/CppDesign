@@ -349,7 +349,7 @@ template <typename T> void Goods::input(T &x) const
     while (std::cin.fail() || std::cin.get() != '\n')
     {
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(LLONG_MAX, '\n');
         std::cout << "输入不合法，请输入数字\n";
         std::cin >> x;
         continue;

@@ -1,8 +1,26 @@
+#include <iostream>
 #include "Platform.hpp"
+// #include "MySocket.hpp"
 
 int main()
 {
-    Platform sys;
+    Server server;
+    Client client;
+
+    std::cout << "请输入建立客户端还是服务端\n";
+    int choice;
+    std::cin >> choice;
+    if (choice == 0)
+    {
+        if (!server.serverInit())
+            return -1;
+    }
+    else if (choice == 1)
+    {
+        if (!client.clientInit())
+            return -1;
+    }
+    Platform sys(client, server);
     sys.show();
     sys.freeUser();
     sys.freeGoods();

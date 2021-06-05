@@ -17,9 +17,14 @@ add_executable(Lab1 "")
 
 target_sources(Lab1
   PRIVATE
+    MySocket.cpp
     Goods.cpp
     User.cpp
     Platform.cpp
     Order.cpp
     main.cpp
   )
+
+if(WIN32)
+  target_link_libraries(Lab1 wsock32 ws2_32)
+endif()

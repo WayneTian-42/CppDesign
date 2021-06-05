@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "Goods.hpp"
 #include "Order.hpp"
-
 /**
  * @brief 存储用户信息，重载相等运算符，实现std::find函数
  *
@@ -22,7 +21,7 @@ struct AccInfo
 class User
 {
   public:
-    User() : type(0), balance(0)  // 构造函数，读入用户数据
+    User(Client c, Server s) : client(c), server(s), type(0), balance(0), myorder(c, s)  // 构造函数，读入用户数据
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -80,6 +79,9 @@ class User
     Order myorder;
     std::vector<std::pair<GoodsInfo, int>> finalOrder;
 
+    Client client;
+    Server server;
+
   private:
     std::fstream accfp;            // 文件指针
     std::vector<AccInfo> accInfo;  // 所有用户信息的数组
@@ -93,9 +95,9 @@ class User
 class Consumer : public User
 {
   public:
-    Consumer(const std::string s) : User()
+    Consumer(const std::string ss, Client c, Server s) : User(c, s)
     {
-        name = s;
+        name = ss;
         type = 1;
     }
     virtual ~Consumer() override
@@ -115,9 +117,9 @@ class Consumer : public User
 class Merchant : public User
 {
   public:
-    Merchant(const std::string s) : User()
+    Merchant(const std::string ss, Client c, Server s) : User(c, s)
     {
-        name = s;
+        name = ss;
         type = 2;
     }
     virtual ~Merchant() override
@@ -137,9 +139,9 @@ class Merchant : public User
 class Admin : public User
 {
   public:
-    Admin(const std::string s) : User()
+    Admin(const std::string ss, Client c, Server s) : User(c, s)
     {
-        name = s;
+        name = ss;
         type = 0;
     }
     virtual ~Admin() override

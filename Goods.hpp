@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "MySocket.hpp"
 // #include <set>
 
 /**
@@ -26,7 +27,7 @@ struct GoodsInfo
 class Goods  // 构造函数，读入商品数据
 {
   public:
-    Goods()
+    Goods(Client c, Server s) : client(c), server(s)
     {
         num = 0;
         goofp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\GoodsInfo.txt");
@@ -87,6 +88,9 @@ class Goods  // 构造函数，读入商品数据
     std::vector<GoodsInfo> goodsInfo;
     std::map<std::string, int> consumerBuy;  //保存被订单锁住的数量
 
+    Client client;
+    Server server;
+
   private:
     std::fstream goofp;
     int num;
@@ -95,11 +99,11 @@ class Goods  // 构造函数，读入商品数据
 class Foods : public Goods
 {
   public:
-    Foods() : Goods()
+    Foods(Client c, Server s) : Goods(c, s)
     {
         type = 1;
     }
-    Foods(const std::string &tname) : Goods()
+    Foods(const std::string &tname, Client c, Server s) : Goods(c, s)
     {
         merchant = tname;
         type = 1;
@@ -115,11 +119,11 @@ class Foods : public Goods
 class Clothes : public Goods
 {
   public:
-    Clothes() : Goods()
+    Clothes(Client c, Server s) : Goods(c, s)
     {
         type = 2;
     }
-    Clothes(const std::string &tname) : Goods()
+    Clothes(const std::string &tname, Client c, Server s) : Goods(c, s)
     {
         merchant = tname;
         type = 2;
@@ -135,11 +139,11 @@ class Clothes : public Goods
 class Books : public Goods
 {
   public:
-    Books() : Goods()
+    Books(Client c, Server s) : Goods(c, s)
     {
         type = 3;
     }
-    Books(const std::string &tname) : Goods()
+    Books(const std::string &tname, Client c, Server s) : Goods(c, s)
     {
         merchant = tname;
         type = 3;
