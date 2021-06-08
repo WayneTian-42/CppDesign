@@ -21,6 +21,7 @@ target_sources(Lab1
     Goods.cpp
     User.cpp
     Platform.cpp
+    PlatformShow.cpp
     Order.cpp
     main.cpp
   )

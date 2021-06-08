@@ -12,10 +12,11 @@
 class Platform
 {
   public:
-    Platform(Client c, Server s) : client(c), server(s)
+    Platform()
     {
+        server.serverInit();
         user = nullptr;
-        goods = new Foods(c, s);
+        goods = new Foods(server);
         goods->getGoods(allGoods);
         delete goods;
         goods = nullptr;
@@ -36,6 +37,8 @@ class Platform
     void freeGoods();                        // 释放商品指针
     template <typename T> void input(T &x);  // 检查输入
 
+    void initSock();
+
     /* void severInit();
     void clientInit(); */
 
@@ -50,6 +53,5 @@ class Platform
     std::vector<std::pair<GoodsInfo, int>> changeInfo;
 
     std::stringstream output, inputStream;
-    Client client;
     Server server;
 };

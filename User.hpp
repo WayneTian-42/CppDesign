@@ -21,7 +21,7 @@ struct AccInfo
 class User
 {
   public:
-    User(Client c, Server s) : client(c), server(s), type(0), balance(0), myorder(c, s)  // 构造函数，读入用户数据
+    User(Server &s) : server(&s), type(0), balance(0), myorder(s)  // 构造函数，读入用户数据
     {
         num = 0;
         accfp.open("D:\\VS-Code\\VS-Code-C++\\semester_4\\Cpp_Design\\AccInfo.txt");
@@ -79,8 +79,8 @@ class User
     Order myorder;
     std::vector<std::pair<GoodsInfo, int>> finalOrder;
 
-    Client client;
-    Server server;
+    // Client client;
+    Server *server;
 
   private:
     std::fstream accfp;            // 文件指针
@@ -95,7 +95,7 @@ class User
 class Consumer : public User
 {
   public:
-    Consumer(const std::string ss, Client c, Server s) : User(c, s)
+    Consumer(const std::string ss, Server &s) : User(s)
     {
         name = ss;
         type = 1;
@@ -117,7 +117,7 @@ class Consumer : public User
 class Merchant : public User
 {
   public:
-    Merchant(const std::string ss, Client c, Server s) : User(c, s)
+    Merchant(const std::string ss, Server &s) : User(s)
     {
         name = ss;
         type = 2;
@@ -139,7 +139,7 @@ class Merchant : public User
 class Admin : public User
 {
   public:
-    Admin(const std::string ss, Client c, Server s) : User(c, s)
+    Admin(const std::string ss, Server &s) : User(s)
     {
         name = ss;
         type = 0;

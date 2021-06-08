@@ -255,17 +255,17 @@ void Order::preorderGoods(std::vector<GoodsInfo> &goodsInfo, const std::string &
                           const int amount)
 {
     freeGoods();
-    goods = new Foods(client, server);
+    goods = new Foods(*server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Clothes(client, server);
+    goods = new Clothes(*server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Books(client, server);
+    goods = new Books(*server);
     goods->setGoods(goodsInfo);
     goods->preorderGoods(goodsName, merchant, name, amount);
     goods->getGoods(goodsInfo);
@@ -274,17 +274,17 @@ void Order::preorderGoods(std::vector<GoodsInfo> &goodsInfo, const std::string &
 void Order::soldOut(std::vector<GoodsInfo> &goodsInfo)
 {
     freeGoods();
-    goods = new Foods(client, server);
+    goods = new Foods(*server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Clothes(client, server);
+    goods = new Clothes(*server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
     freeGoods();
-    goods = new Books(client, server);
+    goods = new Books(*server);
     goods->setGoods(goodsInfo);
     goods->soldOut(name);
     goods->getGoods(goodsInfo);
@@ -324,13 +324,13 @@ void Order::definiteType()
     switch (type)
     {
         case 1:
-            goods = new Foods(client, server);
+            goods = new Foods(*server);
             break;
         case 2:
-            goods = new Clothes(client, server);
+            goods = new Clothes(*server);
             break;
         case 3:
-            goods = new Books(client, server);
+            goods = new Books(*server);
             break;
         default:
             break;

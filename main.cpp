@@ -1,29 +1,32 @@
 #include <iostream>
 #include "Platform.hpp"
+#include "PlatformShow.hpp"
 // #include "MySocket.hpp"
 
 int main()
 {
-    Server server;
-    Client client;
-
     std::cout << "请输入建立客户端还是服务端\n";
     int choice;
     std::cin >> choice;
     if (choice == 0)
     {
+        /* Server server;
         if (!server.serverInit())
-            return -1;
+            return -1; */
+        Platform sys;
+        // sys.initSock();
+        sys.show();
+        sys.freeUser();
+        sys.freeGoods();
     }
     else if (choice == 1)
     {
+        /* Client client;
         if (!client.clientInit())
-            return -1;
+            return -1; */
+        PlatformShow sysc;
+        sysc.show();
     }
-    Platform sys(client, server);
-    sys.show();
-    sys.freeUser();
-    sys.freeGoods();
 
     /* std::string name;
     std::cout << "Please enter your name:\n";

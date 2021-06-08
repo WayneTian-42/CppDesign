@@ -17,7 +17,9 @@ void Platform::show()
                << "2. 商品展示\n"
                << "3. 商品信息修改（针对商家）\n"
                << "其他数字 退出平台" << std::endl;
-        input(action);
+        server.sendMessage(output);
+        /* client.recvMessage(); */
+        action = server.recvMessage();
         switch (action)
         {
             case 1:
@@ -32,9 +34,10 @@ void Platform::show()
             default:
                 break;
         }
-        output << std::endl;
+        // output << std::endl;
     } while (action > 0 && action < 4);
     output << "感谢使用！" << std::endl;
+    server.sendMessage(output);
 }
 void Platform::userCenter()
 {
@@ -93,13 +96,13 @@ void Platform::userRegisterOrLog()
         switch (type)
         {
             case 0:
-                user = new Admin(name, client, server);
+                user = new Admin(name, server);
                 break;
             case 1:
-                user = new Consumer(name, client, server);
+                user = new Consumer(name, server);
                 break;
             case 2:
-                user = new Merchant(name, client, server);
+                user = new Merchant(name, server);
                 break;
             default:
                 break;
@@ -327,17 +330,22 @@ void Platform::definiteType()
     switch (type)
     {
         case 1:
-            goods = new Foods(name, client, server);
+            goods = new Foods(name, server);
             break;
         case 2:
-            goods = new Clothes(name, client, server);
+            goods = new Clothes(name, server);
             break;
         case 3:
-            goods = new Books(name, client, server);
+            goods = new Books(name, server);
             break;
         default:
             break;
     }
+}
+
+void Platform::initSock()
+{
+    server.serverInit();
 }
 template <typename T> void Platform::input(T &x)
 {

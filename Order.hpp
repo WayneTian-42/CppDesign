@@ -6,15 +6,15 @@
 class Order
 {
   public:
-    Order(Client c, Server s) : client(c), server(s)
+    Order(Server &s) : server(&s)
     {
-        goods = new Foods(c, s);
+        goods = new Foods(s);
         goods->updateInfo(shoppingCart);
         delete goods;
-        goods = new Clothes(c, s);
+        goods = new Clothes(s);
         goods->updateInfo(shoppingCart);
         delete goods;
-        goods = new Books(c, s);
+        goods = new Books(s);
         goods->updateInfo(shoppingCart);
         delete goods;
         goods = nullptr;
@@ -53,8 +53,8 @@ class Order
     double sum = 0;
     std::fstream ordfp;
 
-    Client client;
-    Server server;
+    // Client client;
+    Server *server;
 };
 /*
 1 2 1
