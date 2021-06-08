@@ -1,5 +1,7 @@
 #pragma once
 #include <cstdlib>
+#include <sstream>
+#include <string>
 #include "Goods.hpp"
 #include "Order.hpp"
 /**
@@ -55,7 +57,7 @@ class User
     void userRegister();                            // 用户注册
     bool login(const int userType);                 // 用户登录
     void changePwd();                               // 修改密码
-    void confirmPwd(std::string &tmpPwd) const;     // 确认密码是否正确
+    void confirmPwd(std::string &tmpPwd);           // 确认密码是否正确
     double queryBalance() const;                    // 查询余额
     void topUpAndDown();                            // 修改余额
     void orderManagement(std::vector<GoodsInfo> &, std::vector<GoodsInfo> &);
@@ -80,6 +82,7 @@ class User
     std::vector<std::pair<GoodsInfo, int>> finalOrder;
 
     // Client client;
+    std::stringstream output;
     Server *server;
 
   private:

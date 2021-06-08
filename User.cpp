@@ -26,7 +26,8 @@ void User::userRegister()
 {
     if (search(name) != -1)
     {
-        std::cout << "该用户名已存在！\n";
+        output << "该用户名已存在！\n";
+        server->sendMessage(output);
         return;
     }
     AccInfo tmp;
@@ -34,18 +35,25 @@ void User::userRegister()
 
     while (1)
     {
-        std::cout << "输入密码:\n";
+        output << "输入密码:\n";
+        server->sendMessage(output);
         std::string confirm;
-        confirmPwd(tmp.pwd);
-        std::cout << "请再次输入密码确认:\n";
-        confirmPwd(confirm);
+        // confirmPwd(tmp.pwd);
+        server->recvMessage(tmp.pwd);
+        tmp.pwd.erase(tmp.pwd.end() - 1);
+        output << "请再次输入密码确认:\n";
+        server->sendMessage(output);
+        server->recvMessage(confirm);
+        confirm.erase(confirm.end() - 1);
+        // confirmPwd(confirm);
         if (tmp.pwd == confirm)  // 直至两次密码相同才设定成功
             break;
     }
     tmp.t = type;
     tmp.bala = 0;
     accInfo.emplace_back(tmp);
-    std::cout << "注册成功!\n";
+    output << "注册成功!\n";
+    server->sendMessage(output);
 }
 bool User::login(const int userType)
 {
@@ -54,20 +62,26 @@ bool User::login(const int userType)
     {
         if (accInfo[pos].t != userType)
         {
-            std::cout << "用户类型错误，请退出重新选择！\n";
+            output << "用户类型错误，请退出重新选择！\n";
+            server->sendMessage(output);
             return false;
         }
         std::string pwd;
-        std::cout << "请输入密码:\n";
-        confirmPwd(pwd);
+        output << "请输入密码:\n";
+        server->sendMessage(output);
+        // confirmPwd(pwd);
+        server->recvMessage(pwd);
+        pwd.erase(pwd.end() - 1);
         if (pwd != accInfo[pos].pwd)
         {
-            std::cout << "密码错误!\n";
+            output << "密码错误!\n";
+            server->sendMessage(output);
             return false;
         }
         else
         {
-            std::cout << "登录成功!\n";
+            output << "登录成功!\n";
+            server->sendMessage(output);
             password = pwd;
             this->type = userType;
             balance = accInfo[pos].bala;
@@ -77,7 +91,8 @@ bool User::login(const int userType)
     }
     else
     {
-        std::cout << "用户不存在!\n";
+        output << "用户不存在!\n";
+        server->sendMessage(output);
         return false;
     }
 }
@@ -85,37 +100,48 @@ void User::changePwd()
 {
     if (search(name) == -1)
     {
-        std::cout << "用户不存在！";
+        output << "用户不存在！";
+        server->sendMessage(output);
         return;
     }
     std::string pwd;
-    std::cout << "输入旧密码:\n";
+    output << "输入旧密码:\n";
+    server->sendMessage(output);
     std::string confirm;
-    confirmPwd(confirm);
+    // confirmPwd(confirm);
+    server->recvMessage(confirm);
+    confirm.erase(confirm.end() - 1);
     if (confirm != password)
     {
-        std::cout << "密码错误，已退出！\n";
+        output << "密码错误，已退出！\n";
         return;
     }
     while (1)
     {
-        std::cout << "输入新密码:\n";
+        output << "输入新密码:\n";
+        server->sendMessage(output);
         pwd.erase();
-        confirmPwd(pwd);
-        std::cout << "请再次输入密码确认:\n";
+        server->recvMessage(pwd);
+        pwd.erase(pwd.end() - 1);
+        // confirmPwd(pwd);
+        output << "请再次输入密码确认:\n";
+        server->sendMessage(output);
         confirm.erase();
-        confirmPwd(confirm);
+        // confirmPwd(confirm);
+        server->recvMessage(confirm);
+        confirm.erase(confirm.end() - 1);
         if (pwd == confirm)
             break;
         else
-            std::cout << "两次密码不一致，请重新输入！\n";
+            output << "两次密码不一致，请重新输入！\n";
     }
     password = pwd;
     accInfo[num].pwd = pwd;
-    std::cout << "修改成功！\n";
+    output << "修改成功！\n";
+    server->sendMessage(output);
 }
 
-void User::confirmPwd(std::string &tmpPwd) const  //确认密码，实现用*代替字符
+void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
 {
     while (1)
     {
@@ -125,13 +151,13 @@ void User::confirmPwd(std::string &tmpPwd) const  //确认密码，实现用*代替字符
         {
             if (!tmpPwd.empty())
             {
-                std::cout << "\b \b" << std::flush;
+                output << "\b \b" << std::flush;
                 tmpPwd.erase(tmpPwd.length() - 1);  // 清除掉读入的上一个字符
             }
         }
         else if (ch == VK_RETURN)  // 输入回车
         {
-            std::cout << std::endl;
+            output << std::endl;
             break;
         }
         else
@@ -147,32 +173,39 @@ double User::queryBalance() const
 }
 void User::topUpAndDown()
 {
-    std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
+    output << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
     double money;
-    std::cout << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
+    output << "请输入充值或消费金额:(正数表示充值，负数表示消费)\n";
+    server->sendMessage(output);
     while (1)
     {
-        input(money);
+        // input(money);
+        std::string buff;
+        server->recvMessage(buff);
+        money = std::stoi(buff);
         if (balance + money < 0)
-            std::cout << "余额不能为负，请重新输入\n";
+            output << "余额不能为负，请重新输入\n";
         else
             break;
     }
     balance += money;
     accInfo[num].bala = balance;
-    std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
+    output << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
+    server->sendMessage(output);
 }
 void User::transferPayments()
 {
     std::string tmp = name;
     if (finalOrder.empty())
     {
-        std::cout << "没有订单需要支付\n";
+        output << "没有订单需要支付\n";
+        server->sendMessage(output);
         return;
     }
     if (myorder.getToatalPrice() > balance)
     {
-        std::cout << "余额不足，请充值后付款\n";
+        output << "余额不足，请充值后付款\n";
+        server->sendMessage(output);
         return;
     }
     for (auto it : finalOrder)
@@ -184,7 +217,8 @@ void User::transferPayments()
         balance -= singlePrice;
     }
     finalOrder.clear();
-    std::cout << "交易成功！\n";
+    output << "交易成功！\n";
+    server->sendMessage(output);
     int pos = search(name);
     accInfo[pos].bala = balance;
     myorder.clearPrice();
@@ -196,16 +230,20 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
     myorder.setName(name);
     while (1)
     {
-        std::cout << "请选择操作\n"
-                  << "1. 加入购物车\n"
-                  << "2. 展示购物车\n"
-                  << "3. 修改购物车信息\n"
-                  << "4. 生成订单\n"
-                  << "5. 展示订单\n"
-                  << "6. 支付订单\n"
-                  << "7. 取消订单\n"
-                  << "其他数字 退出\n";
-        input(choice);
+        output << "请选择操作\n"
+               << "1. 加入购物车\n"
+               << "2. 展示购物车\n"
+               << "3. 修改购物车信息\n"
+               << "4. 生成订单\n"
+               << "5. 展示订单\n"
+               << "6. 支付订单\n"
+               << "7. 取消订单\n"
+               << "其他数字 退出\n";
+        server->sendMessage(output);
+        // input(choice);
+        std::string buff;
+        server->recvMessage(buff);
+        choice = std::stoi(buff);
         if (choice < 1 || choice > 7)
             return;
         switch (choice)
@@ -223,7 +261,10 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                 if (finalOrder.empty())
                     myorder.generateOrder(finalOrder, goodsInfo);
                 else
-                    std::cout << "请支付上一个订单后再生成订单!\n";
+                {
+                    output << "请支付上一个订单后再生成订单!\n";
+                    server->sendMessage(output);
+                }
                 break;
             case 5:
                 showOrder();
@@ -243,29 +284,33 @@ void User::showOrder()
 {
     if (finalOrder.empty())
     {
-        std::cout << "没有订单！\n";
+        output << "没有订单！\n";
+        server->sendMessage(output);
         return;
     }
-    std::cout << "您的订单如下：\n";
-    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-              << std::left << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
+    output << "您的订单如下：\n";
+    output << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8) << std::left
+           << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
     for (auto it : finalOrder)
     {
-        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
-                  << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
-                  << std::left << it.first.merchant << std::endl;
+        output << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
+               << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
+               << std::left << it.first.merchant << std::endl;
     }
+    server->sendMessage(output);
 }
 void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
 {
     if (finalOrder.empty())
     {
-        std::cout << "没有订单，已退出\n";
+        output << "没有订单，已退出\n";
+        server->sendMessage(output);
         return;
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
-    std::cout << "订单已取消！\n";
+    output << "订单已取消！\n";
+    server->sendMessage(output);
 }
 template <typename T> void User::input(T &x) const
 {

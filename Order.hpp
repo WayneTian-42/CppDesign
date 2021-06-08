@@ -1,5 +1,6 @@
 #pragma once
 #include "Goods.hpp"
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -54,6 +55,7 @@ class Order
     std::fstream ordfp;
 
     // Client client;
+    std::stringstream output;
     Server *server;
 };
 /*

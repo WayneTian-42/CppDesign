@@ -3,7 +3,8 @@
 
 void PlatformShow::show()
 {
-    while (1)
+    int action = 1;
+    do
     {
         /* std::cout << "选择操作：\n"
                   << "1. 用户中心\n"
@@ -14,8 +15,25 @@ void PlatformShow::show()
         std::string buff;
         client.recvMessage(buff);
         std::cout << buff;
-        int action;
-        client.input(action);
-        client.sendMessage(action);
-    }
+        /* client.input(action);
+        std::string tmp = std::to_string(action); */
+        std::string tmp;
+        std::cin >> tmp;
+        client.sendMessage(tmp);
+        /* switch (action)
+        {
+            case 1:
+                userCenter();
+                break;
+            case 2:
+                goodsInformation();
+                break;
+            case 3:
+                changeGoods();
+                break;
+            default:
+                break;
+        } */
+    } while (action > 0 && action < 4);
+    std::cout << "感谢使用！" << std::endl;
 }

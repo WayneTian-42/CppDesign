@@ -22,7 +22,8 @@ void Order::preAddGoods(std::vector<GoodsInfo> &showGoods, std::vector<GoodsInfo
 void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
 {
     std::string gname, merchant;
-    std::cout << "输入想要购买的商品：\n";
+    output << "输入想要购买的商品：\n";
+    server->sendMessage(output);
     int flg = 1, num = 0;
     while (1)
     {
@@ -37,7 +38,10 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
             }
         }
         if (!num)
-            std::cout << "没有该商品，请重新输入商品\n";
+        {
+            output << "没有该商品，请重新输入商品\n";
+            server->sendMessage(output);
+        }
         else
             break;
     }
@@ -46,8 +50,10 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
         bool flg = false;
         while (!flg)
         {
-            std::cout << "该商品多个商家在售卖，请输入想购买的商家名\n";
-            std::cin >> merchant;
+            output << "该商品多个商家在售卖，请输入想购买的商家名\n";
+            server->sendMessage(output);
+            // std::cin >> merchant;
+            server->recvMessage(merchant);
             for (auto it : showGoods)
             {
                 if (it.name == gname && it.merchant == merchant)
@@ -58,43 +64,52 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
                 }
             }
             if (!flg)
-                std::cout << "没有该商家，请重新输入商家\n";
+            {
+                output << "没有该商家，请重新输入商家\n";
+                server->sendMessage(output);
+            }
         }
     }
     if (good.merchant == name)
     {
-        std::cout << "不能购买自己的商品，已退出！\n";
+        output << "不能购买自己的商品，已退出！\n";
+        server->sendMessage(output);
         good.name.erase();
     }
 }
 void Order::chooseAmount(const GoodsInfo &good)
 {
-    std::cout << "请输入要购买的数量(0表示取消加入购物车)：";
+    output << "请输入要购买的数量(0表示取消加入购物车)：";
+    server->sendMessage(output);
     int number;
     bool can = true;
     while (1)
     {
-        input(number);
+        // input(number);
+        std::string buff;
+        server->recvMessage(buff);
+        number = std::stoi(buff);
         if (number > good.amount)
         {
-            std::cout << "想要购买的数量超过了最大数量，请重新输入\n";
+            output << "想要购买的数量超过了最大数量，请重新输入\n";
         }
         else if (number < 0)
         {
-            std::cout << "不能买非正数个商品，请重新输入\n";
+            output << "不能买非正数个商品，请重新输入\n";
         }
         else if (number == 0)
         {
-            std::cout << "已退出\n";
+            output << "已退出\n";
             break;
         }
         else
         {
-            std::cout << "已添加到购物车\n";
+            output << "已添加到购物车\n";
             //相同商品只会产生一次记录
             addGoods(good, number);
             break;
         }
+        server->sendMessage(output);
     }
 }
 void Order::addGoods(const GoodsInfo &good, const int num)
@@ -117,18 +132,20 @@ void Order::showShoppingCart()
 {
     if (shoppingCart.empty())
     {
-        std::cout << "购物车已清空！\n";
+        output << "购物车已清空！\n";
+        server->sendMessage(output);
         return;
     }
-    std::cout << "购物车如下：\n";
-    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "现价" << std::setw(8)
-              << std::left << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
+    output << "购物车如下：\n";
+    output << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "现价" << std::setw(8) << std::left
+           << "购买数量" << std::setw(20) << std::left << "商家" << std::endl;
     for (auto it : shoppingCart)
     {
-        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
-                  << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
-                  << std::left << it.first.merchant << std::endl;
+        output << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left
+               << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
+               << std::left << it.first.merchant << std::endl;
     }
+    server->sendMessage(output);
 }
 int Order::search(const std::string &name)
 {
@@ -150,8 +167,10 @@ int Order::search(const std::string &name)
         while (!flg)
         {
             std::string merchant;
-            std::cout << "该商品购物车内有多种，请输入想购买的商家名\n";
-            std::cin >> merchant;
+            output << "该商品购物车内有多种，请输入想购买的商家名\n";
+            server->sendMessage(output);
+            // std::cin >> merchant;
+            server->recvMessage(merchant);
             for (int i = 0; i < num.size(); i++)
             {
                 if (shoppingCart[num[i]].first.merchant == merchant)
@@ -162,7 +181,10 @@ int Order::search(const std::string &name)
                 }
             }
             if (!flg)
-                std::cout << "没有该商家，请重新输入商家\n";
+            {
+                output << "没有该商家，请重新输入商家\n";
+                server->sendMessage(output);
+            }
         }
     }
     return pos;
@@ -173,22 +195,30 @@ void Order::deleteGoods()
     showShoppingCart();
     if (shoppingCart.empty())
     {
-        std::cout << "不能修改，已退出！\n";
+        output << "不能修改，已退出！\n";
+        server->sendMessage(output);
         return;
     }
     std::string name;
-    std::cout << "输入要修改数量的商品:\n";
-    std::cin >> name;
+    output << "输入要修改数量的商品:\n";
+    server->sendMessage(output);
+    // std::cin >> name;
+    server->recvMessage(name);
     int pos = search(name);
     if (pos == -1)
     {
-        std::cout << "没有该商品，已退出\n";
+        output << "没有该商品，已退出\n";
+        server->sendMessage(output);
         return;
     }
-    std::cout << name << "数量为" << shoppingCart[pos].second << std::endl;
-    std::cout << "请输入要修改的数量（正数表示增加，负数表示）";
+    output << name << "数量为" << shoppingCart[pos].second << std::endl;
+    output << "请输入要修改的数量（正数表示增加，负数表示）";
+    server->sendMessage(output);
     int number;
-    input(number);
+    // input(number);
+    std::string buff;
+    server->recvMessage(buff);
+    number = std::stoi(buff);
     shoppingCart[pos].second += number;
 }
 void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, std::vector<GoodsInfo> &goodsInfo)
@@ -196,26 +226,39 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
     showShoppingCart();
     if (shoppingCart.empty())
         return;
-    std::cout << "请输入每种商品要购买的数量\n";
-    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家"
-              << std::endl;
+    output << "请输入每种商品要购买的数量\n";
+    output << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8) << std::left
+           << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(20) << std::left << "商家" << std::endl;
+    server->sendMessage(output);
     for (auto it = shoppingCart.begin(); !shoppingCart.empty() && it != shoppingCart.end(); it++)
     {
         int amount;
         bool flg = true;
-        std::cout << std::setw(20) << std::left << it->first.name << std::setw(8) << std::left << it->first.price
-                  << std::setw(8) << std::left << it->second << std::setw(8) << std::left << it->first.discount
-                  << std::setw(20) << std::left << it->first.merchant << std::endl;
+        output << std::setw(20) << std::left << it->first.name << std::setw(8) << std::left << it->first.price
+               << std::setw(8) << std::left << it->second << std::setw(8) << std::left << it->first.discount
+               << std::setw(20) << std::left << it->first.merchant << std::endl;
+        server->sendMessage(output);
         while (flg)
         {
-            input(amount);
+            // input(amount);
+            std::string buff;
+            server->recvMessage(buff);
+            amount = std::stoi(buff);
             if (amount < 0)
-                std::cout << "不能购买负数个商品，请重新输入\n";
+            {
+                output << "不能购买负数个商品，请重新输入\n";
+                server->sendMessage(output);
+            }
             else if (amount > it->first.amount)
-                std::cout << "商家没有这么多商品，请重新输入\n";
+            {
+                output << "商家没有这么多商品，请重新输入\n";
+                server->sendMessage(output);
+            }
             else if (amount > it->second)
-                std::cout << "不能超出购物车内数量，请重新输入\n";
+            {
+                output << "不能超出购物车内数量，请重新输入\n";
+                server->sendMessage(output);
+            }
             else
             {
                 finalOrder.emplace_back(std::make_pair(it->first, amount));
@@ -228,20 +271,20 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
             }
         }
     }
-    std::cout << "****************************************************************\n";
-    std::cout << "最终订单如下：\n";
-    std::cout << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8)
-              << std::left << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left << "总价"
-              << std::endl;
+    output << "****************************************************************\n";
+    output << "最终订单如下：\n";
+    output << std::setw(20) << std::left << "名称" << std::setw(8) << std::left << "价格" << std::setw(8) << std::left
+           << "购买数量" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left << "总价" << std::endl;
     for (auto it : finalOrder)
     {
         double total = it.first.price * it.first.discount * it.second;
-        std::cout << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
-                  << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
-                  << std::setw(8) << std::left << total << std::endl;
+        output << std::setw(20) << std::left << it.first.name << std::setw(8) << std::left << it.first.price
+               << std::setw(8) << std::left << it.second << std::setw(8) << std::left << it.first.discount
+               << std::setw(8) << std::left << total << std::endl;
         sum += total;
     }
-    std::cout << "所有商品总价格为" << sum << "元\n";
+    output << "所有商品总价格为" << sum << "元\n";
+    server->sendMessage(output);
 }
 double Order::getToatalPrice()
 {
@@ -311,13 +354,13 @@ void Order::definiteType()
     int type;
     if (!type)
     {
-        std::cout << "请选择商品类型\n"
-                  << "1表示食物，2表示衣服，3表示图书\n";
+        output << "请选择商品类型\n"
+               << "1表示食物，2表示衣服，3表示图书\n";
         input(type);
     }
     while (type < 1 || type > 3)
     {
-        std::cout << "没有该类型商品，请重新输入\n";
+        output << "没有该类型商品，请重新输入\n";
         input(type);
     }
     freeGoods();

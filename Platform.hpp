@@ -6,7 +6,7 @@
 #include "Goods.hpp"
 #include "User.hpp"
 /**
- * @brief å¹³å°ç±»ï¼Œç”¨æ¥å±•ç¤ºä¿¡æ¯ä»¥åŠé€‰æ‹©æ“ä½œ
+ * @brief Æ½Ì¨Àà£¬ÓÃÀ´Õ¹Ê¾ĞÅÏ¢ÒÔ¼°Ñ¡Ôñ²Ù×÷
  *
  */
 class Platform
@@ -24,18 +24,18 @@ class Platform
     ~Platform()
     {
     }
-    void show();                             // å±•ç¤ºåŸºç¡€ç•Œé¢
-    void userCenter();                       // ç”¨æˆ·ä¸­å¿ƒç•Œé¢
-    void userRegisterOrLog();                // æ³¨å†Œç™»å½•åŠŸèƒ½
-    void userInformationChange();            // ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
-    void userQuit();                         // ç”¨æˆ·é€€å‡º
-    void purchaseGoods();                    // è´­ä¹°å•†å“ï¼Œå®éªŒäºŒ
-    void goodsInformation();                 // å•†å“ä¿¡æ¯
-    void changeGoods();                      // ä¿®æ”¹å•†å“ä¿¡æ¯
-    void definiteType();                     // ç¡®å®šå•†å“ç§ç±»
-    void freeUser();                         // é‡Šæ”¾ç”¨æˆ·æŒ‡é’ˆ
-    void freeGoods();                        // é‡Šæ”¾å•†å“æŒ‡é’ˆ
-    template <typename T> void input(T &x);  // æ£€æŸ¥è¾“å…¥
+    void show();                             // Õ¹Ê¾»ù´¡½çÃæ
+    void userCenter();                       // ÓÃ»§ÖĞĞÄ½çÃæ
+    void userRegisterOrLog();                // ×¢²áµÇÂ¼¹¦ÄÜ
+    void userInformationChange();            // ĞŞ¸ÄÓÃ»§ĞÅÏ¢
+    void userQuit();                         // ÓÃ»§ÍË³ö
+    void purchaseGoods();                    // ¹ºÂòÉÌÆ·£¬ÊµÑé¶ş
+    void goodsInformation();                 // ÉÌÆ·ĞÅÏ¢
+    void changeGoods();                      // ĞŞ¸ÄÉÌÆ·ĞÅÏ¢
+    void definiteType();                     // È·¶¨ÉÌÆ·ÖÖÀà
+    void freeUser();                         // ÊÍ·ÅÓÃ»§Ö¸Õë
+    void freeGoods();                        // ÊÍ·ÅÉÌÆ·Ö¸Õë
+    template <typename T> void input(T &x);  // ¼ì²éÊäÈë
 
     void initSock();
 
@@ -43,12 +43,12 @@ class Platform
     void clientInit(); */
 
   private:
-    std::string name;  // ç”¨æˆ·å
-    User *user;        // ç”¨æˆ·æŒ‡é’ˆ
-    Goods *goods;      // å•†å“æŒ‡é’ˆ
+    std::string name;  // ÓÃ»§Ãû
+    User *user;        // ÓÃ»§Ö¸Õë
+    Goods *goods;      // ÉÌÆ·Ö¸Õë
     std::vector<GoodsInfo> allGoods;
-    std::vector<GoodsInfo> showGoods;  // å±•ç¤ºçš„å•†å“,ç”¨äºå®éªŒäºŒ
-    //ä¿å­˜è®¢å•æ•°æ®
+    std::vector<GoodsInfo> showGoods;  // Õ¹Ê¾µÄÉÌÆ·,ÓÃÓÚÊµÑé¶ş
+    //±£´æ¶©µ¥Êı¾İ
     std::map<std::string, std::vector<std::pair<GoodsInfo, int>>> shoppingCart, finalOrder;
     std::vector<std::pair<GoodsInfo, int>> changeInfo;
 

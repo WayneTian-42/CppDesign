@@ -4,27 +4,27 @@
 
 bool Server::serverInit()
 {
-    WORD w_req = MAKEWORD(2, 2);  //∞Ê±æ∫≈
+    WORD w_req = MAKEWORD(2, 2);  //ÁâàÊú¨Âè∑
     WSADATA wsadata;
     int err;
     err = WSAStartup(w_req, &wsadata);
     if (err != 0)
     {
-        std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚ ß∞‹£°" << std::endl;
+        std::cout << "init WSADATA error" << std::endl;
     }
     else
     {
-        std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚≥…π¶£°" << std::endl;
+        std::cout << "init WSADATA success" << std::endl;
     }
-    //ºÏ≤‚∞Ê±æ∫≈
+    //Ê£ÄÊµãÁâàÊú¨Âè∑
     if (LOBYTE(wsadata.wVersion) != 2 || HIBYTE(wsadata.wHighVersion) != 2)
     {
-        std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ∫≈≤ª∑˚£°" << std::endl;
+        std::cout << "socket version error" << std::endl;
         // WSACleanup();
     }
     else
     {
-        std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ’˝»∑£°" << std::endl;
+        std::cout << "socket version right" << std::endl;
     }
     if ((serverSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
     {
@@ -45,21 +45,21 @@ bool Server::serverInit()
         printf("...OK!\n");
     if (listen(serverSock, SOMAXCONN) < 0)
     {
-        std::cout << "º‡Ã˝ ß∞‹\n";
+        std::cout << "listen error\n";
         // WSACleanup();
         return 0;
     }
-    std::cout << "º‡Ã˝¡¨Ω”÷–...\n";
+    std::cout << "listening...\n";
 
     int addrLen = sizeof(SOCKADDR);
     acceptSock = accept(serverSock, (SOCKADDR *)&acceptAddr, &addrLen);
     if (acceptSock == SOCKET_ERROR)
     {
-        std::cout << "¡¨Ω” ß∞‹£°\n";
+        std::cout << "accept error\n";
         // WSACleanup();
         return 0;
     }
-    std::cout << "¡¨Ω”Ω®¡¢£¨◊º±∏Ω” ‹ ˝æ›\n";
+    std::cout << "accept success\n";
     return 1;
 }
 bool Server::sendMessage(std::stringstream &output)
@@ -67,75 +67,76 @@ bool Server::sendMessage(std::stringstream &output)
     /* std::string message;
     std::vector<char> buff;
     buff.assign(message.cbegin(), message.cend()); */
-    char buff[1024] = {0};
+    /* char buff[1024] = {0};
     output >> buff;
-    std::cout << output.str();
+    std::cout << output.str(); */
     sendLength = send(acceptSock, output.str().c_str(), output.str().size(), 0);
     if (sendLength < 0)
     {
-        std::cout << "∑¢ÀÕ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "send error" << WSAGetLastError() << std::endl;
         return false;
     }
-    output.clear();
+    output.str("");
     return true;
 }
 bool Server::recvMessage(std::string &buff)
 {
     buff.clear();
-    char buffer[1024];
+    char buffer[1024] = {0};
     recvLength = recv(acceptSock, buffer, sizeof(buffer), 0);
     if (recvLength < 0)
     {
-        std::cout << "Ω” ’ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "recv error" << WSAGetLastError() << std::endl;
         return 0;
     }
     else
-        buff.append(buffer[0], buffer[strlen(buffer) - 1]);
+        buff.append(buffer, buffer + strlen(buffer));
+    std::cout << buff;
     return 1;
 }
-int Server::recvMessage()
+/* int Server::recvMessage()
 {
     int num;
     char buffer[1024];
     recvLength = recv(acceptSock, buffer, sizeof(buffer), 0);
     if (recvLength < 0)
     {
-        std::cout << "Ω” ’ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "recv error" << WSAGetLastError() << std::endl;
         return INT_MIN;
     }
     else
         memcpy(&num, buffer, sizeof(num));
     return ntohl(num);
-}
+} */
 
 bool Client::clientInit()
 {
-    WORD w_req = MAKEWORD(2, 2);  //∞Ê±æ∫≈
+    WORD w_req = MAKEWORD(2, 2);  //ÁâàÊú¨Âè∑
     WSADATA wsadata;
     int err;
     err = WSAStartup(w_req, &wsadata);
     if (err != 0)
     {
-        std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚ ß∞‹£°" << std::endl;
+        std::cout << "init WSADATA error" << std::endl;
     }
     else
     {
-        std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚≥…π¶£°" << std::endl;
+        std::cout << "init WSADATA success" << std::endl;
     }
-    //ºÏ≤‚∞Ê±æ∫≈
+    //Ê£ÄÊµãÁâàÊú¨Âè∑
     if (LOBYTE(wsadata.wVersion) != 2 || HIBYTE(wsadata.wHighVersion) != 2)
     {
-        std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ∫≈≤ª∑˚£°" << std::endl;
+        std::cout << "socket version error" << std::endl;
         // WSACleanup();
     }
     else
     {
-        std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ’˝»∑£°" << std::endl;
+        std::cout << "socket version right" << std::endl;
     }
 
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");  //Õ®π˝ipconfig/all≤È—Ø
+    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");  //ÈÄöËøáipconfig/allÊü•ËØ¢
     serverAddr.sin_port = htons(PORT);
 
     if ((serverSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
@@ -155,39 +156,41 @@ bool Client::clientInit()
 
 bool Client::sendMessage(std::string &message)
 {
-    std::vector<char> buff;
-    buff.assign(message.cbegin(), message.cend());
-    sendLength = send(serverSock, &buff[0], buff.size(), 0);
+    /* std::vector<char> buff;
+    buff.assign(message.cbegin(), message.cend()); */
+    message.append("\n");
+    sendLength = send(serverSock, message.c_str(), message.size(), 0);
     if (sendLength < 0)
     {
-        std::cout << "∑¢ÀÕ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "send error" << WSAGetLastError() << std::endl;
         return false;
     }
     message.clear();
     return true;
 }
-void Client::sendMessage(const int num)
+/* void Client::sendMessage(const int num)
 {
-    std::vector<char> buff;
-    buff.push_back(htonl(num));
-    sendLength = send(serverSock, &buff[0], buff.size(), 0);
+    char buff[10] = {0};
+    int tmp = htonl(num);
+    memcpy(buff, &tmp, sizeof(tmp));
+    sendLength = send(serverSock, buff, strlen(buff), 0);
     if (sendLength < 0)
     {
-        std::cout << "∑¢ÀÕ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "send error" << WSAGetLastError() << std::endl;
         // return false;
     }
-}
+} */
 bool Client::recvMessage(std::string &buff)
 {
     buff.clear();
-    char buffer[1024];
+    char buffer[1024] = {0};
     recvLength = recv(serverSock, buffer, sizeof(buffer), 0);
     if (recvLength < 0)
     {
-        std::cout << "Ω” ’ ß∞‹" << WSAGetLastError() << std::endl;
+        std::cout << "recv error" << WSAGetLastError() << std::endl;
         return 0;
     }
     else
-        buff.append(buffer[0], buffer[strlen(buffer) - 1]);
+        buff.append(buffer, buffer + strlen(buffer));
     return 1;
 }

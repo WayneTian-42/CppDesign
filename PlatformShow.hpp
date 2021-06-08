@@ -14,7 +14,7 @@ class PlatformShow
     ~PlatformShow()
     {
     }
-    void show();  // 灞曠ず鍩虹鐣岄潰
+    void show();  // 展示基础界面
 
   private:
     Client client;

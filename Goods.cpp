@@ -21,39 +21,63 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it != goodsInfo.end())
     {
-        std::cout << "该商品已存在\n";
+        output << "该商品已存在\n";
+        server->sendMessage(output);
         return;
     }
-    std::cout << "请输入商品描述\n";
-    std::cin >> discription;
-    std::cout << "请输入商品单价\n";
+    output << "请输入商品描述\n";
+    server->sendMessage(output);
+    // std::cin >> discription;
+    server->recvMessage(discription);
+    output << "请输入商品单价\n";
+    server->sendMessage(output);
+
+    std::string buff;
     while (1)
     {
-        input(price);
+        // input(price);
+        server->recvMessage(buff);
+        price = std::stoi(buff);
         if (price > 0)
             break;
         else
-            std::cout << "请重新输入一个正数！\n";
+        {
+            output << "请重新输入一个正数！\n";
+            server->sendMessage(output);
+        }
     }
-    std::cout << "请输入商品数量\n";
+    output << "请输入商品数量\n";
+    server->sendMessage(output);
     while (1)
     {
-        input(amount);
+        // input(amount);
+        server->recvMessage(buff);
+        amount = std::stoi(buff);
         if (amount > 0)
             break;
         else
-            std::cout << "请重新输入一个正数！\n";
+        {
+            output << "请重新输入一个正数！\n";
+            server->sendMessage(output);
+        }
     }
-    std::cout << "请输入商品折扣\n";
+    output << "请输入商品折扣\n";
+    server->sendMessage(output);
     while (1)
     {
-        input(discount);
+        // input(discount);
+        server->recvMessage(buff);
+        discount = std::stod(buff);
         if (discount > 0 && discount <= 1)
             break;
         else
-            std::cout << "请重新输入一个0至1之间的数！\n";
+        {
+            output << "请重新输入一个0至1之间的数！\n";
+            server->sendMessage(output);
+        }
     }
-    std::cout << "添加成功！\n";
+    output << "添加成功！\n";
+    server->sendMessage(output);
     copyInfo(tmp);
     // tmp.sold = 0;
     goodsInfo.emplace_back(tmp);
@@ -68,27 +92,34 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it == goodsInfo.end())
     {
-        std::cout << "该商品不存在" << std::endl;
+        output << "该商品不存在" << std::endl;
+        server->sendMessage(output);
         return;
     }
     if (it->merchant != merchant)
     {
-        std::cout << "该商品不属于商家" << merchant << std::endl;
+        output << "该商品不属于商家" << merchant << std::endl;
+        server->sendMessage(output);
         return;
     }
     copyInfo(it);
     getchar();  // 读入上一次输入的回车，防止干扰下面的输入
     std::string change;
-    std::cout << "请修改商品信息：\n"
-              << "名称（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    output << "请修改商品信息：\n"
+           << "名称（输入回车表示不修改）\n";
+    server->sendMessage(output);
+    // std::getline(std::cin, change);
+    server->recvMessage(change);
     if (!change.empty())
         name = change;
-    std::cout << "描述（输入回车表示不修改）\n";
-    std::getline(std::cin, change);
+    output << "描述（输入回车表示不修改）\n";
+    server->sendMessage(output);
+    // std::getline(std::cin, change);
+    server->recvMessage(change);
     if (!change.empty())
         discription = change;
-    std::cout << "种类（输入回车表示不修改）\n";
+    output << "种类（输入回车表示不修改）\n";
+    server->sendMessage(output);
     while (1)
     {
         int t = type;
@@ -96,7 +127,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         {
             if (t > 3 || t < 1)
             {
-                std::cout << "没有该种类商品，请重新输入\n";
+                output << "没有该种类商品，请重新输入\n";
                 continue;
             }
             else
@@ -106,15 +137,18 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
             }
         }
     }
-    std::cout << "单价（输入回车表示不修改）\n";
+    output << "单价（输入回车表示不修改）\n";
+    server->sendMessage(output);
     while (!changeDouble(price))
     {
     }
-    std::cout << "数量（输入回车表示不修改）\n";
+    output << "数量（输入回车表示不修改）\n";
+    server->sendMessage(output);
     while (!changeInt(amount))
     {
     }
-    std::cout << "折扣（输入回车表示不修改）\n";
+    output << "折扣（输入回车表示不修改）\n";
+    server->sendMessage(output);
     while (1)
     {
         double dis = discount;
@@ -122,7 +156,8 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         {
             if (dis > 1.0)
             {
-                std::cout << "折扣不合理，请重新输入\n";
+                output << "折扣不合理，请重新输入\n";
+                server->sendMessage(output);
                 continue;
             }
             else
@@ -135,7 +170,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     copyInfo(tmp);  //将内容更新回数组
     *it = tmp;
 }
-void Goods::search(std::vector<GoodsInfo> &showGoods) const
+void Goods::search(std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -147,24 +182,25 @@ void Goods::search(std::vector<GoodsInfo> &showGoods) const
                 sum += mt.second;
             // 格式化输出
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                output << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述" << std::setw(8)
+                       << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left
+                       << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left << "商家"
+                       << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
-                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left
-                      << st.amount - sum << std::setw(20) << std::left << st.merchant << std::endl;
+            output << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                   << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount << std::setw(8)
+                   << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount - sum
+                   << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
         }
     }
     if (!flg)
-        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
+        output << "没有满足要求的商品，请更换筛选条件。\n";
+    server->sendMessage(output);
 }
-void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods) const
+void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -175,24 +211,25 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods) c
             for (auto mt : st.sold)
                 sum += mt.second;
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                output << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述" << std::setw(8)
+                       << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left
+                       << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left << "商家"
+                       << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
-                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left
-                      << st.amount - sum << std::setw(20) << std::left << st.merchant << std::endl;
+            output << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                   << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount << std::setw(8)
+                   << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount - sum
+                   << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
         }
     }
     if (!flg)
-        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
+        output << "没有满足要求的商品，请更换筛选条件。\n";
+    server->sendMessage(output);
 }
-void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods) const
+void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -203,24 +240,25 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
             for (auto mt : st.sold)
                 sum += mt.second;
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                output << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述" << std::setw(8)
+                       << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left
+                       << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left << "商家"
+                       << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
-                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left
-                      << st.amount - sum << std::setw(20) << std::left << st.merchant << std::endl;
+            output << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                   << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount << std::setw(8)
+                   << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount - sum
+                   << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
         }
     }
     if (!flg)
-        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
+        output << "没有满足要求的商品，请更换筛选条件。\n";
+    server->sendMessage(output);
 }
-void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods) const
+void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
 {
     int flg = 0;
     for (auto st : goodsInfo)
@@ -231,22 +269,23 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods) const
             for (auto mt : st.sold)
                 sum += mt.second;
             if (!flg)
-                std::cout << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述"
-                          << std::setw(8) << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8)
-                          << std::left << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left
-                          << "商家" << std::endl;
+                output << std::setw(20) << std::left << "名称" << std::setw(20) << std::left << "描述" << std::setw(8)
+                       << std::left << "原价" << std::setw(8) << std::left << "折扣" << std::setw(8) << std::left
+                       << "现价" << std::setw(8) << std::left << "数量" << std::setw(20) << std::left << "商家"
+                       << std::endl;
             flg++;
-            std::cout << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
-                      << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount
-                      << std::setw(8) << std::left << st.price * st.discount << std::setw(8) << std::left
-                      << st.amount - sum << std::setw(20) << std::left << st.merchant << std::endl;
+            output << std::setw(20) << std::left << st.name << std::setw(20) << std::left << st.discription
+                   << std::setw(8) << std::left << st.price << std::setw(8) << std::left << st.discount << std::setw(8)
+                   << std::left << st.price * st.discount << std::setw(8) << std::left << st.amount - sum
+                   << std::setw(20) << std::left << st.merchant << std::endl;
             auto vt = std::find(showGoods.begin(), showGoods.end(), st);
             if (vt == showGoods.end())
                 showGoods.emplace_back(st);
         }
     }
     if (!flg)
-        std::cout << "没有满足要求的商品，请更换筛选条件。\n";
+        output << "没有满足要求的商品，请更换筛选条件。\n";
+    server->sendMessage(output);
 }
 void Goods::atDiscount(const double dis)
 {
@@ -284,10 +323,11 @@ void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder)
 }
 // template <typename T> void Goods::input(T &x, bool mode) const
 
-bool Goods::changeInt(int &number) const
+bool Goods::changeInt(int &number)
 {
     std::string tmp;
-    std::getline(std::cin, tmp);
+    // std::getline(std::cin, tmp);
+    server->recvMessage(tmp);
     if (tmp.empty())
         return true;
     if (isInt(tmp))
@@ -295,7 +335,7 @@ bool Goods::changeInt(int &number) const
         int t = std::stoi(tmp);
         /* if (t < 0)
         {
-            std::cout << "输入不合法，请输入正数！\n";
+            output << "输入不合法，请输入正数！\n";
             return false;
         } */
         number = t;
@@ -303,14 +343,16 @@ bool Goods::changeInt(int &number) const
     }
     else
     {
-        std::cout << "输入不合法，请输入正数！\n";
+        output << "输入不合法，请输入正数！\n";
+        server->sendMessage(output);
         return false;
     }
 }
-bool Goods::changeDouble(double &number) const
+bool Goods::changeDouble(double &number)
 {
     std::string tmp;
-    std::getline(std::cin, tmp);
+    // std::getline(std::cin, tmp);
+    server->recvMessage(tmp);
     if (tmp.empty())
         return true;
     if (isFloat(tmp))
@@ -318,7 +360,7 @@ bool Goods::changeDouble(double &number) const
         double t = std::stod(tmp);
         /* if (t < 0.0)
         {
-            std::cout << "输入不合法，请输入正数！\n";
+            output << "输入不合法，请输入正数！\n";
             return false;
         } */
         number = t;
@@ -326,7 +368,8 @@ bool Goods::changeDouble(double &number) const
     }
     else
     {
-        std::cout << "输入不合法，请输入数字！\n";
+        output << "输入不合法，请输入数字！\n";
+        server->sendMessage(output);
         return false;
     }
 }

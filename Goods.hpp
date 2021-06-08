@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <sstream>
 #include "MySocket.hpp"
 // #include <set>
 
@@ -62,13 +63,13 @@ class Goods  // 构造函数，读入商品数据
     virtual double getPrice() const = 0;                         // 纯虚函数，返回商品价格
     void addItems(const std::string &, const std::string &);     // 加入商品
     void changeItems(const std::string &, const std::string &);  // 修改商品信息
-    bool changeInt(int &) const;                                 // 判断修改int类型是否合法
-    bool changeDouble(double &) const;                           // 判断修改double类型是否合法
-    void search(std::vector<GoodsInfo> &) const;                 // 查找商品，并存入vector中，实验二中用
-    void search(const std::string &, std::vector<GoodsInfo> &) const;         // 重载，按名称查找商品
-    void search(const double, const double, std::vector<GoodsInfo> &) const;  // 重载，按价格查找商品
-    void search(const int, std::vector<GoodsInfo> &) const;                   // 重载，按数量查找商品
-    void atDiscount(const double);                                            // 对某种类商品打折
+    bool changeInt(int &);                                       // 判断修改int类型是否合法
+    bool changeDouble(double &);                                 // 判断修改double类型是否合法
+    void search(std::vector<GoodsInfo> &);                       // 查找商品，并存入vector中，实验二中用
+    void search(const std::string &, std::vector<GoodsInfo> &);  // 重载，按名称查找商品
+    void search(const double, const double, std::vector<GoodsInfo> &);  // 重载，按价格查找商品
+    void search(const int, std::vector<GoodsInfo> &);                   // 重载，按数量查找商品
+    void atDiscount(const double);                                      // 对某种类商品打折
     void preorderGoods(const std::string &, const std::string &, const std::string &, const int);
     void soldOut(const std::string &);
     //更新订单内商品剩余数量
@@ -89,6 +90,7 @@ class Goods  // 构造函数，读入商品数据
     std::map<std::string, int> consumerBuy;  //保存被订单锁住的数量
 
     // Client client;
+    std::stringstream output;
     Server *server;
 
   private:

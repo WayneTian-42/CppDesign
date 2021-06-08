@@ -19,7 +19,10 @@ void Platform::show()
                << "其他数字 退出平台" << std::endl;
         server.sendMessage(output);
         /* client.recvMessage(); */
-        action = server.recvMessage();
+        std::string tmp;
+        server.recvMessage(tmp);
+        action = std::stoi(tmp);
+        // std::cout << action;
         switch (action)
         {
             case 1:
@@ -36,8 +39,8 @@ void Platform::show()
         }
         // output << std::endl;
     } while (action > 0 && action < 4);
-    output << "感谢使用！" << std::endl;
-    server.sendMessage(output);
+    /* output << "感谢使用！" << std::endl;
+    server.sendMessage(output); */
 }
 void Platform::userCenter()
 {
@@ -53,7 +56,11 @@ void Platform::userCenter()
                    << "2. 注销登录\n"
                    << "3. 购物车管理\n"
                    << "其他数字 退出" << std::endl;
-            input(choice);
+            // input(choice);
+            server.sendMessage(output);
+            std::string tmp;
+            server.recvMessage(tmp);
+            choice = std::stoi(tmp);
             switch (choice)
             {
                 case 1:
@@ -78,20 +85,29 @@ void Platform::userRegisterOrLog()
            << "2. 用户登录\n"
            << "其他数字 退出" << std::endl;
     int choice, type;
-    input(choice);
+    // input(choice);
+    server.sendMessage(output);
+    std::string tmp;
+    server.recvMessage(tmp);
+    choice = std::stoi(tmp);
     std::string operation[2] = {"注册", "登录"};
     if (choice == 1 || choice == 2)
     {
         output << "请输入" << operation[choice - 1] << "的用户类型：\n"
                << "1表示顾客，2表示商家\n";
-        input(type);
+        // input(type);
+        server.sendMessage(output);
+        server.recvMessage(tmp);
+        type = std::stoi(tmp);
         if (type > 2 || type < 0 || (type == 0 && choice == 1))  // 只有登录时能选择管理员类型
         {
             output << "没有该类型用户，已退出\n";
             return;
         }
         output << "输入用户名：\n";
-        std::cin >> name;
+        server.sendMessage(output);
+        server.recvMessage(tmp);
+        name.append(tmp.cbegin(), tmp.cend() - 1);
         freeUser();
         switch (type)
         {

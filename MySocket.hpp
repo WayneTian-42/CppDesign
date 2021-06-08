@@ -43,7 +43,7 @@ class Server
     bool serverInit();
     bool sendMessage(std::stringstream &message);
     bool recvMessage(std::string &buff);
-    int recvMessage();
+    // int recvMessage();
 
   private:
     SOCKET serverSock, acceptSock;
@@ -87,7 +87,7 @@ class Client
     }
     bool clientInit();
     bool sendMessage(std::string &message);
-    void sendMessage(const int num);
+    // void sendMessage(const int num);
     bool recvMessage(std::string &buff);
 
     template <typename T> void input(T &x)
@@ -102,7 +102,7 @@ class Client
             std::cin >> x;
             continue;
         }
-    }
+    };
 
   private:
     SOCKET serverSock;
