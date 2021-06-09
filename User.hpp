@@ -71,7 +71,9 @@ class User
     void setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
 
     void input(int &x);  // ¼ì²âÊäÈë
+    void input(double &x);
     bool isInt(const std::string &input) const;
+    bool isDouble(const std::string &input) const;
 
     //ĞŞ¸ÄÎªset get
   protected:

@@ -168,11 +168,13 @@ int Order::search(const std::string &name)
     else if (num.size() > 1)
     {
         bool flg = false;
+        output << "该商品购物车内有多种，请输入想购买的商家名\n";
+        server->sendMessage(output);
         while (!flg)
         {
             std::string merchant;
-            output << "该商品购物车内有多种，请输入想购买的商家名\n";
-            server->sendMessage(output);
+            /* output << "该商品购物车内有多种，请输入想购买的商家名\n";
+            server->sendMessage(output); */
             // std::cin >> merchant;
             server->recvMessage(merchant);
             for (int i = 0; i < num.size(); i++)

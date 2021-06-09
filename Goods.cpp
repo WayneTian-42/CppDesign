@@ -21,7 +21,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it != goodsInfo.end())
     {
-        output << "该商品已存在\n";
+        output << "该商品已存在\n1";
         server->sendMessage(output);
         return;
     }
@@ -70,7 +70,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
             server->sendMessage(output);
         }
     }
-    output << "添加成功！\n";
+    output << "添加成功！\n1";
     server->sendMessage(output);
     copyInfo(tmp);
     // tmp.sold = 0;
@@ -100,21 +100,21 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     getchar();  // 读入上一次输入的回车，防止干扰下面的输入
     std::string change;
     output << "请修改商品信息：\n"
-           << "名称（输入回车表示不修改）\n";
+           << "名称（输入回车表示不修改）\n3";
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    change.erase(change.end());
+    change.erase(change.end() - 1);
     if (change.size())
         name = change;
-    output << "描述（输入回车表示不修改）\n";
+    output << "描述（输入回车表示不修改）\n3";
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    change.erase(change.end());
+    change.erase(change.end() - 1);
     if (change.size())
         discription = change;
-    output << "种类（输入回车表示不修改）\n";
+    output << "种类（输入回车表示不修改）\n3";
     server->sendMessage(output);
     while (1)
     {
@@ -133,17 +133,17 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
             }
         }
     }
-    output << "单价（输入回车表示不修改）\n";
+    output << "单价（输入回车表示不修改）\n3";
     server->sendMessage(output);
     while (!changeDouble(price))
     {
     }
-    output << "数量（输入回车表示不修改）\n";
+    output << "数量（输入回车表示不修改）\n3";
     server->sendMessage(output);
     while (!changeInt(amount))
     {
     }
-    output << "折扣（输入回车表示不修改）\n";
+    output << "折扣（输入回车表示不修改）\n3";
     server->sendMessage(output);
     while (1)
     {
@@ -152,7 +152,7 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
         {
             if (dis > 1.0)
             {
-                output << "折扣不合理，请重新输入\n";
+                output << "折扣不合理，请重新输入\n3";
                 server->sendMessage(output);
                 continue;
             }
@@ -224,6 +224,7 @@ void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
     }
     if (!flg)
         output << "没有满足要求的商品，请更换筛选条件。\n";
+    output << '1';
     server->sendMessage(output);
 }
 void Goods::search(const double lowPrice, const double highPrice, std::vector<GoodsInfo> &showGoods)
@@ -253,6 +254,7 @@ void Goods::search(const double lowPrice, const double highPrice, std::vector<Go
     }
     if (!flg)
         output << "没有满足要求的商品，请更换筛选条件。\n";
+    output << '1';
     server->sendMessage(output);
 }
 void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
@@ -282,6 +284,7 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
     }
     if (!flg)
         output << "没有满足要求的商品，请更换筛选条件。\n";
+    output << '1';
     server->sendMessage(output);
 }
 void Goods::atDiscount(const double dis)

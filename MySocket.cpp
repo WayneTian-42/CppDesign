@@ -1,5 +1,7 @@
 #include "MySocket.hpp"
+#include <ostream>
 #include <string.h>
+#include <string>
 #include <vector>
 
 bool Server::serverInit()
@@ -70,11 +72,19 @@ bool Server::sendMessage(std::stringstream &output)
     /* char buff[1024] = {0};
     output >> buff;
     std::cout << output.str(); */
-    sendLength = send(acceptSock, output.str().c_str(), output.str().size(), 0);
-    if (sendLength < 0)
+    try
     {
-        std::cout << "send error" << WSAGetLastError() << std::endl;
-        return false;
+        sendLength = send(acceptSock, output.str().c_str(), output.str().size(), 0);
+        if (sendLength < 0)
+        {
+            error << "send error " << GetLastError() << std::endl;
+            throw error.str();
+        }
+    }
+    catch (const std::string &msg)
+    {
+        std::cerr << msg;
+        exit(1);
     }
     output.str("");
     return true;
@@ -83,14 +93,21 @@ bool Server::recvMessage(std::string &buff)
 {
     buff.clear();
     char buffer[1024] = {0};
-    recvLength = recv(acceptSock, buffer, sizeof(buffer), 0);
-    if (recvLength < 0)
+    try
     {
-        std::cout << "recv error" << WSAGetLastError() << std::endl;
-        return 0;
+        recvLength = recv(acceptSock, buffer, sizeof(buffer), 0);
+        if (recvLength < 0)
+        {
+            error << "recv error " << GetLastError() << std::endl;
+            throw error.str();
+        }
     }
-    else
-        buff.append(buffer, buffer + strlen(buffer));
+    catch (const std::string &msg)
+    {
+        std::cerr << msg;
+        exit(1);
+    }
+    buff.append(buffer, buffer + strlen(buffer));
     std::cout << buff;
     return 1;
 }
@@ -159,11 +176,19 @@ bool Client::sendMessage(std::string &message)
     /* std::vector<char> buff;
     buff.assign(message.cbegin(), message.cend()); */
     message.append("\n");
-    sendLength = send(serverSock, message.c_str(), message.size(), 0);
-    if (sendLength < 0)
+    try
     {
-        std::cout << "send error" << WSAGetLastError() << std::endl;
-        return false;
+        sendLength = send(serverSock, message.c_str(), message.size(), 0);
+        if (sendLength < 0)
+        {
+            error << "send error " << GetLastError() << std::endl;
+            throw error.str();
+        }
+    }
+    catch (const std::string &msg)
+    {
+        std::cerr << msg;
+        exit(1);
     }
     message.clear();
     return true;
@@ -184,13 +209,20 @@ bool Client::recvMessage(std::string &buff)
 {
     buff.clear();
     char buffer[1024] = {0};
-    recvLength = recv(serverSock, buffer, sizeof(buffer), 0);
-    if (recvLength < 0)
+    try
     {
-        std::cout << "recv error" << WSAGetLastError() << std::endl;
-        return 0;
+        recvLength = recv(serverSock, buffer, sizeof(buffer), 0);
+        if (recvLength < 0)
+        {
+            error << "recv error " << GetLastError() << std::endl;
+            throw error.str();
+        }
     }
-    else
-        buff.append(buffer, buffer + strlen(buffer));
+    catch (const std::string &msg)
+    {
+        std::cerr << msg;
+        exit(1);
+    }
+    buff.append(buffer, buffer + strlen(buffer));
     return 1;
 }

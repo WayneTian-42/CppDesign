@@ -11,27 +11,27 @@ class Server
   public:
     Server() : serverSock(INVALID_SOCKET), acceptSock(INVALID_SOCKET)
     {
-        /* WORD w_req = MAKEWORD(2, 2);  //∞Ê±æ∫≈
+        /* WORD w_req = MAKEWORD(2, 2);  //ÁâàÊú¨Âè∑
         WSADATA wsadata;
         int err;
         err = WSAStartup(w_req, &wsadata);
         if (err != 0)
         {
-            std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚ ß∞‹£°" << std::endl;
+            std::cout << "ÂàùÂßãÂåñÂ•óÊé•Â≠óÂ∫ìÂ§±Ë¥•ÔºÅ" << std::endl;
         }
         else
         {
-            std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚≥…π¶£°" << std::endl;
+            std::cout << "ÂàùÂßãÂåñÂ•óÊé•Â≠óÂ∫ìÊàêÂäüÔºÅ" << std::endl;
         }
-        //ºÏ≤‚∞Ê±æ∫≈
+        //Ê£ÄÊµãÁâàÊú¨Âè∑
         if (LOBYTE(wsadata.wVersion) != 2 || HIBYTE(wsadata.wHighVersion) != 2)
         {
-            std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ∫≈≤ª∑˚£°" << std::endl;
+            std::cout << "Â•óÊé•Â≠óÂ∫ìÁâàÊú¨Âè∑‰∏çÁ¨¶ÔºÅ" << std::endl;
             // WSACleanup();
         }
         else
         {
-            std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ’˝»∑£°" << std::endl;
+            std::cout << "Â•óÊé•Â≠óÂ∫ìÁâàÊú¨Ê≠£Á°ÆÔºÅ" << std::endl;
         } */
     }
     ~Server()
@@ -48,8 +48,9 @@ class Server
   private:
     SOCKET serverSock, acceptSock;
     SOCKADDR_IN serverAddr, acceptAddr;
+    std::stringstream error;
     int sendLength, recvLength;
-    const int PORT = 8888;
+    const int PORT = 8889;
 };
 
 class Client
@@ -57,27 +58,27 @@ class Client
   public:
     Client() : serverSock(INVALID_SOCKET)
     {
-        /* WORD w_req = MAKEWORD(2, 2);  //∞Ê±æ∫≈
+        /* WORD w_req = MAKEWORD(2, 2);  //ÁâàÊú¨Âè∑
         WSADATA wsadata;
         int err;
         err = WSAStartup(w_req, &wsadata);
         if (err != 0)
         {
-            std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚ ß∞‹£°" << std::endl;
+            std::cout << "ÂàùÂßãÂåñÂ•óÊé•Â≠óÂ∫ìÂ§±Ë¥•ÔºÅ" << std::endl;
         }
         else
         {
-            std::cout << "≥ı ºªØÃ◊Ω”◊÷ø‚≥…π¶£°" << std::endl;
+            std::cout << "ÂàùÂßãÂåñÂ•óÊé•Â≠óÂ∫ìÊàêÂäüÔºÅ" << std::endl;
         }
-        //ºÏ≤‚∞Ê±æ∫≈
+        //Ê£ÄÊµãÁâàÊú¨Âè∑
         if (LOBYTE(wsadata.wVersion) != 2 || HIBYTE(wsadata.wHighVersion) != 2)
         {
-            std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ∫≈≤ª∑˚£°" << std::endl;
+            std::cout << "Â•óÊé•Â≠óÂ∫ìÁâàÊú¨Âè∑‰∏çÁ¨¶ÔºÅ" << std::endl;
             // WSACleanup();
         }
         else
         {
-            std::cout << "Ã◊Ω”◊÷ø‚∞Ê±æ’˝»∑£°" << std::endl;
+            std::cout << "Â•óÊé•Â≠óÂ∫ìÁâàÊú¨Ê≠£Á°ÆÔºÅ" << std::endl;
         } */
     }
     ~Client()
@@ -98,7 +99,7 @@ class Client
         {
             std::cin.clear();
             std::cin.ignore(LLONG_MAX, '\n');
-            std::cout << " ‰»Î≤ª∫œ∑®£¨«Î ‰»Î ˝◊÷\n";
+            std::cout << "ËæìÂÖ•‰∏çÂêàÊ≥ïÔºåËØ∑ËæìÂÖ•Êï∞Â≠ó\n";
             std::cin >> x;
             continue;
         }
@@ -107,6 +108,7 @@ class Client
   private:
     SOCKET serverSock;
     SOCKADDR_IN serverAddr;
+    std::stringstream error;
     int sendLength, recvLength;
-    const int PORT = 8888;
+    const int PORT = 8889;
 };

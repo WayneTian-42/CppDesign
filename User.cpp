@@ -101,6 +101,7 @@ bool User::login(const int userType)
 }
 void User::changePwd()
 {
+    // 可以删掉？必须登陆后才能改密码
     if (search(name) == -1)
     {
         output << "用户不存在！\n1";
@@ -116,7 +117,8 @@ void User::changePwd()
     confirm.erase(confirm.end() - 1);
     if (confirm != password)
     {
-        output << "密码错误，已退出！\n";
+        output << "密码错误，已退出！\n1";
+        server->sendMessage(output);
         return;
     }
     while (1)
@@ -183,10 +185,7 @@ void User::topUpAndDown()
     server->sendMessage(output);
     while (1)
     {
-        // input(money);
-        std::string buff;
-        server->recvMessage(buff);
-        money = std::stoi(buff);
+        input(money);
         if (balance + money < 0)
             output << "余额不能为负，请重新输入\n";
         else
@@ -266,7 +265,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                     myorder.generateOrder(finalOrder, goodsInfo);
                 else
                 {
-                    output << "请支付上一个订单后再生成订单!\n";
+                    output << "请支付上一个订单后再生成订单!\n1";
                     server->sendMessage(output);
                 }
                 break;
@@ -288,7 +287,7 @@ void User::showOrder()
 {
     if (finalOrder.empty())
     {
-        output << "没有订单！\n";
+        output << "没有订单！\n1";
         server->sendMessage(output);
         return;
     }
@@ -301,20 +300,41 @@ void User::showOrder()
                << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
                << std::left << it.first.merchant << std::endl;
     }
+    output << '1';
     server->sendMessage(output);
 }
 void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
 {
     if (finalOrder.empty())
     {
-        output << "没有订单，已退出\n";
+        output << "没有订单，已退出\n1";
         server->sendMessage(output);
         return;
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
-    output << "订单已取消！\n";
+    output << "订单已取消！\n1";
     server->sendMessage(output);
+}
+void User::input(double &x)
+{
+    std::string tmp;
+    server->recvMessage(tmp);
+    tmp.erase(tmp.end() - 1);
+    if (tmp.empty())
+    {
+        x = -1;
+        return;
+    }
+    while (!isDouble(tmp))
+    {
+        output << "输入不合法，请输入数字\n";
+        server->sendMessage(output);
+        server->recvMessage(tmp);
+        tmp.erase(tmp.end() - 1);
+    }
+    if (!tmp.empty())
+        x = std::stod(tmp);
 }
 void User::input(int &x)
 {
@@ -341,6 +361,11 @@ void User::input(int &x)
 bool User::isInt(const std::string &input) const
 {
     std::regex rx("^\\-?\\d+$");  //+号表示多次匹配
+    return std::regex_match(input, rx);
+}
+bool User::isDouble(const std::string &input) const
+{
+    std::regex rx("^\\-?\\d+(.\\d+)?$");
     return std::regex_match(input, rx);
 }
 void User::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &dest)

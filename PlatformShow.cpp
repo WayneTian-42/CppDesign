@@ -7,7 +7,7 @@
 void PlatformShow::show()
 {
     // int action = 1;
-    bool skip = false, encryption = false;
+    bool skip = false, encryption = false, aBlankLine = false;
     while (1)
     {
         /* std::cout << "选择操作：\n"
@@ -39,10 +39,13 @@ void PlatformShow::show()
             case '2':
                 encryption = true;
                 break;
+            case '3':
+                aBlankLine = true;
+                break;
             default:
                 break;
         }
-        if (*(buff.end() - 1) != '\n')
+        if (buff.size() && *(buff.end() - 1) != '\n')
             buff.erase(buff.end() - 1);
         std::cout << buff;
         if (skip)
@@ -56,7 +59,19 @@ void PlatformShow::show()
             inputPwd(tmp);
         }
         else
-            std::getline(std::cin, tmp);
+        {
+            while (1)
+            {
+                std::getline(std::cin, tmp);
+                if (!aBlankLine && tmp.empty())
+                    std::cout << "不能输入空行，请重新输入！\n";
+                else
+                {
+                    aBlankLine = false;
+                    break;
+                }
+            }
+        }
         client.sendMessage(tmp);
         /* switch (action)
         {
