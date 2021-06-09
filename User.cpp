@@ -230,6 +230,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                 break;
             case 6:
                 transferPayments();
+                myorder.soldOut(goodsInfo);
                 break;
             case 7:
                 cancelOrder(goodsInfo);
