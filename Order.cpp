@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <regex>
 
 // goods可以删除掉
 void Order::preAddGoods(std::vector<GoodsInfo> &showGoods, std::vector<GoodsInfo> &goodsInfo)
@@ -27,7 +28,9 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
     int flg = 1, num = 0;
     while (1)
     {
-        std::cin >> gname;
+        // std::cin >> gname;
+        server->recvMessage(gname);
+        gname.erase(gname.end() - 1);
         for (auto it : showGoods)
         {
             if (it.name == gname)
@@ -72,44 +75,44 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
     }
     if (good.merchant == name)
     {
-        output << "不能购买自己的商品，已退出！\n";
+        output << "不能购买自己的商品，已退出！\n1";
         server->sendMessage(output);
         good.name.erase();
     }
 }
 void Order::chooseAmount(const GoodsInfo &good)
 {
-    output << "请输入要购买的数量(0表示取消加入购物车)：";
+    output << "请输入要购买的数量(0表示取消加入购物车)：\n";
     server->sendMessage(output);
     int number;
     bool can = true;
     while (1)
     {
-        // input(number);
-        std::string buff;
-        server->recvMessage(buff);
-        number = std::stoi(buff);
+        input(number);
         if (number > good.amount)
         {
             output << "想要购买的数量超过了最大数量，请重新输入\n";
+            server->sendMessage(output);
         }
         else if (number < 0)
         {
             output << "不能买非正数个商品，请重新输入\n";
+            server->sendMessage(output);
         }
         else if (number == 0)
         {
-            output << "已退出\n";
+            output << "已退出\n1";  //
+            server->sendMessage(output);
             break;
         }
         else
         {
-            output << "已添加到购物车\n";
+            output << "已添加到购物车\n1";  //
             //相同商品只会产生一次记录
+            server->sendMessage(output);
             addGoods(good, number);
             break;
         }
-        server->sendMessage(output);
     }
 }
 void Order::addGoods(const GoodsInfo &good, const int num)
@@ -132,7 +135,7 @@ void Order::showShoppingCart()
 {
     if (shoppingCart.empty())
     {
-        output << "购物车已清空！\n";
+        output << "购物车已清空！\n1";
         server->sendMessage(output);
         return;
     }
@@ -145,6 +148,7 @@ void Order::showShoppingCart()
                << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
                << std::left << it.first.merchant << std::endl;
     }
+    output << '1';
     server->sendMessage(output);
 }
 int Order::search(const std::string &name)
@@ -195,7 +199,7 @@ void Order::deleteGoods()
     showShoppingCart();
     if (shoppingCart.empty())
     {
-        output << "不能修改，已退出！\n";
+        output << "不能修改，已退出！\n1";
         server->sendMessage(output);
         return;
     }
@@ -204,21 +208,31 @@ void Order::deleteGoods()
     server->sendMessage(output);
     // std::cin >> name;
     server->recvMessage(name);
+    name.erase(name.end() - 1);
     int pos = search(name);
     if (pos == -1)
     {
-        output << "没有该商品，已退出\n";
+        output << "没有该商品，已退出\n1";  //
         server->sendMessage(output);
         return;
     }
     output << name << "数量为" << shoppingCart[pos].second << std::endl;
-    output << "请输入要修改的数量（正数表示增加，负数表示）";
+    output << "请输入要修改的数量（正数表示增加，负数表示减少）\n";
     server->sendMessage(output);
     int number;
     // input(number);
-    std::string buff;
-    server->recvMessage(buff);
-    number = std::stoi(buff);
+    while (1)
+    {
+        input(number);
+        if (shoppingCart[pos].second + number < 0)
+        {
+            output << "购物车数量不能为负，请重新输入\n";
+            server->sendMessage(output);
+            continue;
+        }
+        else
+            break;
+    }
     shoppingCart[pos].second += number;
 }
 void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, std::vector<GoodsInfo> &goodsInfo)
@@ -240,10 +254,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
         server->sendMessage(output);
         while (flg)
         {
-            // input(amount);
-            std::string buff;
-            server->recvMessage(buff);
-            amount = std::stoi(buff);
+            input(amount);
             if (amount < 0)
             {
                 output << "不能购买负数个商品，请重新输入\n";
@@ -283,7 +294,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
                << std::setw(8) << std::left << total << std::endl;
         sum += total;
     }
-    output << "所有商品总价格为" << sum << "元\n";
+    output << "所有商品总价格为" << sum << "元\n1";
     server->sendMessage(output);
 }
 double Order::getToatalPrice()
@@ -352,15 +363,20 @@ void Order::setName(const std::string &name)
 void Order::definiteType()
 {
     int type;
-    if (!type)
+    /* if (!type)
     {
         output << "请选择商品类型\n"
                << "1表示食物，2表示衣服，3表示图书\n";
         input(type);
-    }
+    } */
+    output << "请选择商品类型\n"
+           << "1表示食物，2表示衣服，3表示图书\n";
+    server->sendMessage(output);
+    input(type);
     while (type < 1 || type > 3)
     {
         output << "没有该类型商品，请重新输入\n";
+        server->sendMessage(output);
         input(type);
     }
     freeGoods();
@@ -387,15 +403,30 @@ void Order::freeGoods()
         goods = nullptr;
     }
 }
-template <typename T> void Order::input(T &x) const
+void Order::input(int &x)
 {
-    std::cin >> x;
-    while (std::cin.fail())
+    std::string tmp;
+    server->recvMessage(tmp);
+    tmp.erase(tmp.end() - 1);
+    if (tmp.empty())
     {
-        std::cin.clear();
-        std::cin.ignore(LLONG_MAX, '\n');
-        std::cout << "输入不合法，请输入数字\n";
-        std::cin >> x;
-        continue;
+        x = -1;
+        return;
     }
+    while (!isInt(tmp))
+    {
+        output << "输入不合法，请输入数字\n";
+        server->sendMessage(output);
+        server->recvMessage(tmp);
+        tmp.erase(tmp.end() - 1);
+        if (tmp.empty())
+            break;
+    }
+    if (!tmp.empty())
+        x = std::stoi(tmp);
+}
+bool Order::isInt(const std::string &input) const
+{
+    std::regex rx("^\\-?\\d+$");  //+号表示多次匹配
+    return std::regex_match(input, rx);
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include "Platform.hpp"
 #include "PlatformShow.hpp"
 // #include "MySocket.hpp"
@@ -24,6 +25,7 @@ int main()
         /* Client client;
         if (!client.clientInit())
             return -1; */
+        getchar();
         PlatformShow sysc;
         sysc.show();
     }

@@ -15,6 +15,7 @@ class PlatformShow
     {
     }
     void show();  // 展示基础界面
+    void inputPwd(std::string &pwd);
 
   private:
     Client client;

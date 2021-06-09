@@ -6,6 +6,7 @@
 // 头文件用来实现星号显示密码
 #include <conio.h>
 #include <windows.h>
+#include <regex>
 
 bool AccInfo::operator==(const AccInfo &ac) const
 {
@@ -26,7 +27,7 @@ void User::userRegister()
 {
     if (search(name) != -1)
     {
-        output << "该用户名已存在！\n";
+        output << "该用户名已存在！\n1";
         server->sendMessage(output);
         return;
     }
@@ -35,13 +36,13 @@ void User::userRegister()
 
     while (1)
     {
-        output << "输入密码:\n";
+        output << "输入密码:\n2";
         server->sendMessage(output);
         std::string confirm;
         // confirmPwd(tmp.pwd);
         server->recvMessage(tmp.pwd);
         tmp.pwd.erase(tmp.pwd.end() - 1);
-        output << "请再次输入密码确认:\n";
+        output << "请再次输入密码确认:\n2";
         server->sendMessage(output);
         server->recvMessage(confirm);
         confirm.erase(confirm.end() - 1);
@@ -52,7 +53,7 @@ void User::userRegister()
     tmp.t = type;
     tmp.bala = 0;
     accInfo.emplace_back(tmp);
-    output << "注册成功!\n";
+    output << "注册成功!\n1";
     server->sendMessage(output);
 }
 bool User::login(const int userType)
@@ -62,26 +63,28 @@ bool User::login(const int userType)
     {
         if (accInfo[pos].t != userType)
         {
-            output << "用户类型错误，请退出重新选择！\n";
+            output << "用户类型错误，请退出重新选择！\n1";
             server->sendMessage(output);
             return false;
         }
         std::string pwd;
-        output << "请输入密码:\n";
+        output << "请输入密码:\n2";
         server->sendMessage(output);
         // confirmPwd(pwd);
         server->recvMessage(pwd);
         pwd.erase(pwd.end() - 1);
         if (pwd != accInfo[pos].pwd)
         {
-            output << "密码错误!\n";
+            output << "密码错误!\n1";
             server->sendMessage(output);
             return false;
         }
         else
         {
-            output << "登录成功!\n";
+            output << "登录成功!\n1";
             server->sendMessage(output);
+            /* output << "-1";
+            server->sendMessage(output); */
             password = pwd;
             this->type = userType;
             balance = accInfo[pos].bala;
@@ -91,7 +94,7 @@ bool User::login(const int userType)
     }
     else
     {
-        output << "用户不存在!\n";
+        output << "用户不存在!\n1";
         server->sendMessage(output);
         return false;
     }
@@ -100,12 +103,12 @@ void User::changePwd()
 {
     if (search(name) == -1)
     {
-        output << "用户不存在！";
+        output << "用户不存在！\n1";
         server->sendMessage(output);
         return;
     }
     std::string pwd;
-    output << "输入旧密码:\n";
+    output << "输入旧密码:\n2";
     server->sendMessage(output);
     std::string confirm;
     // confirmPwd(confirm);
@@ -118,13 +121,13 @@ void User::changePwd()
     }
     while (1)
     {
-        output << "输入新密码:\n";
+        output << "输入新密码:\n2";
         server->sendMessage(output);
         pwd.erase();
         server->recvMessage(pwd);
         pwd.erase(pwd.end() - 1);
         // confirmPwd(pwd);
-        output << "请再次输入密码确认:\n";
+        output << "请再次输入密码确认:\n2";
         server->sendMessage(output);
         confirm.erase();
         // confirmPwd(confirm);
@@ -137,11 +140,11 @@ void User::changePwd()
     }
     password = pwd;
     accInfo[num].pwd = pwd;
-    output << "修改成功！\n";
+    output << "修改成功！\n1";
     server->sendMessage(output);
 }
 
-void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
+/* void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
 {
     while (1)
     {
@@ -166,7 +169,8 @@ void User::confirmPwd(std::string &tmpPwd)  //确认密码，实现用*代替字符
             _putch('*');   // 输出*
         }
     }
-}
+} */
+
 double User::queryBalance() const
 {
     return balance;
@@ -190,7 +194,7 @@ void User::topUpAndDown()
     }
     balance += money;
     accInfo[num].bala = balance;
-    output << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
+    output << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl << '1';
     server->sendMessage(output);
 }
 void User::transferPayments()
@@ -198,13 +202,13 @@ void User::transferPayments()
     std::string tmp = name;
     if (finalOrder.empty())
     {
-        output << "没有订单需要支付\n";
+        output << "没有订单需要支付\n1";
         server->sendMessage(output);
         return;
     }
     if (myorder.getToatalPrice() > balance)
     {
-        output << "余额不足，请充值后付款\n";
+        output << "余额不足，请充值后付款\n1";
         server->sendMessage(output);
         return;
     }
@@ -217,7 +221,7 @@ void User::transferPayments()
         balance -= singlePrice;
     }
     finalOrder.clear();
-    output << "交易成功！\n";
+    output << "交易成功！\n1";
     server->sendMessage(output);
     int pos = search(name);
     accInfo[pos].bala = balance;
@@ -240,10 +244,10 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                << "7. 取消订单\n"
                << "其他数字 退出\n";
         server->sendMessage(output);
-        // input(choice);
-        std::string buff;
+        input(choice);
+        /* std::string buff;
         server->recvMessage(buff);
-        choice = std::stoi(buff);
+        choice = std::stoi(buff); */
         if (choice < 1 || choice > 7)
             return;
         switch (choice)
@@ -312,17 +316,32 @@ void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
     output << "订单已取消！\n";
     server->sendMessage(output);
 }
-template <typename T> void User::input(T &x) const
+void User::input(int &x)
 {
-    std::cin >> x;
-    while (std::cin.fail())
+    std::string tmp;
+    server->recvMessage(tmp);
+    tmp.erase(tmp.end() - 1);
+    if (tmp.empty())
     {
-        std::cin.clear();
-        std::cin.ignore(LLONG_MAX, '\n');
-        std::cout << "输入不合法，请输入数字\n";
-        std::cin >> x;
-        continue;
+        x = -1;
+        return;
     }
+    while (!isInt(tmp))
+    {
+        output << "输入不合法，请输入数字\n";
+        server->sendMessage(output);
+        server->recvMessage(tmp);
+        tmp.erase(tmp.end() - 1);
+        if (tmp.empty())
+            break;
+    }
+    if (!tmp.empty())
+        x = std::stoi(tmp);
+}
+bool User::isInt(const std::string &input) const
+{
+    std::regex rx("^\\-?\\d+$");  //+号表示多次匹配
+    return std::regex_match(input, rx);
 }
 void User::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &dest)
 {
@@ -340,15 +359,3 @@ void User::setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &sou)
 {
     finalOrder = sou;
 }
-/* void User::exchangeMoney(const std::string &merchant, const double total)
-{
-    std::cin >> x;
-    while (std::cin.fail() || std::cin.get() != '\n')
-    {
-        std::cin.clear();
-        std::cin.ignore(LLONG_MAX, '\n');
-        std::cout << "输入不合法，请输入数字\n";
-        std::cin >> x;
-        continue;
-    }
-}*/

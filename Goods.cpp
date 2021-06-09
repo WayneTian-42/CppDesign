@@ -35,9 +35,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     std::string buff;
     while (1)
     {
-        // input(price);
-        server->recvMessage(buff);
-        price = std::stoi(buff);
+        input(price);
         if (price > 0)
             break;
         else
@@ -50,9 +48,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     server->sendMessage(output);
     while (1)
     {
-        // input(amount);
-        server->recvMessage(buff);
-        amount = std::stoi(buff);
+        input(amount);
         if (amount > 0)
             break;
         else
@@ -65,9 +61,7 @@ void Goods::addItems(const std::string &goodsName, const std::string &merchant)
     server->sendMessage(output);
     while (1)
     {
-        // input(discount);
-        server->recvMessage(buff);
-        discount = std::stod(buff);
+        input(discount);
         if (discount > 0 && discount <= 1)
             break;
         else
@@ -92,13 +86,13 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     auto it = std::find(goodsInfo.begin(), goodsInfo.end(), tmp);
     if (it == goodsInfo.end())
     {
-        output << "该商品不存在" << std::endl;
+        output << "该商品不存在" << std::endl << '1';
         server->sendMessage(output);
         return;
     }
     if (it->merchant != merchant)
     {
-        output << "该商品不属于商家" << merchant << std::endl;
+        output << "该商品不属于商家" << merchant << std::endl << '1';
         server->sendMessage(output);
         return;
     }
@@ -110,13 +104,15 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    if (!change.empty())
+    change.erase(change.end());
+    if (change.size())
         name = change;
     output << "描述（输入回车表示不修改）\n";
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    if (!change.empty())
+    change.erase(change.end());
+    if (change.size())
         discription = change;
     output << "种类（输入回车表示不修改）\n";
     server->sendMessage(output);
@@ -198,6 +194,7 @@ void Goods::search(std::vector<GoodsInfo> &showGoods)
     }
     if (!flg)
         output << "没有满足要求的商品，请更换筛选条件。\n";
+    output << '1';
     server->sendMessage(output);
 }
 void Goods::search(const std::string &name, std::vector<GoodsInfo> &showGoods)
@@ -328,8 +325,9 @@ bool Goods::changeInt(int &number)
     std::string tmp;
     // std::getline(std::cin, tmp);
     server->recvMessage(tmp);
-    if (tmp.empty())
+    if (tmp.size() == 1)
         return true;
+    tmp.erase(tmp.end() - 1);
     if (isInt(tmp))
     {
         int t = std::stoi(tmp);
@@ -353,9 +351,10 @@ bool Goods::changeDouble(double &number)
     std::string tmp;
     // std::getline(std::cin, tmp);
     server->recvMessage(tmp);
-    if (tmp.empty())
+    if (tmp.size() == 1)
         return true;
-    if (isFloat(tmp))
+    tmp.erase(tmp.end() - 1);
+    if (isDouble(tmp))
     {
         double t = std::stod(tmp);
         /* if (t < 0.0)
@@ -375,28 +374,57 @@ bool Goods::changeDouble(double &number)
 }
 bool Goods::isInt(const std::string &input) const
 {
-    std::regex rx("^[0-9]+$");  //+号表示多次匹配
+    std::regex rx("^\\-?\\d+$");  //+号表示多次匹配
     return std::regex_match(input, rx);
 }
-bool Goods::isFloat(const std::string &input) const
+bool Goods::isDouble(const std::string &input) const
 {
-    std::regex rx("^[0-9]+(.[0-9]+)?$");
+    std::regex rx("^\\d+(.\\d+)?$");
     return std::regex_match(input, rx);
 }
-template <typename T> void Goods::input(T &x) const
+void Goods::input(int &x)
 {
-    std::cin >> x;
-    /* if (mode)
-        if (std::cin.get() == '\n')
-            return; */
-    while (std::cin.fail() || std::cin.get() != '\n')
+    std::string tmp;
+    server->recvMessage(tmp);
+    tmp.erase(tmp.end() - 1);
+    if (tmp.empty())
     {
-        std::cin.clear();
-        std::cin.ignore(LLONG_MAX, '\n');
-        std::cout << "输入不合法，请输入数字\n";
-        std::cin >> x;
-        continue;
+        x = -1;
+        return;
     }
+    while (!isInt(tmp))
+    {
+        output << "输入不合法，请输入数字\n";
+        server->sendMessage(output);
+        server->recvMessage(tmp);
+        tmp.erase(tmp.end() - 1);
+        if (tmp.empty())
+            break;
+    }
+    if (!tmp.empty())
+        x = std::stoi(tmp);
+}
+void Goods::input(double &x)
+{
+    std::string tmp;
+    server->recvMessage(tmp);
+    tmp.erase(tmp.end() - 1);
+    if (tmp.empty())
+    {
+        x = -1;
+        return;
+    }
+    while (!isDouble(tmp))
+    {
+        output << "输入不合法，请输入数字\n";
+        server->sendMessage(output);
+        server->recvMessage(tmp);
+        tmp.erase(tmp.end() - 1);
+        if (tmp.empty())
+            break;
+    }
+    if (!tmp.empty())
+        x = std::stod(tmp);
 }
 void Goods::copyInfo(GoodsInfo &des) const
 {

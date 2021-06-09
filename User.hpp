@@ -70,7 +70,8 @@ class User
     void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);  // 获取订单
     void setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
 
-    template <typename T> void input(T &x) const;  // 检测输入
+    void input(int &x);  // 检测输入
+    bool isInt(const std::string &input) const;
 
     //修改为set get
   protected:

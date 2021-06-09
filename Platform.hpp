@@ -3,6 +3,7 @@
 #include <cstring>
 #include <map>
 #include <sstream>
+#include <string>
 #include "Goods.hpp"
 #include "User.hpp"
 /**
@@ -24,18 +25,23 @@ class Platform
     ~Platform()
     {
     }
-    void show();                             // 展示基础界面
-    void userCenter();                       // 用户中心界面
-    void userRegisterOrLog();                // 注册登录功能
-    void userInformationChange();            // 修改用户信息
-    void userQuit();                         // 用户退出
-    void purchaseGoods();                    // 购买商品，实验二
-    void goodsInformation();                 // 商品信息
-    void changeGoods();                      // 修改商品信息
-    void definiteType();                     // 确定商品种类
-    void freeUser();                         // 释放用户指针
-    void freeGoods();                        // 释放商品指针
-    template <typename T> void input(T &x);  // 检查输入
+    void show();                   // 展示基础界面
+    void userCenter();             // 用户中心界面
+    void userRegisterOrLog();      // 注册登录功能
+    void userInformationChange();  // 修改用户信息
+    void userQuit();               // 用户退出
+    void purchaseGoods();          // 购买商品，实验二
+    void goodsInformation();       // 商品信息
+    void changeGoods();            // 修改商品信息
+    void definiteType();           // 确定商品种类
+    void freeUser();               // 释放用户指针
+    void freeGoods();              // 释放商品指针
+    void input(int &x);            // 检查输入
+    void input(double &x);
+
+    void input(std::string &x);
+    bool isInt(const std::string &input) const;
+    bool isDouble(const std::string &input) const;
 
     void initSock();
 

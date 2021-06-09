@@ -75,12 +75,15 @@ class Goods  // 构造函数，读入商品数据
     //更新订单内商品剩余数量
     void updateInfo(std::vector<std::pair<GoodsInfo, int>> &);
     bool isInt(const std::string &) const;                    // 正则表达式判断输入是否为int类型
-    bool isFloat(const std::string &) const;                  // 正则表达式判断输入是否为double类型
+    bool isDouble(const std::string &) const;                 // 正则表达式判断输入是否为double类型
     template <typename T> void input(T &) const;              //检测非法输入
     void copyInfo(GoodsInfo &) const;                         //将类中数据成员信息拷贝到临时变量中
     void copyInfo(const std::vector<GoodsInfo>::iterator &);  //将数组中数据成员信息拷贝到数据成员中
     void getGoods(std::vector<GoodsInfo> &) const;
     void setGoods(const std::vector<GoodsInfo> &);
+
+    void input(double &x);
+    void input(int &x);  // 检测输入
 
   protected:
     std::string name, merchant, discription;

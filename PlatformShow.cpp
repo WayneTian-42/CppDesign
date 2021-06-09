@@ -1,10 +1,14 @@
 #include "PlatformShow.hpp"
+#include <iostream>
 #include <string>
+#include <conio.h>
+#include <windows.h>
 
 void PlatformShow::show()
 {
-    int action = 1;
-    do
+    // int action = 1;
+    bool skip = false, encryption = false;
+    while (1)
     {
         /* std::cout << "选择操作：\n"
                   << "1. 用户中心\n"
@@ -14,11 +18,45 @@ void PlatformShow::show()
 
         std::string buff;
         client.recvMessage(buff);
-        std::cout << buff;
-        /* client.input(action);
-        std::string tmp = std::to_string(action); */
         std::string tmp;
-        std::cin >> tmp;
+
+        /* if (*(buff.end() - 1) == '1')
+        {
+            buff.erase(buff.end() - 1);
+            flg = 1;
+        }
+        else if (*(buff.end() - 1) == '0')
+        {
+            break;
+        } */
+        if (*(buff.end() - 1) == '0')
+            break;
+        switch (*(buff.end() - 1))
+        {
+            case '1':
+                skip = true;
+                break;
+            case '2':
+                encryption = true;
+                break;
+            default:
+                break;
+        }
+        if (*(buff.end() - 1) != '\n')
+            buff.erase(buff.end() - 1);
+        std::cout << buff;
+        if (skip)
+        {
+            skip = false;
+            continue;
+        }
+        if (encryption)
+        {
+            encryption = false;
+            inputPwd(tmp);
+        }
+        else
+            std::getline(std::cin, tmp);
         client.sendMessage(tmp);
         /* switch (action)
         {
@@ -34,6 +72,33 @@ void PlatformShow::show()
             default:
                 break;
         } */
-    } while (action > 0 && action < 4);
+    }
     std::cout << "感谢使用！" << std::endl;
+}
+void PlatformShow::inputPwd(std::string &tmpPwd)
+{
+    while (1)
+    {
+        char ch;
+        ch = _getch();      //读取一个字符并且不显示到屏幕上
+        if (ch == VK_BACK)  //输入backspace
+        {
+            if (!tmpPwd.empty())
+            {
+                std::cout << "\b \b" << std::flush;
+                tmpPwd.erase(tmpPwd.length() - 1);  // 清除掉读入的上一个字符
+            }
+        }
+        else if (ch == VK_RETURN)  // 输入回车
+        {
+            std::cout << std::endl;
+            // tmpPwd += '\n';  // 客户端会删除回车
+            break;
+        }
+        else
+        {
+            tmpPwd += ch;  // 读入字符
+            _putch('*');   // 输出*
+        }
+    }
 }

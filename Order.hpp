@@ -44,7 +44,9 @@ class Order
     void setName(const std::string &);
     void definiteType();
     void freeGoods();
-    template <typename T> void input(T &) const;
+
+    void input(int &x);  // 检测输入
+    bool isInt(const std::string &input) const;
 
   private:
     std::vector<std::pair<GoodsInfo, int>> shoppingCart;
