@@ -104,14 +104,14 @@ void Goods::changeItems(const std::string &goodsName, const std::string &merchan
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    change.erase(change.end());
+    // change.erase(change.end());
     if (change.size())
         name = change;
     output << "描述（输入回车表示不修改）\n";
     server->sendMessage(output);
     // std::getline(std::cin, change);
     server->recvMessage(change);
-    change.erase(change.end());
+    // change.erase(change.end());
     if (change.size())
         discription = change;
     output << "种类（输入回车表示不修改）\n";
@@ -327,7 +327,7 @@ bool Goods::changeInt(int &number)
     server->recvMessage(tmp);
     if (tmp.size() == 1)
         return true;
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (isInt(tmp))
     {
         int t = std::stoi(tmp);
@@ -353,7 +353,7 @@ bool Goods::changeDouble(double &number)
     server->recvMessage(tmp);
     if (tmp.size() == 1)
         return true;
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (isDouble(tmp))
     {
         double t = std::stod(tmp);
@@ -386,7 +386,7 @@ void Goods::input(int &x)
 {
     std::string tmp;
     server->recvMessage(tmp);
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (tmp.empty())
     {
         x = -1;
@@ -397,7 +397,7 @@ void Goods::input(int &x)
         output << "输入不合法，请输入数字\n";
         server->sendMessage(output);
         server->recvMessage(tmp);
-        tmp.erase(tmp.end() - 1);
+        // tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }
@@ -408,7 +408,7 @@ void Goods::input(double &x)
 {
     std::string tmp;
     server->recvMessage(tmp);
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (tmp.empty())
     {
         x = -1;
@@ -419,7 +419,7 @@ void Goods::input(double &x)
         output << "输入不合法，请输入数字\n";
         server->sendMessage(output);
         server->recvMessage(tmp);
-        tmp.erase(tmp.end() - 1);
+        // tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }

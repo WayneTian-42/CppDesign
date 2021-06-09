@@ -1,4 +1,5 @@
 #include "MySocket.hpp"
+#include <ostream>
 #include <string.h>
 #include <vector>
 
@@ -91,7 +92,7 @@ bool Server::recvMessage(std::string &buff)
     }
     else
         buff.append(buffer, buffer + strlen(buffer));
-    std::cout << buff;
+    std::cout << buff << std::endl;
     return 1;
 }
 /* int Server::recvMessage()
@@ -158,7 +159,7 @@ bool Client::sendMessage(std::string &message)
 {
     /* std::vector<char> buff;
     buff.assign(message.cbegin(), message.cend()); */
-    message.append("\n");
+    // message.append("\n");
     sendLength = send(serverSock, message.c_str(), message.size(), 0);
     if (sendLength < 0)
     {

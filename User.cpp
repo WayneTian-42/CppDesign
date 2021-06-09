@@ -41,11 +41,11 @@ void User::userRegister()
         std::string confirm;
         // confirmPwd(tmp.pwd);
         server->recvMessage(tmp.pwd);
-        tmp.pwd.erase(tmp.pwd.end() - 1);
+        // tmp.pwd.erase(tmp.pwd.end() - 1);
         output << "请再次输入密码确认:\n2";
         server->sendMessage(output);
         server->recvMessage(confirm);
-        confirm.erase(confirm.end() - 1);
+        // confirm.erase(confirm.end() - 1);
         // confirmPwd(confirm);
         if (tmp.pwd == confirm)  // 直至两次密码相同才设定成功
             break;
@@ -72,7 +72,7 @@ bool User::login(const int userType)
         server->sendMessage(output);
         // confirmPwd(pwd);
         server->recvMessage(pwd);
-        pwd.erase(pwd.end() - 1);
+        // pwd.erase(pwd.end() - 1);
         if (pwd != accInfo[pos].pwd)
         {
             output << "密码错误!\n1";
@@ -113,7 +113,7 @@ void User::changePwd()
     std::string confirm;
     // confirmPwd(confirm);
     server->recvMessage(confirm);
-    confirm.erase(confirm.end() - 1);
+    // confirm.erase(confirm.end() - 1);
     if (confirm != password)
     {
         output << "密码错误，已退出！\n";
@@ -125,14 +125,14 @@ void User::changePwd()
         server->sendMessage(output);
         pwd.erase();
         server->recvMessage(pwd);
-        pwd.erase(pwd.end() - 1);
+        // pwd.erase(pwd.end() - 1);
         // confirmPwd(pwd);
         output << "请再次输入密码确认:\n2";
         server->sendMessage(output);
         confirm.erase();
         // confirmPwd(confirm);
         server->recvMessage(confirm);
-        confirm.erase(confirm.end() - 1);
+        // confirm.erase(confirm.end() - 1);
         if (pwd == confirm)
             break;
         else
@@ -288,7 +288,7 @@ void User::showOrder()
 {
     if (finalOrder.empty())
     {
-        output << "没有订单！\n";
+        output << "没有订单！\n1";
         server->sendMessage(output);
         return;
     }
@@ -301,26 +301,27 @@ void User::showOrder()
                << it.first.price * it.first.discount << std::setw(8) << std::left << it.second << std::setw(20)
                << std::left << it.first.merchant << std::endl;
     }
+    output << '1';
     server->sendMessage(output);
 }
 void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
 {
     if (finalOrder.empty())
     {
-        output << "没有订单，已退出\n";
+        output << "没有订单，已退出\n1";
         server->sendMessage(output);
         return;
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
-    output << "订单已取消！\n";
+    output << "订单已取消！\n1";
     server->sendMessage(output);
 }
 void User::input(int &x)
 {
     std::string tmp;
     server->recvMessage(tmp);
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (tmp.empty())
     {
         x = -1;
@@ -331,7 +332,7 @@ void User::input(int &x)
         output << "输入不合法，请输入数字\n";
         server->sendMessage(output);
         server->recvMessage(tmp);
-        tmp.erase(tmp.end() - 1);
+        // tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }

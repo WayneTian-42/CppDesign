@@ -30,7 +30,7 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
     {
         // std::cin >> gname;
         server->recvMessage(gname);
-        gname.erase(gname.end() - 1);
+        // gname.erase(gname.end() - 1);
         for (auto it : showGoods)
         {
             if (it.name == gname)
@@ -208,7 +208,7 @@ void Order::deleteGoods()
     server->sendMessage(output);
     // std::cin >> name;
     server->recvMessage(name);
-    name.erase(name.end() - 1);
+    // name.erase(name.end() - 1);
     int pos = search(name);
     if (pos == -1)
     {
@@ -407,7 +407,7 @@ void Order::input(int &x)
 {
     std::string tmp;
     server->recvMessage(tmp);
-    tmp.erase(tmp.end() - 1);
+    // tmp.erase(tmp.end() - 1);
     if (tmp.empty())
     {
         x = -1;
@@ -418,7 +418,7 @@ void Order::input(int &x)
         output << "输入不合法，请输入数字\n";
         server->sendMessage(output);
         server->recvMessage(tmp);
-        tmp.erase(tmp.end() - 1);
+        // tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }
