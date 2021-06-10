@@ -355,6 +355,7 @@ void Platform::changeGoods()
                 break;
             case 2:
                 goods->addItems(goodsName, name);
+                break;
             default:
                 break;
         }
@@ -413,7 +414,7 @@ void Platform::input(int &x)
     inputStream >> x; */
     std::string tmp;
     server.recvMessage(tmp);
-    // tmp.erase(tmp.end() - 1);
+    tmp.erase(tmp.end() - 1);
     if (tmp.empty())
     {
         x = -1;
@@ -424,7 +425,7 @@ void Platform::input(int &x)
         output << "输入不合法，请输入数字\n";
         server.sendMessage(output);
         server.recvMessage(tmp);
-        // tmp.erase(tmp.end() - 1);
+        tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }
@@ -435,13 +436,13 @@ void Platform::input(double &x)
 {
     std::string tmp;
     server.recvMessage(tmp);
-    // tmp.erase(tmp.end() - 1);
+    tmp.erase(tmp.end() - 1);
     while (!isDouble(tmp))
     {
         output << "输入不合法，请输入数字\n";
         server.sendMessage(output);
         server.recvMessage(tmp);
-        // tmp.erase(tmp.end() - 1);
+        tmp.erase(tmp.end() - 1);
         if (tmp.empty())
             break;
     }
@@ -451,8 +452,8 @@ void Platform::input(double &x)
 void Platform::input(std::string &x)
 {
     server.recvMessage(x);
-    /* if (!x.empty())
-        x.erase(x.end() - 1); */
+    if (!x.empty())
+        x.erase(x.end() - 1);
 }
 bool Platform::isInt(const std::string &input) const
 {
