@@ -90,7 +90,7 @@ void PlatformShow::show()
     }
     std::cout << "¸ÐÐ»Ê¹ÓÃ£¡" << std::endl;
 }
-void PlatformShow::inputPwd(std::string &tmpPwd)
+void PlatformShow::inputPwd(std::string &tmpPwd) const
 {
     while (1)
     {

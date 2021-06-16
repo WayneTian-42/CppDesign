@@ -288,7 +288,7 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods)
     output << '1';
     server->sendMessage(output);
 }
-int Goods::searchAmount(const std::string &name, const std::string &merchant, const int type)
+int Goods::searchAmount(const std::string &name, const std::string &merchant, const int type) const
 {
     for (auto st : goodsInfo)
     {
@@ -325,7 +325,7 @@ void Goods::soldOut(const std::string &consumer)
         gt.sold.erase(consumer);
     }
 }
-void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder)
+void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder) const
 {
     for (auto &vt : preorder)
     {

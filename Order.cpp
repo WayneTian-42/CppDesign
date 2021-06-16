@@ -318,7 +318,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
     output << "所有商品总价格为" << sum << "元\n1";
     server->sendMessage(output);
 }
-double Order::getToatalPrice()
+double Order::getToatalPrice() const
 {
     return sum;
 }
