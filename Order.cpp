@@ -210,9 +210,25 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
         while (flg)
         {
             input(amount);
+            int tmp = -1, max = 0;
+            freeGoods();
+            goods = new Foods();
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
+            freeGoods();
+            goods = new Clothes();
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
+            freeGoods();
+            goods = new Books();
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
             if (amount < 0)
                 std::cout << "不能购买负数个商品，请重新输入\n";
-            else if (amount > it->first.amount)
+            else if (amount > max)
                 std::cout << "商家没有这么多商品，请重新输入\n";
             else if (amount > it->second)
                 std::cout << "不能超出购物车内数量，请重新输入\n";

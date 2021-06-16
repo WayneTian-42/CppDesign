@@ -72,6 +72,7 @@ class Goods  // 构造函数，读入商品数据
     void soldOut(const std::string &);
     //更新订单内商品剩余数量
     void updateInfo(std::vector<std::pair<GoodsInfo, int>> &);
+    int searchAmount(const std::string &, const std::string &, const int);  //查找商品剩余量
     bool isInt(const std::string &) const;                    // 正则表达式判断输入是否为int类型
     bool isFloat(const std::string &) const;                  // 正则表达式判断输入是否为double类型
     template <typename T> void input(T &) const;              //检测非法输入

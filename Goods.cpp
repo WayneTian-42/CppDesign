@@ -248,6 +248,17 @@ void Goods::search(const int lowAmount, std::vector<GoodsInfo> &showGoods) const
     if (!flg)
         std::cout << "没有满足要求的商品，请更换筛选条件。\n";
 }
+int Goods::searchAmount(const std::string &name, const std::string &merchant, const int type)
+{
+    for (auto st : goodsInfo)
+    {
+        if (st.name == name && st.merchant == merchant && st.type == type)
+        {
+            return st.amount;
+        }
+    }
+    return -1;
+}
 void Goods::atDiscount(const double dis)
 {
     int begin = num;

@@ -162,7 +162,7 @@ void User::topUpAndDown()
     accInfo[num].bala = balance;
     std::cout << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl;
 }
-void User::transferPayments()
+void User::transferPayments(std::vector<GoodsInfo> &goodsInfo)
 {
     std::string tmp = name;
     if (finalOrder.empty())
@@ -184,6 +184,7 @@ void User::transferPayments()
         balance -= singlePrice;
     }
     finalOrder.clear();
+    myorder.soldOut(goodsInfo);
     std::cout << "交易成功！\n";
     int pos = search(name);
     accInfo[pos].bala = balance;
@@ -229,8 +230,8 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                 showOrder();
                 break;
             case 6:
-                transferPayments();
-                myorder.soldOut(goodsInfo);
+                transferPayments(goodsInfo);
+                // myorder.soldOut(goodsInfo);
                 break;
             case 7:
                 cancelOrder(goodsInfo);

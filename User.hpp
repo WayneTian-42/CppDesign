@@ -61,7 +61,7 @@ class User
     void topUpAndDown();                            // 修改余额
     void orderManagement(std::vector<GoodsInfo> &, std::vector<GoodsInfo> &);
 
-    void transferPayments();
+    void transferPayments(std::vector<GoodsInfo> &);
     void showOrder();
     void cancelOrder(std::vector<GoodsInfo> &);
     void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);  // 获取购物车
