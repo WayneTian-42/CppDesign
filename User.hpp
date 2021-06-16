@@ -62,11 +62,11 @@ class User
     void orderManagement(std::vector<GoodsInfo> &, std::vector<GoodsInfo> &);
 
     void transferPayments(std::vector<GoodsInfo> &);
-    void showOrder();
+    void showOrder() const;
     void cancelOrder(std::vector<GoodsInfo> &);
     void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);  // 获取购物车
     void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
-    void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);  // 获取订单
+    void getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &) const;  // 获取订单
     void setFinalOrder(std::vector<std::pair<GoodsInfo, int>> &);
 
     template <typename T> void input(T &x) const;  // 检测输入

@@ -242,7 +242,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
         }
     }
 }
-void User::showOrder()
+void User::showOrder() const
 {
     if (finalOrder.empty())
     {
@@ -291,7 +291,7 @@ void User::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &sou)
 {
     myorder.setShoppingCart(sou);
 }
-void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &dest)
+void User::getFinalOrder(std::vector<std::pair<GoodsInfo, int>> &dest) const
 {
     dest = finalOrder;
 }

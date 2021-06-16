@@ -285,7 +285,7 @@ void Goods::soldOut(const std::string &consumer)
         gt.sold.erase(consumer);
     }
 }
-void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder)
+void Goods::updateInfo(std::vector<std::pair<GoodsInfo, int>> &preorder) const
 {
     for (auto &vt : preorder)
     {

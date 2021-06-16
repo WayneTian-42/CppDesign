@@ -113,7 +113,7 @@ void Order::addGoods(const GoodsInfo &good, const int num)
     if (flg)
         shoppingCart.emplace_back(std::make_pair(good, num));
 }
-void Order::showShoppingCart()
+void Order::showShoppingCart() const
 {
     if (shoppingCart.empty())
     {
@@ -130,7 +130,7 @@ void Order::showShoppingCart()
                   << std::left << it.first.merchant << std::endl;
     }
 }
-int Order::search(const std::string &name)
+int Order::search(const std::string &name) const
 {
     int pos;
     std::vector<int> num;
@@ -259,7 +259,7 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
     }
     std::cout << "所有商品总价格为" << sum << "元\n";
 }
-double Order::getToatalPrice()
+double Order::getToatalPrice() const
 {
     return sum;
 }
@@ -310,7 +310,7 @@ void Order::setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)
 {
     shoppingCart = tmp;
 }
-void Order::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp)
+void Order::getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &tmp) const
 {
     tmp = shoppingCart;
 }

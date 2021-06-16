@@ -27,17 +27,17 @@ class Order
     void chooseGoods(std::vector<GoodsInfo> &, GoodsInfo &);
     void chooseAmount(const GoodsInfo &);
     void addGoods(const GoodsInfo &, const int);
-    void showShoppingCart();
-    int search(const std::string &);
+    void showShoppingCart() const;
+    int search(const std::string &) const;
     void deleteGoods();
     void changeAmount();
     void generateOrder(std::vector<std::pair<GoodsInfo, int>> &, std::vector<GoodsInfo> &);
-    double getToatalPrice();
+    double getToatalPrice() const;
     void clearPrice();
     void preorderGoods(std::vector<GoodsInfo> &, const std::string &, const std::string &, const int);
     void soldOut(std::vector<GoodsInfo> &);
     void setShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
-    void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &);
+    void getShoppingCart(std::vector<std::pair<GoodsInfo, int>> &) const;
     // void transferPayments();
 
     void setName(const std::string &);
