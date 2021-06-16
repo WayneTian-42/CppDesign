@@ -169,7 +169,7 @@ int Order::search(const std::string &name)
 }
 void Order::deleteGoods()
 {
-    definiteType();
+    // definiteType();
     showShoppingCart();
     if (shoppingCart.empty())
     {

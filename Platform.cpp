@@ -229,7 +229,7 @@ void Platform::goodsInformation()
                   << "1. 跳转到购物车界面\n"
                   << "其他数字 退出\n"
                   << std::endl;
-        std::cin >> choice;
+        input(choice);
         if (choice == 1)
             user->orderManagement(showGoods, allGoods);
     }

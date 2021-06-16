@@ -234,6 +234,7 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                 break;
             case 7:
                 cancelOrder(goodsInfo);
+                myorder.soldOut(goodsInfo);
                 break;
             default:
                 break;
@@ -266,6 +267,7 @@ void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
+    finalOrder.clear();
     std::cout << "订单已取消！\n";
 }
 template <typename T> void User::input(T &x) const
