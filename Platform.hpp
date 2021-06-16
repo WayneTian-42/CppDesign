@@ -43,7 +43,7 @@ class Platform
     bool isInt(const std::string &input) const;
     bool isDouble(const std::string &input) const;
 
-    void initSock();
+    // void initSock();
 
     /* void severInit();
     void clientInit(); */

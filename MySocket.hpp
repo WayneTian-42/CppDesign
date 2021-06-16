@@ -91,20 +91,6 @@ class Client
     // void sendMessage(const int num);
     bool recvMessage(std::string &buff);
 
-    template <typename T> void input(T &x)
-    {
-        std::cin >> x;
-
-        while (std::cin.fail() || std::cin.get() != '\n')
-        {
-            std::cin.clear();
-            std::cin.ignore(LLONG_MAX, '\n');
-            std::cout << "输入不合法，请输入数字\n";
-            std::cin >> x;
-            continue;
-        }
-    };
-
   private:
     SOCKET serverSock;
     SOCKADDR_IN serverAddr;

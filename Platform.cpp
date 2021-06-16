@@ -395,10 +395,10 @@ void Platform::definiteType()
     }
 }
 
-void Platform::initSock()
+/* void Platform::initSock()
 {
     server.serverInit();
-}
+} */
 void Platform::input(int &x)
 {
     /* std::cin >> x;
