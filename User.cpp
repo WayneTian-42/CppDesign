@@ -196,7 +196,7 @@ void User::topUpAndDown()
     output << name << "，您账户当前余额为" << queryBalance() << "元" << std::endl << '1';
     server->sendMessage(output);
 }
-void User::transferPayments()
+void User::transferPayments(std::vector<GoodsInfo> &goodsInfo)
 {
     std::string tmp = name;
     if (finalOrder.empty())
@@ -220,6 +220,7 @@ void User::transferPayments()
         balance -= singlePrice;
     }
     finalOrder.clear();
+    myorder.soldOut(goodsInfo);
     output << "交易成功！\n1";
     server->sendMessage(output);
     int pos = search(name);
@@ -273,10 +274,11 @@ void User::orderManagement(std::vector<GoodsInfo> &showGoods, std::vector<GoodsI
                 showOrder();
                 break;
             case 6:
-                transferPayments();
+                transferPayments(goodsInfo);
                 break;
             case 7:
                 cancelOrder(goodsInfo);
+                myorder.soldOut(goodsInfo);
                 break;
             default:
                 break;
@@ -313,6 +315,7 @@ void User::cancelOrder(std::vector<GoodsInfo> &goodsInfo)
     }
     for (auto it : finalOrder)
         myorder.preorderGoods(goodsInfo, it.first.name, it.first.merchant, 0);
+    finalOrder.clear();
     output << "订单已取消！\n1";
     server->sendMessage(output);
 }

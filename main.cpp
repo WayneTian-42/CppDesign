@@ -26,7 +26,7 @@ int main()
     }
     else if (choice == 1)
     {
-        getchar();
+        // getchar();
         PlatformShow sysc;
         sysc.show();
     }

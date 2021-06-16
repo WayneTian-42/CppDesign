@@ -57,6 +57,7 @@ void Order::chooseGoods(std::vector<GoodsInfo> &showGoods, GoodsInfo &good)
             server->sendMessage(output);
             // std::cin >> merchant;
             server->recvMessage(merchant);
+            merchant.pop_back();
             for (auto it : showGoods)
             {
                 if (it.name == gname && it.merchant == merchant)
@@ -177,6 +178,8 @@ int Order::search(const std::string &name)
             server->sendMessage(output); */
             // std::cin >> merchant;
             server->recvMessage(merchant);
+            // merchant.erase(merchant.end() - 1);
+            merchant.pop_back();
             for (int i = 0; i < num.size(); i++)
             {
                 if (shoppingCart[num[i]].first.merchant == merchant)
@@ -197,7 +200,7 @@ int Order::search(const std::string &name)
 }
 void Order::deleteGoods()
 {
-    definiteType();
+    // definiteType();
     showShoppingCart();
     if (shoppingCart.empty())
     {
@@ -257,12 +260,28 @@ void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, st
         while (flg)
         {
             input(amount);
+            int tmp = -1, max = 0;
+            freeGoods();
+            goods = new Foods(*server);
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
+            freeGoods();
+            goods = new Clothes(*server);
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
+            freeGoods();
+            goods = new Books(*server);
+            tmp = goods->searchAmount(it->first.name, it->first.merchant, it->first.type);
+            if (tmp != -1)
+                max = tmp;
             if (amount < 0)
             {
                 output << "不能购买负数个商品，请重新输入\n";
                 server->sendMessage(output);
             }
-            else if (amount > it->first.amount)
+            else if (amount > max)
             {
                 output << "商家没有这么多商品，请重新输入\n";
                 server->sendMessage(output);
