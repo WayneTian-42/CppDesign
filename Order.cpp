@@ -188,8 +188,20 @@ void Order::deleteGoods()
     std::cout << name << "数量为" << shoppingCart[pos].second << std::endl;
     std::cout << "请输入要修改的数量（正数表示增加，负数表示）";
     int number;
-    input(number);
+    while (1)
+    {
+        input(number);
+        if (shoppingCart[pos].second + number < 0)
+        {
+            std::cout << "购物车数量不能为负，请重新输入\n";
+            continue;
+        }
+        else
+            break;
+    }
     shoppingCart[pos].second += number;
+    if (!shoppingCart[pos].second)
+        shoppingCart.erase(shoppingCart.begin() + pos);
 }
 void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, std::vector<GoodsInfo> &goodsInfo)
 {
@@ -363,7 +375,7 @@ void Order::freeGoods()
 template <typename T> void Order::input(T &x) const
 {
     std::cin >> x;
-    while (std::cin.fail())
+    while (std::cin.fail() || std::cin.get() != '\n')
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
