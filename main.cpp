@@ -6,7 +6,7 @@
 
 int main()
 {
-    std::cout << "请输入建立客户端还是服务端\n";
+    std::cout << "建立服务端(输入0)或者客户端(输入1)\n";
     int choice;
     std::cin >> choice;
     while (std::cin.fail() || std::cin.get() != '\n')

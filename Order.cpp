@@ -239,6 +239,8 @@ void Order::deleteGoods()
             break;
     }
     shoppingCart[pos].second += number;
+    if (!shoppingCart[pos].second)
+        shoppingCart.erase(shoppingCart.begin() + pos);
 }
 void Order::generateOrder(std::vector<std::pair<GoodsInfo, int>> &finalOrder, std::vector<GoodsInfo> &goodsInfo)
 {
