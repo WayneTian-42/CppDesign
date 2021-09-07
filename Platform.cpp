@@ -7,16 +7,17 @@
 //#include <utility>
 // #include <WinSock2.h>
 
+//test
 void Platform::show()
 {
     int action;
     do
     {
-        output << "Ñ¡Ôñ²Ù×÷£º\n"
-               << "1. ÓÃ»§ÖÐÐÄ\n"
-               << "2. ÉÌÆ·Õ¹Ê¾\n"
-               << "3. ÉÌÆ·ÐÅÏ¢ÐÞ¸Ä£¨Õë¶ÔÉÌ¼Ò£©\n"
-               << "ÆäËûÊý×Ö ÍË³öÆ½Ì¨" << std::endl;
+        output << "Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+               << "1. ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+               << "2. ï¿½ï¿½Æ·Õ¹Ê¾\n"
+               << "3. ï¿½ï¿½Æ·ï¿½ï¿½Ï¢ï¿½Þ¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼Ò£ï¿½\n"
+               << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½Æ½Ì¨" << std::endl;
         input(action);
         switch (action)
         {
@@ -34,22 +35,22 @@ void Platform::show()
         }
         output << std::endl;
     } while (action > 0 && action < 4);
-    output << "¸ÐÐ»Ê¹ÓÃ£¡" << std::endl;
+    output << "ï¿½ï¿½Ð»Ê¹ï¿½Ã£ï¿½" << std::endl;
 }
 void Platform::userCenter()
 {
-    if (name.empty())  // Î´µÇÂ¼Çé¿öÏÂÖ»ÄÜ×¢²á»òµÇÂ¼
+    if (name.empty())  // Î´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Â¼
         userRegisterOrLog();
-    else  // ÒÑµÇÂ¼
+    else  // ï¿½Ñµï¿½Â¼
     {
         int choice;
         do
         {
-            output << "Ñ¡Ôñ²Ù×÷£º\n"
-                   << "1. ÓÃ»§ÐÅÏ¢²éÑ¯ÓëÐÞ¸Ä\n"
-                   << "2. ×¢ÏúµÇÂ¼\n"
-                   << "3. ¹ºÎï³µ¹ÜÀí\n"
-                   << "ÆäËûÊý×Ö ÍË³ö" << std::endl;
+            output << "Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+                   << "1. ï¿½Ã»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Þ¸ï¿½\n"
+                   << "2. ×¢ï¿½ï¿½ï¿½ï¿½Â¼\n"
+                   << "3. ï¿½ï¿½ï¿½ï³µï¿½ï¿½ï¿½ï¿½\n"
+                   << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½" << std::endl;
             input(choice);
             switch (choice)
             {
@@ -70,24 +71,24 @@ void Platform::userCenter()
 }
 void Platform::userRegisterOrLog()
 {
-    output << "Ñ¡Ôñ²Ù×÷£º\n"
-           << "1. ÓÃ»§×¢²á\n"
-           << "2. ÓÃ»§µÇÂ¼\n"
-           << "ÆäËûÊý×Ö ÍË³ö" << std::endl;
+    output << "Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+           << "1. ï¿½Ã»ï¿½×¢ï¿½ï¿½\n"
+           << "2. ï¿½Ã»ï¿½ï¿½ï¿½Â¼\n"
+           << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½" << std::endl;
     int choice, type;
     input(choice);
-    std::string operation[2] = {"×¢²á", "µÇÂ¼"};
+    std::string operation[2] = {"×¢ï¿½ï¿½", "ï¿½ï¿½Â¼"};
     if (choice == 1 || choice == 2)
     {
-        output << "ÇëÊäÈë" << operation[choice - 1] << "µÄÓÃ»§ÀàÐÍ£º\n"
-               << "1±íÊ¾¹Ë¿Í£¬2±íÊ¾ÉÌ¼Ò\n";
+        output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << operation[choice - 1] << "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Í£ï¿½\n"
+               << "1ï¿½ï¿½Ê¾ï¿½Ë¿Í£ï¿½2ï¿½ï¿½Ê¾ï¿½Ì¼ï¿½\n";
         input(type);
-        if (type > 2 || type < 0 || (type == 0 && choice == 1))  // Ö»ÓÐµÇÂ¼Ê±ÄÜÑ¡Ôñ¹ÜÀíÔ±ÀàÐÍ
+        if (type > 2 || type < 0 || (type == 0 && choice == 1))  // Ö»ï¿½Ðµï¿½Â¼Ê±ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
         {
-            output << "Ã»ÓÐ¸ÃÀàÐÍÓÃ»§£¬ÒÑÍË³ö\n";
+            output << "Ã»ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½\n";
             return;
         }
-        output << "ÊäÈëÓÃ»§Ãû£º\n";
+        output << "ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½\n";
         std::cin >> name;
         freeUser();
         switch (type)
@@ -113,7 +114,7 @@ void Platform::userRegisterOrLog()
             name.clear();
             break;
         case 2:
-            if (!user->login(type))  // µÇÂ¼Ê§°ÜÇé¿öÏÂ
+            if (!user->login(type))  // ï¿½ï¿½Â¼Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             {
                 freeUser();
                 name.clear();
@@ -141,11 +142,11 @@ void Platform::userInformationChange()
     {
         /* char tmp[15];
         std::strcpy(tmp, name.c_str()); */
-        output << name << ", ÇëÑ¡Ôñ²Ù×÷£º\n"
-               << "1. ÐÞ¸ÄÃÜÂë\n"
-               << "2. Óà¶î²éÑ¯\n"
-               << "3. Óà¶î³äÖµÓëÏû·Ñ\n"
-               << "ÆäËûÊý×Ö ÍË³ö" << std::endl;
+        output << name << ", ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+               << "1. ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+               << "2. ï¿½ï¿½ï¿½ï¿½Ñ¯\n"
+               << "3. ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+               << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½" << std::endl;
         input(choice);
         switch (choice)
         {
@@ -153,7 +154,7 @@ void Platform::userInformationChange()
                 user->changePwd();
                 break;
             case 2:
-                output << name << "£¬Äúµ±Ç°ÕË»§Óà¶îÎª" << user->queryBalance() << "Ôª\n";
+                output << name << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ë»ï¿½ï¿½ï¿½ï¿½Îª" << user->queryBalance() << "Ôª\n";
                 break;
             case 3:
                 user->topUpAndDown();
@@ -165,7 +166,7 @@ void Platform::userInformationChange()
 }
 void Platform::userQuit()
 {
-    output << "ÒÑÍË³ö£¡\n";
+    output << "ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½\n";
     std::vector<std::pair<GoodsInfo, int>> shoppingcart, order;
     user->getShoppingCart(shoppingcart);
     shoppingCart.insert(std::make_pair(name, shoppingcart));
@@ -178,12 +179,12 @@ void Platform::userQuit()
 void Platform::goodsInformation()
 {
     int choice;
-    output << "ÇëÑ¡ÔñÉ¸Ñ¡Ìõ¼þ\n"
-           << "0. Õ¹Ê¾Ä³ÀàÉÌÆ·\n"
-           << "1. °´Ãû³ÆÉ¸Ñ¡\n"
-           << "2. °´¼Û¸ñÉ¸Ñ¡\n"
-           << "3. °´ÊýÁ¿É¸Ñ¡\n"
-           << "ÆäËûÊý×Ö ÍË³ö\n";
+    output << "ï¿½ï¿½Ñ¡ï¿½ï¿½É¸Ñ¡ï¿½ï¿½ï¿½ï¿½\n"
+           << "0. Õ¹Ê¾Ä³ï¿½ï¿½ï¿½ï¿½Æ·\n"
+           << "1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¸Ñ¡\n"
+           << "2. ï¿½ï¿½ï¿½Û¸ï¿½É¸Ñ¡\n"
+           << "3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¸Ñ¡\n"
+           << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½\n";
     int amount;
     double priceLow, priceHigh;
     input(choice);
@@ -200,20 +201,20 @@ void Platform::goodsInformation()
             goods->search(showGoods);
             break;
         case 1:
-            output << "ÇëÊäÈëÉÌÆ·Ãû³Æ\n";
+            output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½\n";
             std::cin >> goodsName;
             goods->search(goodsName, showGoods);
             break;
         case 2:
             while (1)
             {
-                output << "ÇëÊäÈëÉÌÆ·×îµÍ¼Û¸ñ\n";
+                output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Í¼Û¸ï¿½\n";
                 input(priceLow);
-                output << "ÇëÊäÈëÉÌÆ·×î¸ß¼Û¸ñ\n";
+                output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ß¼Û¸ï¿½\n";
                 input(priceHigh);
-                //´óÐ¡±È½Ï
+                //ï¿½ï¿½Ð¡ï¿½È½ï¿½
                 if (priceLow > priceHigh || priceLow < 0 || priceHigh < 0)
-                    output << "ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë£¡\n";
+                    output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¡\n";
                 else
                 {
                     goods->search(priceLow, priceHigh, showGoods);
@@ -222,7 +223,7 @@ void Platform::goodsInformation()
             }
             break;
         case 3:
-            output << "ÇëÊäÈëÉÌÆ·×îÐ¡ÊýÁ¿";
+            output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½";
             input(amount);
             goods->search(amount, showGoods);
             break;
@@ -231,44 +232,44 @@ void Platform::goodsInformation()
     }
     if (!name.empty())
     {
-        output << "ÇëÑ¡Ôñ²Ù×÷£º\n "
-               << "1. Ìø×ªµ½¹ºÎï³µ½çÃæ\n"
-               << "ÆäËûÊý×Ö ÍË³ö\n"
+        output << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n "
+               << "1. ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï³µï¿½ï¿½ï¿½ï¿½\n"
+               << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½\n"
                << std::endl;
         std::cin >> choice;
         if (choice == 1)
             user->orderManagement(showGoods, allGoods);
     }
-    // ÊµÑé¶þ
-    /*  output << "ÇëÑ¡Ôñ²Ù×÷£º\n "
-               << "1. ¹ºÂòÉÌÆ·\n"
-               << "ÆäËûÊý×Ö ÍË³ö\n"
+    // Êµï¿½ï¿½ï¿½
+    /*  output << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n "
+               << "1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·\n"
+               << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½\n"
                << std::endl;
      std::cin >> choice;
      if (choice == 1)
          purchaseGoods(); */
     goods->getGoods(allGoods);
     freeGoods();
-    //Çå¿Õvector
+    //ï¿½ï¿½ï¿½vector
     std::vector<GoodsInfo> tmp;
     showGoods.swap(tmp);
 }
 void Platform::changeGoods()
 {
-    // Î´µÇÂ¼Çé¿öÏÂ
+    // Î´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
     if (name.empty() || user->getUserType() == 1)
     {
-        output << "ÇëµÇÈëÉÌ¼ÒÕËºÅºó½øÐÐ¸Ã²Ù×÷£¡\n";
+        output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ËºÅºï¿½ï¿½ï¿½Ð¸Ã²ï¿½ï¿½ï¿½ï¿½ï¿½\n";
         return;
     }
     int choice;
     do
     {
         double dis;
-        output << "ÇëÑ¡ÔñÒª½øÐÐµÄ²Ù×÷\n"
-               << "1. ÐÞ¸ÄÒÑÓÐÉÌÆ·\n"
-               << "2. Ìí¼ÓÉÌÆ·\n"
-               << "ÆäËûÊý×Ö ÍË³ö\n";
+        output << "ï¿½ï¿½Ñ¡ï¿½ï¿½Òªï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½\n"
+               << "1. ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·\n"
+               << "2. ï¿½ï¿½ï¿½ï¿½ï¿½Æ·\n"
+               << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë³ï¿½\n";
         input(choice);
         std::string goodsName;
         if ((choice > 0 && choice < 3) || (choice == 0 && user->getUserType() == 0))
@@ -278,7 +279,7 @@ void Platform::changeGoods()
             goods->getGoods(allGoods);
             if (choice)
             {
-                output << "ÊäÈëÉÌÆ·Ãû³Æ\n";
+                output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½\n";
                 std::cin >> goodsName;
             }
         }
@@ -287,18 +288,18 @@ void Platform::changeGoods()
             case 0:
                 if (user->getUserType())
                 {
-                    output << "Ã»ÓÐÈ¨ÏÞ!\n";
+                    output << "Ã»ï¿½ï¿½È¨ï¿½ï¿½!\n";
                     break;
                 }
-                output << "ÇëÊäÈëÒª¸ø³öµÄÕÛ¿Û(ÓÃÐ¡Êý±íÊ¾£¬0-1Ö®¼ä):\n";
+                output << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½(ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½0-1Ö®ï¿½ï¿½):\n";
                 input(dis);
                 if (dis < 0 || dis > 1)
                 {
-                    output << "ÕÛ¿Û²»ºÏÀí£¬ÒÑÍË³ö£¡\n";
+                    output << "ï¿½Û¿Û²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½\n";
                     return;
                 }
                 goods->atDiscount(dis);
-                output << "´òÕÛ³É¹¦";
+                output << "ï¿½ï¿½ï¿½Û³É¹ï¿½";
                 break;
             case 1:
                 goods->changeItems(goodsName, name);
@@ -315,13 +316,13 @@ void Platform::changeGoods()
 void Platform::definiteType()
 {
     int type;
-    output << "ÇëÑ¡ÔñÉÌÆ·ÀàÐÍ\n"
-           << "1±íÊ¾Ê³Îï£¬2±íÊ¾ÒÂ·þ£¬3±íÊ¾Í¼Êé\n";
+    output << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½\n"
+           << "1ï¿½ï¿½Ê¾Ê³ï¿½ï£¬2ï¿½ï¿½Ê¾ï¿½Â·ï¿½ï¿½ï¿½3ï¿½ï¿½Ê¾Í¼ï¿½ï¿½\n";
     input(type);
     freeGoods();
     while (type < 1 || type > 3)
     {
-        output << "Ã»ÓÐ¸ÃÀàÐÍÉÌÆ·£¬ÇëÖØÐÂÊäÈë\n";
+        output << "Ã»ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n";
         input(type);
     }
     switch (type)
@@ -347,7 +348,7 @@ template <typename T> void Platform::input(T &x)
     {
         std::cin.clear();
         std::cin.ignore(LLONG_MAX, '\n');
-        std::cout << "ÊäÈë²»ºÏ·¨£¬ÇëÊäÈëÊý×Ö\n";
+        std::cout << "ï¿½ï¿½ï¿½ë²»ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n";
         std::cin >> x;
         continue;
     }
